@@ -1,7 +1,9 @@
-package jcchen.goodsmanager;
+package jcchen.goodsmanager.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import jcchen.goodsmanager.R;
 
 public class MainActivity extends AppCompatActivity {
 

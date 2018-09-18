@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="@string/purchase"
+        android:id="@+id/bottom_navigation_purchase"
+        android:icon="@drawable/ic_bottom_navigation_purchase"
+        android:orderInCategory="1"/>
+    <item
+        android:title="@string/manage"
+        android:id="@+id/bottom_navigation_manage"
+        android:icon="@drawable/ic_bottom_navigation_manage"
+        android:orderInCategory="2"/>
+    <item
+        android:title="@string/setting"
+        android:id="@+id/bottom_navigation_setting"
+        android:icon="@drawable/ic_bottom_navigation_setting"
+        android:orderInCategory="3"/>
+</menu>
