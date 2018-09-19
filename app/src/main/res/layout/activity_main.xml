@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:elevation="4dp"
     tools:context="jcchen.goodsmanager.view.MainActivity">
 
 
@@ -12,9 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        app:theme="@style/ToolbarItem"
+        android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
-        android:weightSum="1">
+        android:weightSum="1"
+        app:theme="@style/ToolbarItem">
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -32,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_above="@+id/bottom_navigation"
-        android:background="@drawable/shadow" />
+        android:background="@drawable/shadow_up" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -42,7 +44,6 @@
         android:layout_alignParentEnd="false"
         app:itemIconTint="@color/bottom_navigation_state"
         app:itemTextColor="@color/bottom_navigation_state"
-        app:elevation="4dp"
         app:menu="@menu/bottom_navigation_menu" />
 
 </RelativeLayout>
