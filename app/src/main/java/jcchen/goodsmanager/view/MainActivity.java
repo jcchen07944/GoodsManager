@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import jcchen.goodsmanager.R;
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView toolbar_title;
     private BottomNavigationView bottomNavigationView;
+    private FrameLayout content;
+    private int width = -1;
 
     private Fragment[] contents;
 
@@ -76,6 +80,15 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        content = (FrameLayout) findViewById(R.id.activity_main_content);
+        content.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                content.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                width = content.getWidth();
+                switchToFragment(contents[0]);
+            }
+        });
     }
 
     private void switchToFragment(Fragment targetFragment) {
@@ -83,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().replace(R.id.activity_main_content, targetFragment).commit();
     }
 
+    public int getContentWidthPixel() {
+        return width;
+    }
 
 
 }

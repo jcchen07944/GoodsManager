@@ -8,6 +8,10 @@ public class TypeInfo {
 
     private String Type;
 
+    public TypeInfo(String type) {
+        this.Type = type;
+    }
+
     public String getType() {
         return Type;
     }
