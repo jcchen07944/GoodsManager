@@ -7,6 +7,7 @@
     <color name="colorSecondary">#00c853</color>
     <color name="colorSecondaryLight">#5efc82</color>
     <color name="colorSecondaryDark">#009624</color>
-    <color name="colorTextOnSecondary">#37474f</color>
-    <color name="colorBackground">#ffffff</color>
+    <color name="colorTextOnSecondary">#fafafa</color>
+    <color name="colorObjectBackground">#ffffff</color>
+    <color name="colorAppBackground">#e0e0e0</color>
 </resources>

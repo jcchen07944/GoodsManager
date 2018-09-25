@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 
-        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:colorBackground">@color/colorAppBackground</item>
     </style>
 
     <style name="ToolbarItem" parent="AppTheme">
