@@ -1,25 +1,29 @@
 package jcchen.goodsmanager.view;
 
+import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.os.Debug;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.ViewTreeObserver;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import jcchen.goodsmanager.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
-    private TextView toolbar_title;
-    private int width = -1;
-
+    private Toolbar mToolbar;
+    private DrawerLayout mDrawerLayout;
+    private FrameLayout content;
+    private FloatingActionButton mFloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,26 +33,59 @@ public class MainActivity extends AppCompatActivity {
         initUI();
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
     private void initUI() {
 
         /* Init Toolbar */
-        toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
-        toolbar_title = (TextView) findViewById(R.id.toolbar_title);
-        toolbar.setTitle("");
-        toolbar.setSubtitle("");
-        toolbar_title.setText(getResources().getString(R.string.app_name));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(getResources().getString(R.string.app_name));
+        mToolbar.setSubtitle("");
+        setSupportActionBar(mToolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+        /* Init Drawer */
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        /* Init Content */
+        content = (FrameLayout) findViewById(R.id.activity_main_content);
+
+        /* Init FloatingActionButton */
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        mFloatingActionButton.setElevation(6 * getResources().getDisplayMetrics().density);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
     }
 
-    public int getContentWidthPixel() {
-        return width;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
+
+    private void openDialog() {
+        ValueAnimator moveFab_VA = ValueAnimator.ofFloat(mFloatingActionButton.getY(),
+                                        mFloatingActionButton.getY() - (content.getHeight() / 2));
+        moveFab_VA.setDuration(300);
+        moveFab_VA.setInterpolator(new AccelerateInterpolator(0.6f));
+        moveFab_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+
+            }
+        });
+    }
+
+    private void closeDialog() {
+
+    }
+
 }
