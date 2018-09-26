@@ -10,4 +10,5 @@
     <color name="colorTextOnSecondary">#ffffff</color>
     <color name="colorObjectBackground">#ffffff</color>
     <color name="colorAppBackground">#e0e0e0</color>
+    <color name="colorTextOnBackground">#000000</color>
 </resources>

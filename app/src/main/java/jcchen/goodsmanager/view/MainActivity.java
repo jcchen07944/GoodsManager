@@ -17,6 +17,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.view.fragment.PurchaseTypeDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openDialog() {
+        /*final float OldY = mFloatingActionButton.getY();
+
         ValueAnimator moveFab_VA = ValueAnimator.ofFloat(mFloatingActionButton.getY(),
                                         mFloatingActionButton.getY() - (content.getHeight() / 2));
         moveFab_VA.setDuration(300);
@@ -79,9 +82,12 @@ public class MainActivity extends AppCompatActivity {
         moveFab_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-
+                mFloatingActionButton.setY((float) animation.getAnimatedValue());
             }
         });
+        moveFab_VA.start();*/
+        PurchaseTypeDialogFragment mPurchaseTypeDialogFragment = new PurchaseTypeDialogFragment();
+        mPurchaseTypeDialogFragment.show(getFragmentManager(), "PurchaseTypeDialogFragment");
     }
 
     private void closeDialog() {

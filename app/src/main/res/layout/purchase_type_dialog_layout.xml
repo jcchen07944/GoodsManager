@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jcchen.goodsmanager.view.container.PurchaseTypeDialogContainer xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/purchase_type_title"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/colorSecondary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="@string/type"
+        android:textColor="@color/colorTextOnSecondary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <jcchen.goodsmanager.view.widget.FocusListView.FocusListView
+        android:id="@+id/purchase_type_list"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:background="@color/colorObjectBackground"
+        app:layout_constraintTop_toBottomOf="@id/purchase_type_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</jcchen.goodsmanager.view.container.PurchaseTypeDialogContainer>
