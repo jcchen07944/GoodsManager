@@ -1,4 +1,4 @@
-package jcchen.goodsmanager.view.adapter;
+package jcchen.goodsmanager.view.widget.FocusListView;
 
 import android.content.Context;
 import android.view.LayoutInflater;
