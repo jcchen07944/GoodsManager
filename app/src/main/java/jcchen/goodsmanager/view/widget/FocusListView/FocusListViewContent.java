@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.widget.TextView;
 
 /**
  * Created by JCChen on 2018/9/26.
@@ -11,9 +13,9 @@ import android.util.AttributeSet;
 
 public class FocusListViewContent extends ConstraintLayout {
 
-    private final float SCALE_MAX = 1f;
+    private final float SCALE_MAX = 1.5f;
 
-    private float parentHeight;
+    private float parentHeight = -1;
 
     public FocusListViewContent(Context context) {
         super(context);
@@ -39,11 +41,11 @@ public class FocusListViewContent extends ConstraintLayout {
     }
 
     public int getMid() {
-        return (getTop() + getBottom() / 2);
+        return (getTop() + getBottom()) / 2;
     }
 
     private float getScale() {
-        return Math.max(getPosRate(), 0f) * SCALE_MAX;
+        return Math.max(getPosRate(), 0.5f) * SCALE_MAX;
     }
 
 
@@ -51,6 +53,6 @@ public class FocusListViewContent extends ConstraintLayout {
         if(getMid() < parentHeight / 2f)
             return (float) getMid() / (parentHeight / 2f);
         else
-            return (parentHeight - (float) getMid() / (parentHeight / 2f));
+            return (parentHeight - (float) getMid()) / (parentHeight / 2f);
     }
 }
