@@ -24,7 +24,7 @@ public class FocusListViewContent extends ConstraintLayout {
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas) {
+    public void dispatchDraw(Canvas canvas) {
         float scale = getScale();
         canvas.save();
         {
