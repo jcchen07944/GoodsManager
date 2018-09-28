@@ -4,4 +4,17 @@
     <string name="manage">管理</string>
     <string name="purchase">進貨</string>
     <string name="type">類型</string>
+    <string name="choose">選擇尺寸</string>
+    <string name="flexible">彈性</string>
+    <string name="size">尺寸</string>
+    <string name="color">顏色</string>
+    <string name="material">材質</string>
+    <string name="goods_name">品名</string>
+    <string name="numbers">編號</string>
+    <string name="mall">商城</string>
+    <string name="position">櫃位</string>
+    <string name="list_price">定價</string>
+    <string name="actual_price">連線</string>
+    <string name="income_k">進Ｋ</string>
+    <string name="income_t">進Ｔ</string>
 </resources>

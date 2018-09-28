@@ -2,6 +2,7 @@ package jcchen.goodsmanager.view;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -9,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import jcchen.goodsmanager.R;
@@ -21,8 +24,12 @@ public class MainActivity extends AppCompatActivity {
     public static final int TOOLBAR_ANIMATION_STATE_PURCHASE = 0;
     public static final int TOOLBAR_ANIMATION_STATE_RESUME = 1;
 
+    public static final int ACTIONBAR_STATE_HOME = 0;
+    public static final int ACTIONBAR_STATE_BACK = 1;
+    public int ACTIONBAR_STATE;
 
     private Toolbar mToolbar;
+    private ActionBar mActionBar;
     private DrawerLayout mDrawerLayout;
     private FrameLayout content;
     private FloatingActionButton mFloatingActionButton;
@@ -43,13 +50,14 @@ public class MainActivity extends AppCompatActivity {
     private void initUI() {
 
         /* Init Toolbar */
+        ACTIONBAR_STATE = ACTIONBAR_STATE_HOME;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(getResources().getString(R.string.app_name));
         mToolbar.setSubtitle("");
+        mToolbar.setNavigationIcon(R.drawable.ic_menu);
         setSupportActionBar(mToolbar);
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
 
         /* Init Drawer */
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -74,7 +82,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
+                if(ACTIONBAR_STATE == ACTIONBAR_STATE_HOME)
+                    mDrawerLayout.openDrawer(GravityCompat.START);
+                if(ACTIONBAR_STATE == ACTIONBAR_STATE_BACK)
+                    onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -111,7 +122,16 @@ public class MainActivity extends AppCompatActivity {
     public void onPurchaseAnimationEnd(int STATE) {
         switch(STATE) {
             case TOOLBAR_ANIMATION_STATE_PURCHASE:
+                // Set StatusBar color.
+                Window window = this.getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorSecondaryDark));
+
+                // ActionBar icon & color.
+                ACTIONBAR_STATE = ACTIONBAR_STATE_BACK;
                 mToolbar.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
+                mToolbar.setNavigationIcon(R.drawable.ic_back);
                 break;
             case TOOLBAR_ANIMATION_STATE_RESUME:
                 break;

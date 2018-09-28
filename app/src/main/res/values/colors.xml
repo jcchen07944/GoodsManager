@@ -11,5 +11,6 @@
     <color name="colorObjectBackground">#ffffff</color>
     <color name="colorAppBackground">#e0e0e0</color>
     <color name="colorTextOnBackground">#616161</color>
+    <color name="colorTextHint">#9e9e9e</color>
     <color name="colorDivider">#9e9e9e</color>
 </resources>

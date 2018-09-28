@@ -2,7 +2,9 @@ package jcchen.goodsmanager.presenter.impl;
 
 import java.util.Vector;
 
+import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
+import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.PurchasePresenter;
 
@@ -13,8 +15,9 @@ import jcchen.goodsmanager.presenter.PurchasePresenter;
 public class PurchasePresenterImpl implements PurchasePresenter {
 
     /* Get type list from model(maybe from DB or from setting) */
+    @Override
     public Vector<TypeInfo> getTypeList() {
-        // Now using static type list.
+        // Now using static list.
         Vector<TypeInfo> typeList = new Vector<>();
         typeList.add(new TypeInfo("上衣"));
         typeList.add(new TypeInfo("褲子"));
@@ -24,7 +27,31 @@ public class PurchasePresenterImpl implements PurchasePresenter {
         return typeList;
     }
 
+    @Override
+    public Vector<ColorInfo> getColorList() {
+        // Now using static list.
+        Vector<ColorInfo> colorList = new Vector<>();
+        colorList.add(new ColorInfo("丈青", "NV"));
+        colorList.add(new ColorInfo("黑", "KK"));
+        colorList.add(new ColorInfo("米白", "IV"));
+        colorList.add(new ColorInfo("杏", "CC"));
+        colorList.add(new ColorInfo("均", "XX"));
+        return null;
+    }
+
+    @Override
+    public Vector<SizeInfo> getSizeList() {
+        // Now using static list.
+        return null;
+    }
+
+    @Override
     public void sendPurchaseInfo(PurchaseInfo purchaseInfo) {
+
+    }
+
+    @Override
+    public void savePurchaseInfo(PurchaseInfo purchaseInfo) {
 
     }
 }
