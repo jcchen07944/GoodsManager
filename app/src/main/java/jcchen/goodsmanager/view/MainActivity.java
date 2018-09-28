@@ -12,14 +12,25 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.view.fragment.ManageFragment;
+import jcchen.goodsmanager.view.fragment.PurchaseFragment;
 import jcchen.goodsmanager.view.fragment.SelectTypeDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int TOOLBAR_ANIMATION_STATE_PURCHASE = 0;
+    public static final int TOOLBAR_ANIMATION_STATE_RESUME = 1;
+
 
     private Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     private FrameLayout content;
     private FloatingActionButton mFloatingActionButton;
+
+    private SelectTypeDialogFragment mSelectTypeDialogFragment = null;
+    private PurchaseFragment mPurchaseFragment = null;
+    private ManageFragment mManageFragment = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         /* Init Content */
         content = (FrameLayout) findViewById(R.id.activity_main_content);
+        mManageFragment = new ManageFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_content, mManageFragment).commit();
 
         /* Init FloatingActionButton */
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -81,12 +94,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         moveFab_VA.start();*/
-        SelectTypeDialogFragment mSelectTypeDialogFragment = new SelectTypeDialogFragment();
+        if(mSelectTypeDialogFragment == null)
+            mSelectTypeDialogFragment = new SelectTypeDialogFragment();
         mSelectTypeDialogFragment.show(getFragmentManager(), "SelectTypeDialogFragment");
     }
 
-    private void closeDialog() {
+    public void onStartPurchase() {
+        mSelectTypeDialogFragment.dismiss();
 
+        if(mPurchaseFragment == null)
+            mPurchaseFragment = new PurchaseFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_content,
+                mPurchaseFragment, mPurchaseFragment.getClass().getName()).commit();
+    }
+
+    public void onPurchaseAnimationEnd(int STATE) {
+        switch(STATE) {
+            case TOOLBAR_ANIMATION_STATE_PURCHASE:
+                mToolbar.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
+                break;
+            case TOOLBAR_ANIMATION_STATE_RESUME:
+                break;
+        }
+    }
+
+    public void onEndPurchase() {
+        if(mManageFragment == null)
+            mManageFragment = new ManageFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_content,
+                mManageFragment, mManageFragment.getClass().getName()).commit();
     }
 
 }

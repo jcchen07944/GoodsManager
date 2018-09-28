@@ -1,6 +1,8 @@
 package jcchen.goodsmanager.view.container;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -10,8 +12,10 @@ import android.widget.AbsListView;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
+import jcchen.goodsmanager.view.MainActivity;
 import jcchen.goodsmanager.view.widget.FocusListView.FocusListViewAdapter;
 import jcchen.goodsmanager.view.widget.FocusListView.FocusListView;
+import jcchen.goodsmanager.view.widget.RoundedImageView;
 
 /**
  * Created by JCChen on 2018/9/26.
@@ -20,25 +24,28 @@ import jcchen.goodsmanager.view.widget.FocusListView.FocusListView;
 public class SelectTypeDialogContainer extends ConstraintLayout implements Container {
 
     private FocusListView mFocusListView;
+    private RoundedImageView mRoundedImageView;
     private Context context;
 
     private PurchasePresenterImpl presenter;
 
     public SelectTypeDialogContainer(Context context) {
         super(context);
-        this.context = context;
+        this.context = getActivityFromView(this);
         init();
     }
 
     public SelectTypeDialogContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        this.context = context;
+        this.context = getActivityFromView(this);
         init();
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
+        // FocusListView
         mFocusListView = (FocusListView) this.findViewById(R.id.purchase_type_list);
         final FocusListViewAdapter adapter = new FocusListViewAdapter(context, mFocusListView, presenter.getTypeList());
         mFocusListView.setAdapter(adapter);
@@ -72,6 +79,19 @@ public class SelectTypeDialogContainer extends ConstraintLayout implements Conta
                 return false;
             }
         });
+
+        // RoundedImageView
+        mRoundedImageView = (RoundedImageView) this.findViewById(R.id.confirm_button);
+        mRoundedImageView.setClickable(true);
+        mRoundedImageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) context).onStartPurchase();
+                // Do animation.
+                ((MainActivity) context).onPurchaseAnimationEnd(((MainActivity) context).TOOLBAR_ANIMATION_STATE_PURCHASE);
+
+            }
+        });
     }
 
     @Override
@@ -89,5 +109,22 @@ public class SelectTypeDialogContainer extends ConstraintLayout implements Conta
     public boolean onBackPressed() {
         return false;
     }
+
+    /**
+     * try get host activity from view.
+     * views hosted on floating window like dialog and toast will sure return null.
+     * @return host activity; or null if not available
+     */
+    public static Context getActivityFromView(View view) {
+        Context context = view.getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return context;
+            }
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+        return null;
+    }
+
 
 }
