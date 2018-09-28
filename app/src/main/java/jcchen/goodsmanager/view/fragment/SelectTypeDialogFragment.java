@@ -14,11 +14,11 @@ import jcchen.goodsmanager.R;
  * Created by JCChen on 2018/9/26.
  */
 
-public class PurchaseTypeDialogFragment extends DialogFragment {
+public class SelectTypeDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.purchase_type_dialog_layout, container);
+        View view = inflater.inflate(R.layout.select_type_dialog_layout, container);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return view;
     }

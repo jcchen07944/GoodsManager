@@ -17,20 +17,20 @@ import jcchen.goodsmanager.view.widget.FocusListView.FocusListView;
  * Created by JCChen on 2018/9/26.
  */
 
-public class PurchaseTypeDialogContainer extends ConstraintLayout implements Container {
+public class SelectTypeDialogContainer extends ConstraintLayout implements Container {
 
     private FocusListView mFocusListView;
     private Context context;
 
     private PurchasePresenterImpl presenter;
 
-    public PurchaseTypeDialogContainer(Context context) {
+    public SelectTypeDialogContainer(Context context) {
         super(context);
         this.context = context;
         init();
     }
 
-    public PurchaseTypeDialogContainer(Context context, AttributeSet attributeSet) {
+    public SelectTypeDialogContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         this.context = context;
         init();

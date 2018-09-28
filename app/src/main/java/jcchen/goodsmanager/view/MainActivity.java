@@ -1,23 +1,18 @@
 package jcchen.goodsmanager.view;
 
-import android.animation.ValueAnimator;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.FrameLayout;
 
 import jcchen.goodsmanager.R;
-import jcchen.goodsmanager.view.fragment.PurchaseTypeDialogFragment;
+import jcchen.goodsmanager.view.fragment.SelectTypeDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -86,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         moveFab_VA.start();*/
-        PurchaseTypeDialogFragment mPurchaseTypeDialogFragment = new PurchaseTypeDialogFragment();
-        mPurchaseTypeDialogFragment.show(getFragmentManager(), "PurchaseTypeDialogFragment");
+        SelectTypeDialogFragment mSelectTypeDialogFragment = new SelectTypeDialogFragment();
+        mSelectTypeDialogFragment.show(getFragmentManager(), "SelectTypeDialogFragment");
     }
 
     private void closeDialog() {
