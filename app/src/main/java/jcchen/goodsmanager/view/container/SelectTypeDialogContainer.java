@@ -88,7 +88,7 @@ public class SelectTypeDialogContainer extends ConstraintLayout implements Conta
             public void onClick(View view) {
                 ((MainActivity) context).onStartPurchase();
                 // Do animation.
-                ((MainActivity) context).onPurchaseAnimationEnd(((MainActivity) context).TOOLBAR_ANIMATION_STATE_PURCHASE);
+                ((MainActivity) context).onAnimationEnd(((MainActivity) context).TOOLBAR_ANIMATION_STATE_PURCHASE);
 
             }
         });

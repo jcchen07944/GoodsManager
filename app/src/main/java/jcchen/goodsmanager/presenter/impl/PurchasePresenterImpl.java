@@ -36,7 +36,7 @@ public class PurchasePresenterImpl implements PurchasePresenter {
         colorList.add(new ColorInfo("米白", "IV"));
         colorList.add(new ColorInfo("杏", "CC"));
         colorList.add(new ColorInfo("均", "XX"));
-        return null;
+        return colorList;
     }
 
     @Override

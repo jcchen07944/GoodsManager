@@ -17,7 +17,7 @@ import android.widget.FrameLayout;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.view.fragment.ManageFragment;
 import jcchen.goodsmanager.view.fragment.PurchaseFragment;
-import jcchen.goodsmanager.view.fragment.SelectTypeDialogFragment;
+import jcchen.goodsmanager.view.fragment.TypeSelectDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private FrameLayout content;
     private FloatingActionButton mFloatingActionButton;
 
-    private SelectTypeDialogFragment mSelectTypeDialogFragment = null;
+    private TypeSelectDialogFragment mTypeSelectDialogFragment = null;
     private PurchaseFragment mPurchaseFragment = null;
     private ManageFragment mManageFragment = null;
 
@@ -105,13 +105,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         moveFab_VA.start();*/
-        if(mSelectTypeDialogFragment == null)
-            mSelectTypeDialogFragment = new SelectTypeDialogFragment();
-        mSelectTypeDialogFragment.show(getFragmentManager(), "SelectTypeDialogFragment");
+        if(mTypeSelectDialogFragment == null)
+            mTypeSelectDialogFragment = new TypeSelectDialogFragment();
+        mTypeSelectDialogFragment.show(getFragmentManager(), "TypeSelectDialogFragment");
     }
 
     public void onStartPurchase() {
-        mSelectTypeDialogFragment.dismiss();
+        mTypeSelectDialogFragment.dismiss();
 
         if(mPurchaseFragment == null)
             mPurchaseFragment = new PurchaseFragment();
@@ -119,11 +119,12 @@ public class MainActivity extends AppCompatActivity {
                 mPurchaseFragment, mPurchaseFragment.getClass().getName()).commit();
     }
 
-    public void onPurchaseAnimationEnd(int STATE) {
+    public void onAnimationEnd(int STATE) {
+        Window window = this.getWindow();
         switch(STATE) {
             case TOOLBAR_ANIMATION_STATE_PURCHASE:
+                mFloatingActionButton.setVisibility(View.GONE);
                 // Set StatusBar color.
-                Window window = this.getWindow();
                 window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                 window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorSecondaryDark));
@@ -134,6 +135,16 @@ public class MainActivity extends AppCompatActivity {
                 mToolbar.setNavigationIcon(R.drawable.ic_back);
                 break;
             case TOOLBAR_ANIMATION_STATE_RESUME:
+                mFloatingActionButton.setVisibility(View.VISIBLE);
+                // Set StatusBar color.
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+
+                // ActionBar icon & color.
+                ACTIONBAR_STATE = ACTIONBAR_STATE_HOME;
+                mToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mToolbar.setNavigationIcon(R.drawable.ic_menu);
                 break;
         }
     }
