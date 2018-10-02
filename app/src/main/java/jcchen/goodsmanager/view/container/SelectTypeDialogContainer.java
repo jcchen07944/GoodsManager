@@ -86,6 +86,7 @@ public class SelectTypeDialogContainer extends ConstraintLayout implements Conta
         mRoundedImageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                postResult();
                 ((MainActivity) context).onStartPurchase();
                 // Do animation.
                 ((MainActivity) context).onAnimationEnd(((MainActivity) context).TOOLBAR_ANIMATION_STATE_PURCHASE);
@@ -108,6 +109,11 @@ public class SelectTypeDialogContainer extends ConstraintLayout implements Conta
     @Override
     public boolean onBackPressed() {
         return false;
+    }
+
+    @Override
+    public void postResult() {
+
     }
 
     /**

@@ -95,6 +95,11 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     }
 
     @Override
+    public void postResult() {
+
+    }
+
+    @Override
     public void onColorSelected(Vector<ColorInfo> selectedColor) {
         String text = "";
         for(int i = 0; i < selectedColor.size(); i++) {

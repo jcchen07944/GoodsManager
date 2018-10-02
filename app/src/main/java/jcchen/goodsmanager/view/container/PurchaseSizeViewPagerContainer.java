@@ -4,13 +4,13 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 
-public class ManageContainer extends ConstraintLayout implements Container {
+public class PurchaseSizeViewPagerContainer extends ConstraintLayout implements Container{
 
-    public ManageContainer(Context context) {
+    public PurchaseSizeViewPagerContainer(Context context) {
         super(context);
     }
 
-    public ManageContainer(Context context, AttributeSet attributeSet) {
+    public PurchaseSizeViewPagerContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
     }
 

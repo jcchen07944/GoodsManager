@@ -8,4 +8,5 @@ public interface Container {
     void init();
     void showItem(Object object);
     boolean onBackPressed();
+    void postResult();
 }
