@@ -1,17 +1,27 @@
 package jcchen.goodsmanager.view.container;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
 
-public class PurchaseSizeViewPagerContainer extends ConstraintLayout implements Container{
+import jcchen.goodsmanager.R;
+
+public class PurchaseSizeViewPagerContainer extends FrameLayout implements Container{
+
+    private Context context;
 
     public PurchaseSizeViewPagerContainer(Context context) {
         super(context);
+        this.context = context;
+        init();
     }
 
     public PurchaseSizeViewPagerContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
+        this.context = context;
+        init();
     }
 
     @Override
@@ -21,7 +31,8 @@ public class PurchaseSizeViewPagerContainer extends ConstraintLayout implements 
 
     @Override
     public void init() {
-
+        View view = LayoutInflater.from(context).inflate(R.layout.purchase_size_viewpager_content, null);
+        addView(view);
     }
 
     @Override

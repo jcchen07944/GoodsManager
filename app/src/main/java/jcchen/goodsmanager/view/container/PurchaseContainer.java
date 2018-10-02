@@ -2,9 +2,11 @@ package jcchen.goodsmanager.view.container;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
+import jcchen.goodsmanager.view.adapter.PurchaseSizeViewPagerAdapter;
 import jcchen.goodsmanager.view.fragment.ColorSelectDialogFragment;
 import jcchen.goodsmanager.view.fragment.SizeSelectDialogFragment;
 import jcchen.goodsmanager.view.listener.OnColorSelectedListener;
@@ -25,10 +28,14 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
     private Button colorSelect, sizeSelect;
     private TextView sizeText, colorText;
+    private ViewPager mViewPager;
 
     private ColorSelectDialogFragment mColorSelectDialogFragment;
     private SizeSelectDialogFragment mSizeSelectDialogFragment;
     private PurchasePresenterImpl presenter;
+    private PurchaseSizeViewPagerAdapter mPurchaseSizeViewPagerAdapter;
+
+    private Vector<FrameLayout> pagerList;
 
     public PurchaseContainer(Context context) {
         super(context);
@@ -65,6 +72,9 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         colorText = (TextView) findViewById(R.id.purchase_color_text);
 
         sizeText = (TextView) findViewById(R.id.purchase_size_text);
+
+        mViewPager = (ViewPager) findViewById(R.id.purchase_pager);
+        mViewPager.setAdapter(mPurchaseSizeViewPagerAdapter);
     }
 
     @Override
@@ -82,6 +92,12 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         mSizeSelectDialogFragment.setPresenter(presenter);
         mSizeSelectDialogFragment.setListener(this);
         mSizeSelectDialogFragment.init();
+
+        pagerList = new Vector<>();
+        pagerList.add(new PurchaseSizeViewPagerContainer(context));
+        pagerList.add(new PurchaseSizeViewPagerContainer(context));
+        pagerList.add(new PurchaseSizeViewPagerContainer(context));
+        mPurchaseSizeViewPagerAdapter= new PurchaseSizeViewPagerAdapter(context, pagerList);
     }
 
     @Override
