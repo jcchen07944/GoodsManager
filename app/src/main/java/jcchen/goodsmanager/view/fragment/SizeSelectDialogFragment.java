@@ -36,4 +36,8 @@ public class SizeSelectDialogFragment extends DialogFragment {
     public void setListener(OnSizeSelectedListener listener) {
         this.listener = listener;
     }
+
+    public void init() {
+
+    }
 }

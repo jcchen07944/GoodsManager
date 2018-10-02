@@ -4,7 +4,7 @@
     <string name="manage">管理</string>
     <string name="purchase">進貨</string>
     <string name="type">類型</string>
-    <string name="choose">選擇尺寸</string>
+    <string name="size_choose">選擇尺寸</string>
     <string name="flexible">彈性</string>
     <string name="size">尺寸</string>
     <string name="color">顏色</string>
@@ -18,4 +18,6 @@
     <string name="income_k">進Ｋ</string>
     <string name="income_t">進Ｔ</string>
     <string name="search">搜尋</string>
+    <string name="none_select">未選擇</string>
+    <string name="color_choose">選擇顏色</string>
 </resources>

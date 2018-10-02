@@ -264,7 +264,7 @@
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
-            android:text="@string/color"
+            android:text="@string/color_choose"
             app:layout_constraintEnd_toStartOf="@id/purchase_material"
             app:layout_constraintStart_toEndOf="@id/flexible_layout"
             app:layout_constraintTop_toBottomOf="@+id/purchase_income_k_t_layout" />
@@ -287,15 +287,49 @@
             app:layout_constraintStart_toEndOf="@id/purchase_color"
             app:layout_constraintTop_toBottomOf="@+id/purchase_income_k_t_layout" />
 
+        <LinearLayout
+            android:id="@+id/purchase_color_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/purchase_color">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/color"
+                android:textColor="@color/colorTextOnBackground"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" : "
+                android:textColor="@color/colorTextOnBackground"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/purchase_color_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/none_select"
+                android:textColor="@color/colorTextOnBackground"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/purchase_size_select"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
-            android:text="@string/choose"
+            android:text="@string/size_choose"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/purchase_color" />
+            app:layout_constraintTop_toBottomOf="@+id/purchase_color_layout" />
 
         <LinearLayout
             android:id="@+id/purchase_size_layout"
@@ -331,141 +365,10 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/purchase_size_1"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/purchase_edittext_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:singleLine="true"
-            android:textColor="@color/colorTextOnBackground"
-            android:textColorHint="@color/colorTextHint"
-            app:layout_constraintEnd_toStartOf="@id/purchase_size_2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/purchase_size_layout" />
-
-        <EditText
-            android:id="@+id/purchase_size_2"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/purchase_edittext_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:singleLine="true"
-            android:textColor="@color/colorTextOnBackground"
-            android:textColorHint="@color/colorTextHint"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/purchase_size_1"
-            app:layout_constraintTop_toBottomOf="@+id/purchase_size_layout" />
-
-        <EditText
-            android:id="@+id/purchase_size_3"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/purchase_edittext_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:singleLine="true"
-            android:textColor="@color/colorTextOnBackground"
-            android:textColorHint="@color/colorTextHint"
-            app:layout_constraintEnd_toStartOf="@id/purchase_size_4"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/purchase_size_1" />
-
-        <EditText
-            android:id="@+id/purchase_size_4"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/purchase_edittext_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:singleLine="true"
-            android:textColor="@color/colorTextOnBackground"
-            android:textColorHint="@color/colorTextHint"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/purchase_size_3"
-            app:layout_constraintTop_toBottomOf="@+id/purchase_size_2" />
-
-        <EditText
-            android:id="@+id/purchase_size_5"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/purchase_edittext_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:singleLine="true"
-            android:textColor="@color/colorTextOnBackground"
-            android:textColorHint="@color/colorTextHint"
-            app:layout_constraintEnd_toStartOf="@id/purchase_size_6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/purchase_size_3" />
-
-        <EditText
-            android:id="@+id/purchase_size_6"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/purchase_edittext_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:singleLine="true"
-            android:textColor="@color/colorTextOnBackground"
-            android:textColorHint="@color/colorTextHint"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/purchase_size_5"
-            app:layout_constraintTop_toBottomOf="@id/purchase_size_4" />
-
-        <EditText
-            android:id="@+id/purchase_size_7"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/purchase_edittext_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:singleLine="true"
-            android:textColor="@color/colorTextOnBackground"
-            android:textColorHint="@color/colorTextHint"
-            app:layout_constraintEnd_toStartOf="@id/purchase_size_8"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/purchase_size_5" />
-
-        <EditText
-            android:id="@+id/purchase_size_8"
-            android:layout_width="100dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/purchase_edittext_style"
-            android:gravity="center"
-            android:inputType="number"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:singleLine="true"
-            android:textColor="@color/colorTextOnBackground"
-            android:textColorHint="@color/colorTextHint"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/purchase_size_7"
-            app:layout_constraintTop_toBottomOf="@id/purchase_size_6" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/purchase_pager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </android.support.constraint.ConstraintLayout>
 

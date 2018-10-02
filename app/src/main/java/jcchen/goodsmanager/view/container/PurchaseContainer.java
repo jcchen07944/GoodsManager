@@ -23,8 +23,8 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
     private Context context;
 
-    private Button selectColor, selectSize;
-    private TextView sizeText;
+    private Button colorSelect, sizeSelect;
+    private TextView sizeText, colorText;
 
     private ColorSelectDialogFragment mColorSelectDialogFragment;
     private SizeSelectDialogFragment mSizeSelectDialogFragment;
@@ -46,21 +46,24 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        selectColor = (Button) findViewById(R.id.purchase_color);
-        selectColor.setOnClickListener(new OnClickListener() {
+        colorSelect = (Button) findViewById(R.id.purchase_color);
+        colorSelect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 mColorSelectDialogFragment.show(((Activity) context).getFragmentManager(), "ColorSelectDialogFragment");
             }
         });
 
-        selectSize = (Button) findViewById(R.id.purchase_size_select);
-        selectSize.setOnClickListener(new OnClickListener() {
+        sizeSelect = (Button) findViewById(R.id.purchase_size_select);
+        sizeSelect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 mSizeSelectDialogFragment.show(((Activity) context).getFragmentManager(), "SizeSelectDialogFragment");
             }
         });
+
+        colorText = (TextView) findViewById(R.id.purchase_color_text);
+
         sizeText = (TextView) findViewById(R.id.purchase_size_text);
     }
 
@@ -72,11 +75,13 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         mColorSelectDialogFragment = new ColorSelectDialogFragment();
         mColorSelectDialogFragment.setPresenter(presenter);
         mColorSelectDialogFragment.setListener(this);
+        mColorSelectDialogFragment.init(context);
 
         // Size select.
         mSizeSelectDialogFragment = new SizeSelectDialogFragment();
         mSizeSelectDialogFragment.setPresenter(presenter);
         mSizeSelectDialogFragment.setListener(this);
+        mSizeSelectDialogFragment.init();
     }
 
     @Override
@@ -90,8 +95,16 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     }
 
     @Override
-    public void onColorSelected(ColorInfo colorInfo) {
-        selectColor.setText(colorInfo.getName());
+    public void onColorSelected(Vector<ColorInfo> selectedColor) {
+        String text = "";
+        for(int i = 0; i < selectedColor.size(); i++) {
+            if(i > 0)
+                text = text.concat("/");
+            text = text.concat(selectedColor.get(i).getName());
+        }
+        if(selectedColor.size() == 0)
+            text = getResources().getString(R.string.none_select);
+        colorText.setText(text);
     }
 
     @Override

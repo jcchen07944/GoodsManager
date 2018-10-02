@@ -2,27 +2,53 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorObjectBackground"
     android:orientation="vertical"
     android:layout_width="150dp"
-    android:layout_height="300dp">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.SearchView
         android:id="@+id/color_search"
         android:layout_width="150dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorSecondary"
         app:searchIcon="@null" />
 
     <ListView
         android:id="@+id/color_list"
-        android:divider="@drawable/color_listview_divider"
-        android:dividerHeight="1px"
-        android:focusable="true"
-        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:listSelector="@drawable/listview_ripple"
-        android:drawSelectorOnTop="true"/>
+        android:background="@color/colorObjectBackground"
+        android:choiceMode="multipleChoice"
+        android:clickable="true"
+        android:divider="@drawable/color_listview_divider"
+        android:dividerHeight="1px"
+        android:drawSelectorOnTop="true"
+        android:focusable="true"
+        android:listSelector="@drawable/listview_ripple" />
+
+    <TextView
+        android:id="@+id/color_preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorObjectBackground"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="5dp"
+        android:paddingBottom="10dp"
+        android:singleLine="false"
+        android:textColor="@color/colorTextOnBackground"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <jcchen.goodsmanager.view.widget.RoundedImageView
+        android:id="@+id/color_confirm_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_confirm"
+        android:tint="@color/colorSecondary"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

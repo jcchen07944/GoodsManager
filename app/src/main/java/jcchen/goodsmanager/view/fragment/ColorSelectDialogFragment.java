@@ -15,21 +15,29 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.Vector;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
 import jcchen.goodsmanager.view.adapter.ColorListViewAdapter;
 import jcchen.goodsmanager.view.listener.OnColorSelectedListener;
+import jcchen.goodsmanager.view.widget.RoundedImageView;
 
 public class ColorSelectDialogFragment extends DialogFragment {
 
     private SearchView mSearchView;
     private ListView mListView;
+    private RoundedImageView mRoundedImageView;
+    private TextView mTextView;
 
     private ColorListViewAdapter adapter;
     private PurchasePresenterImpl presenter;
     private OnColorSelectedListener listener;
+
+    private Vector<ColorInfo> selectedColor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,15 +48,35 @@ public class ColorSelectDialogFragment extends DialogFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
-        adapter = new ColorListViewAdapter(getActivity(), presenter.getColorList());
+        mTextView = (TextView) view.findViewById(R.id.color_preview);
+        updateTextView();
 
         mListView = (ListView) view.findViewById(R.id.color_list);
         mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                listener.onColorSelected((ColorInfo) mListView.getItemAtPosition(i));
+                if(adapter.isSelected((int) adapter.getItemId(i))) {
+                    adapter.setSelected((int) adapter.getItemId(i), false);
+                    for (int j = 0; j < selectedColor.size(); j++) {
+                        if (selectedColor.get(j).getName().equals(((ColorInfo) mListView.getItemAtPosition(i)).getName())) {
+                            selectedColor.remove(j);
+                            break;
+                        }
+                    }
+                } else {
+                    adapter.setSelected((int) adapter.getItemId(i), true);
+                    selectedColor.add((ColorInfo) mListView.getItemAtPosition(i));
+                }
+                updateTextView();
+            }
+        });
+
+        mRoundedImageView = (RoundedImageView) view.findViewById(R.id.color_confirm_button);
+        mRoundedImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onColorSelected(selectedColor);
                 dismiss();
             }
         });
@@ -87,5 +115,22 @@ public class ColorSelectDialogFragment extends DialogFragment {
 
     public void setListener(OnColorSelectedListener listener) {
         this.listener = listener;
+    }
+
+    public void init(Context context) {
+        adapter = new ColorListViewAdapter(context, presenter.getColorList());
+        selectedColor = new Vector<>();
+    }
+
+    private void updateTextView() {
+        String text = getResources().getString(R.string.color) + " : ";
+        for(int i = 0; i < selectedColor.size(); i++) {
+            if(i > 0)
+                text = text.concat("/");
+            text = text.concat(selectedColor.get(i).getName());
+        }
+        if(selectedColor.size() == 0)
+            text = text.concat("(" + getResources().getString(R.string.none_select) + ")");
+        mTextView.setText(text);
     }
 }

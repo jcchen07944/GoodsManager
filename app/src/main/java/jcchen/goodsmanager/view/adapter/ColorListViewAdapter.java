@@ -1,6 +1,7 @@
 package jcchen.goodsmanager.view.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ public class ColorListViewAdapter extends BaseAdapter implements Filterable {
 
     private Context context;
     private Vector<ColorInfo> colorList, filterList;
+    private boolean[] selectList;
 
     private LayoutInflater inflater;
     private ColorFilter mColorFilter;
@@ -26,6 +28,9 @@ public class ColorListViewAdapter extends BaseAdapter implements Filterable {
         this.context = context;
         this.colorList = colorList;
         filterList = new Vector<>(colorList);
+        selectList = new boolean[colorList.size()];
+        for(int i = 0; i < colorList.size(); i++)
+            selectList[i] = false;
     }
 
     @Override
@@ -40,7 +45,10 @@ public class ColorListViewAdapter extends BaseAdapter implements Filterable {
 
     @Override
     public long getItemId(int i) {
-        return i;
+        for(int j = 0; j < filterList.size(); j++)
+            if(filterList.get(j).getName().equals(colorList.get(i).getName()))
+                return j;
+        return -1;
     }
 
     @Override
@@ -52,6 +60,13 @@ public class ColorListViewAdapter extends BaseAdapter implements Filterable {
 
         TextView colorName = (TextView) view.findViewById(R.id.color_name);
         colorName.setText(colorList.get(i).getName());
+        if(selectList[(int) getItemId(i)]) {
+            view.setBackground(ContextCompat.getDrawable(context, R.color.colorSecondaryLight));
+            colorName.setTextColor(ContextCompat.getColor(context, R.color.colorTextOnSecondary));
+        } else {
+            view.setBackground(ContextCompat.getDrawable(context, R.color.colorObjectBackground));
+            colorName.setTextColor(ContextCompat.getColor(context, R.color.colorTextOnBackground));
+        }
         return view;
     }
 
@@ -60,6 +75,15 @@ public class ColorListViewAdapter extends BaseAdapter implements Filterable {
         if(mColorFilter == null)
             mColorFilter = new ColorFilter();
         return mColorFilter;
+    }
+
+    public void setSelected(int id, boolean state) {
+        selectList[id] = state;
+        notifyDataSetChanged();
+    }
+
+    public boolean isSelected(int id) {
+        return selectList[id];
     }
 
     private class ColorFilter extends Filter {
