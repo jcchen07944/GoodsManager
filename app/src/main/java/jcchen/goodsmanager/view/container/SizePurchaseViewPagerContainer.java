@@ -8,17 +8,17 @@ import android.widget.FrameLayout;
 
 import jcchen.goodsmanager.R;
 
-public class PurchaseSizeViewPagerContainer extends FrameLayout implements Container{
+public class SizePurchaseViewPagerContainer extends FrameLayout implements Container{
 
     private Context context;
 
-    public PurchaseSizeViewPagerContainer(Context context) {
+    public SizePurchaseViewPagerContainer(Context context) {
         super(context);
         this.context = context;
         init();
     }
 
-    public PurchaseSizeViewPagerContainer(Context context, AttributeSet attributeSet) {
+    public SizePurchaseViewPagerContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         this.context = context;
         init();

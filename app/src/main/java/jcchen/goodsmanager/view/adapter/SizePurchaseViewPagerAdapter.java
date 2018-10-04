@@ -8,12 +8,12 @@ import android.widget.FrameLayout;
 
 import java.util.Vector;
 
-public class PurchaseSizeViewPagerAdapter extends PagerAdapter {
+public class SizePurchaseViewPagerAdapter extends PagerAdapter {
 
     private Context context;
     private Vector<FrameLayout> pageList;
 
-    public PurchaseSizeViewPagerAdapter(Context context, Vector<FrameLayout> pageList) {
+    public SizePurchaseViewPagerAdapter(Context context, Vector<FrameLayout> pageList) {
         this.context = context;
         this.pageList = pageList;
     }
