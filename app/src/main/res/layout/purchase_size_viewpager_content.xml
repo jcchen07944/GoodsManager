@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/purchase_viewpager_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="20dp">
@@ -66,6 +67,7 @@
         android:singleLine="true"
         android:textColor="@color/colorTextOnBackground"
         android:textColorHint="@color/colorTextHint"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/purchase_size_2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/content_size_layout" />
@@ -83,6 +85,7 @@
         android:singleLine="true"
         android:textColor="@color/colorTextOnBackground"
         android:textColorHint="@color/colorTextHint"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/purchase_size_1"
         app:layout_constraintTop_toBottomOf="@id/content_size_layout" />
@@ -100,6 +103,7 @@
         android:singleLine="true"
         android:textColor="@color/colorTextOnBackground"
         android:textColorHint="@color/colorTextHint"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/purchase_size_4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/purchase_size_1" />
@@ -117,6 +121,7 @@
         android:singleLine="true"
         android:textColor="@color/colorTextOnBackground"
         android:textColorHint="@color/colorTextHint"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/purchase_size_3"
         app:layout_constraintTop_toBottomOf="@+id/purchase_size_2" />
@@ -134,6 +139,7 @@
         android:singleLine="true"
         android:textColor="@color/colorTextOnBackground"
         android:textColorHint="@color/colorTextHint"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/purchase_size_6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/purchase_size_3" />
@@ -151,6 +157,7 @@
         android:singleLine="true"
         android:textColor="@color/colorTextOnBackground"
         android:textColorHint="@color/colorTextHint"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/purchase_size_5"
         app:layout_constraintTop_toBottomOf="@id/purchase_size_4" />
@@ -168,6 +175,7 @@
         android:singleLine="true"
         android:textColor="@color/colorTextOnBackground"
         android:textColorHint="@color/colorTextHint"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/purchase_size_8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/purchase_size_5" />
@@ -185,6 +193,7 @@
         android:singleLine="true"
         android:textColor="@color/colorTextOnBackground"
         android:textColorHint="@color/colorTextHint"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/purchase_size_7"
         app:layout_constraintTop_toBottomOf="@id/purchase_size_6" />

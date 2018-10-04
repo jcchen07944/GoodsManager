@@ -2,10 +2,13 @@ package jcchen.goodsmanager.view.container;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -17,7 +20,9 @@ import java.util.Vector;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
+import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
+import jcchen.goodsmanager.view.MainActivity;
 import jcchen.goodsmanager.view.adapter.SizePurchaseViewPagerAdapter;
 import jcchen.goodsmanager.view.fragment.ColorSelectDialogFragment;
 import jcchen.goodsmanager.view.fragment.SizeSelectDialogFragment;
@@ -28,6 +33,9 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
     private Context context;
 
+    private TypeInfo currentType;
+
+    private ConstraintLayout purchaseBaseLayout;
     private Button colorSelect, sizeSelect;
     private TextView sizeText, colorText;
     private ViewPager mViewPager;
@@ -37,7 +45,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     private PurchasePresenterImpl presenter;
     private SizePurchaseViewPagerAdapter mSizePurchaseViewPagerAdapter;
 
-    private Vector<FrameLayout> pagerList;
+    private Vector<SizePurchaseViewPagerContainer> pageList;
     private Vector<ColorInfo> colorSelectList;
     private Vector<SizeInfo> sizeSelectList;
 
@@ -56,6 +64,15 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
+        purchaseBaseLayout = (ConstraintLayout) findViewById(R.id.purchase_base_layout);
+        purchaseBaseLayout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InputMethodManager inputMethodManager = (InputMethodManager) ((MainActivity) context).getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(((MainActivity) context).getCurrentFocus().getWindowToken(), 0);
+            }
+        });
 
         colorSelect = (Button) findViewById(R.id.purchase_color);
         colorSelect.setOnClickListener(new OnClickListener() {
@@ -81,9 +98,26 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
         mViewPager = (ViewPager) findViewById(R.id.purchase_pager);
         mViewPager.setAdapter(mSizePurchaseViewPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                InputMethodManager inputMethodManager = (InputMethodManager) ((MainActivity) context).getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(((MainActivity) context).getCurrentFocus().getWindowToken(), 0);
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         LinePageIndicator pageIndicator = (LinePageIndicator) findViewById(R.id.page_indicator);
         pageIndicator.setViewPager(mViewPager);
+
     }
 
     @Override
@@ -100,16 +134,18 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         mSizeSelectDialogFragment.setPresenter(presenter);
         mSizeSelectDialogFragment.setListener(this);
 
-        pagerList = new Vector<>();
-        pagerList.add(new SizePurchaseViewPagerContainer(context));
-        pagerList.add(new SizePurchaseViewPagerContainer(context));
-        pagerList.add(new SizePurchaseViewPagerContainer(context));
-        mSizePurchaseViewPagerAdapter = new SizePurchaseViewPagerAdapter(context, pagerList);
+        pageList = new Vector<>();
+        pageList.add(new SizePurchaseViewPagerContainer(context));
+        pageList.add(new SizePurchaseViewPagerContainer(context));
+        pageList.add(new SizePurchaseViewPagerContainer(context));
+        mSizePurchaseViewPagerAdapter = new SizePurchaseViewPagerAdapter(context, pageList);
     }
 
     @Override
     public void showItem(Object object) {
-
+        currentType = (TypeInfo) object;
+        for (int i = 0; i < pageList.size(); i++)
+            pageList.get(i).showItem(object);
     }
 
     @Override

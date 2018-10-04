@@ -19,11 +19,18 @@ public class PurchasePresenterImpl implements PurchasePresenter {
     public Vector<TypeInfo> getTypeList() {
         // Now using static list.
         Vector<TypeInfo> typeList = new Vector<>();
-        typeList.add(new TypeInfo("上衣"));
-        typeList.add(new TypeInfo("褲子"));
-        typeList.add(new TypeInfo("洋裝"));
-        typeList.add(new TypeInfo("內外"));
-        typeList.add(new TypeInfo("裙子"));
+        Vector<String> column = new Vector<>();
+        column.add("全長");
+        column.add("肩寬");
+        column.add("胸寬");
+        column.add("腰寬");
+        column.add("下擺寬");
+        column.add("袖長");
+        typeList.add(new TypeInfo("上衣", column));
+        typeList.add(new TypeInfo("褲子", column));
+        typeList.add(new TypeInfo("洋裝", column));
+        typeList.add(new TypeInfo("內外", column));
+        typeList.add(new TypeInfo("裙子", column));
         return typeList;
     }
 

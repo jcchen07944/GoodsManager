@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
 import jcchen.goodsmanager.view.MainActivity;
 import jcchen.goodsmanager.view.widget.FocusListView.FocusListViewAdapter;
@@ -86,8 +87,8 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
         mRoundedImageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                postResult();
-                ((MainActivity) context).onPurchaseStart();
+                int SelectedPosition = (mFocusListView.getLastVisiblePosition() + mFocusListView.getFirstVisiblePosition()) / 2;
+                ((MainActivity) context).onPurchaseStart((TypeInfo) adapter.getItem(SelectedPosition));
                 // Do animation.
                 ((MainActivity) context).onAnimationEnd(((MainActivity) context).TOOLBAR_ANIMATION_STATE_PURCHASE);
 

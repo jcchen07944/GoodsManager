@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.view.fragment.ManageFragment;
 import jcchen.goodsmanager.view.fragment.PurchaseFragment;
 import jcchen.goodsmanager.view.fragment.TypeSelectDialogFragment;
@@ -91,6 +92,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        int BackStackCount = getSupportFragmentManager().getBackStackEntryCount();
+        String Name = getSupportFragmentManager().getBackStackEntryAt( BackStackCount - 1).getName();
+        if(Name.equals(PurchaseFragment.TAG)) {
+            getSupportFragmentManager().popBackStack();
+            onPurchaseEnd();
+            onAnimationEnd(TOOLBAR_ANIMATION_STATE_RESUME);
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
     private void openDialog() {
         /*final float OldY = mFloatingActionButton.getY();
 
@@ -110,13 +125,16 @@ public class MainActivity extends AppCompatActivity {
         mTypeSelectDialogFragment.show(getFragmentManager(), "TypeSelectDialogFragment");
     }
 
-    public void onStartPurchase() {
+    public void onPurchaseStart(TypeInfo selectedType) {
         mTypeSelectDialogFragment.dismiss();
 
         if(mPurchaseFragment == null)
             mPurchaseFragment = new PurchaseFragment();
+        mPurchaseFragment.setSelectedType(selectedType);
         getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_content,
-                mPurchaseFragment, mPurchaseFragment.getClass().getName()).commit();
+                mPurchaseFragment, mPurchaseFragment.getClass().getName()).addToBackStack(PurchaseFragment.TAG).commit();
+
+        mToolbar.setTitle(selectedType.getType());
     }
 
     public void onAnimationEnd(int STATE) {
@@ -149,11 +167,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onEndPurchase() {
+    public void onPurchaseEnd() {
         if(mManageFragment == null)
             mManageFragment = new ManageFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_content,
                 mManageFragment, mManageFragment.getClass().getName()).commit();
+
+        mToolbar.setTitle(getResources().getString(R.string.app_name));
     }
 
 }
