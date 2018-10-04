@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="150dp"
     android:layout_height="wrap_content">
@@ -16,20 +16,35 @@
         android:text="@string/size"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/colorTextOnSecondary"/>
+        android:textColor="@color/colorTextOnSecondary"
+        android:elevation="2dp"/>
 
-    <ListView
-        android:id="@+id/size_list"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:background="@color/colorObjectBackground"
-        android:choiceMode="multipleChoice"
-        android:clickable="true"
-        android:divider="@drawable/color_listview_divider"
-        android:dividerHeight="1px"
-        android:drawSelectorOnTop="true"
-        android:focusable="true"
-        android:listSelector="@drawable/listview_ripple" />
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/size_list"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@color/colorObjectBackground"
+            android:choiceMode="multipleChoice"
+            android:clickable="true"
+            android:divider="@drawable/color_listview_divider"
+            android:dividerHeight="1px"
+            android:drawSelectorOnTop="true"
+            android:focusable="true"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@drawable/shadow_up"
+            app:layout_constraintBottom_toBottomOf="@id/size_list"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
 
     <TextView
         android:id="@+id/size_preview"
