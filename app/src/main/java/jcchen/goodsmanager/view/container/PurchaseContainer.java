@@ -1,15 +1,19 @@
 package jcchen.goodsmanager.view.container;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -36,9 +40,12 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     private TypeInfo currentType;
 
     private ConstraintLayout purchaseBaseLayout;
+    private LinearLayout numbersLayout, nameLayout, priceLayout, incomeTKLayout, flexibleLayout, colorLayout, sizeLayout;
     private Button colorSelect, sizeSelect, submit;
     private TextView sizeText, colorText;
     private ViewPager mViewPager;
+    private EditText material;
+    private LinePageIndicator pageIndicator;
 
     private ColorSelectDialogFragment mColorSelectDialogFragment;
     private SizeSelectDialogFragment mSizeSelectDialogFragment;
@@ -74,6 +81,12 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
             }
         });
 
+        numbersLayout = (LinearLayout) findViewById(R.id.purchase_numbers_layout);
+        nameLayout = (LinearLayout) findViewById(R.id.purchase_name_layout);
+        priceLayout = (LinearLayout) findViewById(R.id.purchase_price_layout);
+        incomeTKLayout = (LinearLayout) findViewById(R.id.purchase_income_k_t_layout);
+        flexibleLayout = (LinearLayout) findViewById(R.id.flexible_layout);
+
         colorSelect = (Button) findViewById(R.id.purchase_color);
         colorSelect.setOnClickListener(new OnClickListener() {
             @Override
@@ -82,6 +95,11 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
                 mColorSelectDialogFragment.show(((Activity) context).getFragmentManager(), "ColorSelectDialogFragment");
             }
         });
+
+        material = (EditText) findViewById(R.id.purchase_material);
+
+        colorLayout = (LinearLayout) findViewById(R.id.purchase_color_layout);
+        colorText = (TextView) findViewById(R.id.purchase_color_text);
 
         sizeSelect = (Button) findViewById(R.id.purchase_size_select);
         sizeSelect.setOnClickListener(new OnClickListener() {
@@ -92,8 +110,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
             }
         });
 
-        colorText = (TextView) findViewById(R.id.purchase_color_text);
-
+        sizeLayout = (LinearLayout) findViewById(R.id.purchase_size_layout);
         sizeText = (TextView) findViewById(R.id.purchase_size_text);
 
         mViewPager = (ViewPager) findViewById(R.id.purchase_pager);
@@ -115,7 +132,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
             }
         });
-        LinePageIndicator pageIndicator = (LinePageIndicator) findViewById(R.id.page_indicator);
+        pageIndicator = (LinePageIndicator) findViewById(R.id.page_indicator);
         pageIndicator.setViewPager(mViewPager);
 
         submit = (Button) findViewById(R.id.purchase_submit);
@@ -125,6 +142,8 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
                 onBackPressed();
             }
         });
+
+        initAnimation();
     }
 
     @Override
@@ -192,5 +211,22 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
             size = "F";
         sizeText.setText(size);
         this.sizeSelectList = sizeSelectList;
+    }
+
+    private void initAnimation() {
+        int delay = 50, duration = 400;
+        numbersLayout.animate().alpha(1f).setDuration(duration).start();
+        nameLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay).start();
+        priceLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 2).start();
+        incomeTKLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 3).start();
+        flexibleLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 4).start();
+        colorSelect.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 5).start();
+        material.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 6).start();
+        colorLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 7).start();
+        sizeSelect.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 8).start();
+        sizeLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 9).start();
+        pageIndicator.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 10).start();
+        mViewPager.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 10).start();
+        submit.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 11).start();
     }
 }
