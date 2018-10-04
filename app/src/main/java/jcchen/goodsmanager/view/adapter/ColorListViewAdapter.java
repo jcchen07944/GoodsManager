@@ -51,6 +51,13 @@ public class ColorListViewAdapter extends BaseAdapter implements Filterable {
         return -1;
     }
 
+    public long getItemId(String Name) {
+        for(int j = 0; j < filterList.size(); j++)
+            if(filterList.get(j).getName().equals(Name))
+                return j;
+        return -1;
+    }
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(inflater == null)

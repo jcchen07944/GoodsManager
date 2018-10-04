@@ -38,6 +38,8 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     private PurchaseSizeViewPagerAdapter mPurchaseSizeViewPagerAdapter;
 
     private Vector<FrameLayout> pagerList;
+    private Vector<ColorInfo> colorSelectList;
+    private Vector<SizeInfo> sizeSelectList;
 
     public PurchaseContainer(Context context) {
         super(context);
@@ -59,6 +61,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         colorSelect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                mColorSelectDialogFragment.loadSavedData(colorSelectList);
                 mColorSelectDialogFragment.show(((Activity) context).getFragmentManager(), "ColorSelectDialogFragment");
             }
         });
@@ -90,13 +93,11 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         mColorSelectDialogFragment = new ColorSelectDialogFragment();
         mColorSelectDialogFragment.setPresenter(presenter);
         mColorSelectDialogFragment.setListener(this);
-        mColorSelectDialogFragment.init(context);
 
         // Size select.
         mSizeSelectDialogFragment = new SizeSelectDialogFragment();
         mSizeSelectDialogFragment.setPresenter(presenter);
         mSizeSelectDialogFragment.setListener(this);
-        mSizeSelectDialogFragment.init();
 
         pagerList = new Vector<>();
         pagerList.add(new PurchaseSizeViewPagerContainer(context));
@@ -121,16 +122,17 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     }
 
     @Override
-    public void onColorSelected(Vector<ColorInfo> selectedColor) {
+    public void onColorSelected(Vector<ColorInfo> colorSelectList) {
         String text = "";
-        for(int i = 0; i < selectedColor.size(); i++) {
+        for(int i = 0; i < colorSelectList.size(); i++) {
             if(i > 0)
                 text = text.concat("/");
-            text = text.concat(selectedColor.get(i).getName());
+            text = text.concat(colorSelectList.get(i).getName());
         }
-        if(selectedColor.size() == 0)
+        if(colorSelectList.size() == 0)
             text = getResources().getString(R.string.none_select);
         colorText.setText(text);
+        this.colorSelectList = colorSelectList;
     }
 
     @Override
