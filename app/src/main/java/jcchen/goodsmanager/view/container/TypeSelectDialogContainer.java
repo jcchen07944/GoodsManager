@@ -21,7 +21,7 @@ import jcchen.goodsmanager.view.widget.RoundedImageView;
  * Created by JCChen on 2018/9/26.
  */
 
-public class SelectTypeDialogContainer extends ConstraintLayout implements Container {
+public class TypeSelectDialogContainer extends ConstraintLayout implements Container {
 
     private FocusListView mFocusListView;
     private RoundedImageView mRoundedImageView;
@@ -29,13 +29,13 @@ public class SelectTypeDialogContainer extends ConstraintLayout implements Conta
 
     private PurchasePresenterImpl presenter;
 
-    public SelectTypeDialogContainer(Context context) {
+    public TypeSelectDialogContainer(Context context) {
         super(context);
         this.context = getActivityFromView(this);
         init();
     }
 
-    public SelectTypeDialogContainer(Context context, AttributeSet attributeSet) {
+    public TypeSelectDialogContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         this.context = getActivityFromView(this);
         init();
@@ -87,7 +87,7 @@ public class SelectTypeDialogContainer extends ConstraintLayout implements Conta
             @Override
             public void onClick(View view) {
                 postResult();
-                ((MainActivity) context).onStartPurchase();
+                ((MainActivity) context).onPurchaseStart();
                 // Do animation.
                 ((MainActivity) context).onAnimationEnd(((MainActivity) context).TOOLBAR_ANIMATION_STATE_PURCHASE);
 
