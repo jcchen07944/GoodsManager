@@ -365,13 +365,23 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <com.viewpagerindicator.LinePageIndicator
+            android:id="@+id/page_indicator"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="20dp"
+            app:strokeWidth="2dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/purchase_size_layout"/>
+
         <jcchen.goodsmanager.view.widget.WrapContentHeightViewPager
             android:id="@+id/purchase_pager"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/purchase_size_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/page_indicator" />
 
     </android.support.constraint.ConstraintLayout>
 

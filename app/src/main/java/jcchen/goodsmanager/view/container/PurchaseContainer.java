@@ -10,6 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.viewpagerindicator.LinePageIndicator;
+
 import java.util.Vector;
 
 import jcchen.goodsmanager.R;
@@ -75,6 +77,9 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
         mViewPager = (ViewPager) findViewById(R.id.purchase_pager);
         mViewPager.setAdapter(mPurchaseSizeViewPagerAdapter);
+
+        LinePageIndicator pageIndicator = (LinePageIndicator) findViewById(R.id.page_indicator);
+        pageIndicator.setViewPager(mViewPager);
     }
 
     @Override
