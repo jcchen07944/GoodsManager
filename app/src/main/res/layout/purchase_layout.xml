@@ -8,7 +8,8 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/purchase_base_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp">
 
         <LinearLayout
             android:id="@+id/purchase_numbers_layout"
@@ -38,6 +39,7 @@
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
                 android:singleLine="true"
+                android:text="BT"
                 android:textColor="@color/colorTextOnBackground"
                 android:textSize="14sp" />
 
@@ -371,10 +373,10 @@
             android:layout_width="0dp"
             android:layout_height="2dp"
             android:layout_marginTop="20dp"
-            app:strokeWidth="2dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/purchase_size_layout"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/purchase_size_layout"
+            app:strokeWidth="2dp" />
 
         <jcchen.goodsmanager.view.widget.WrapContentHeightViewPager
             android:id="@+id/purchase_pager"
@@ -383,6 +385,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/page_indicator" />
+
+        <Button
+            android:id="@+id/purchase_submit"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:text="@string/submit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/purchase_pager" />
 
     </android.support.constraint.ConstraintLayout>
 

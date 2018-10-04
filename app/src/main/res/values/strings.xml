@@ -20,4 +20,5 @@
     <string name="search">搜尋</string>
     <string name="none_select">未選擇</string>
     <string name="color_choose">選擇顏色</string>
+    <string name="submit">送出</string>
 </resources>

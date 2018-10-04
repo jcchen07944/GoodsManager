@@ -36,7 +36,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     private TypeInfo currentType;
 
     private ConstraintLayout purchaseBaseLayout;
-    private Button colorSelect, sizeSelect;
+    private Button colorSelect, sizeSelect, submit;
     private TextView sizeText, colorText;
     private ViewPager mViewPager;
 
@@ -118,6 +118,13 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         LinePageIndicator pageIndicator = (LinePageIndicator) findViewById(R.id.page_indicator);
         pageIndicator.setViewPager(mViewPager);
 
+        submit = (Button) findViewById(R.id.purchase_submit);
+        submit.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -150,6 +157,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
     @Override
     public boolean onBackPressed() {
+        ((MainActivity) context).onBackPressed();
         return false;
     }
 
