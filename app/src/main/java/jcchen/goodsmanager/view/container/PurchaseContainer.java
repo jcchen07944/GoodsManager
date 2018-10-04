@@ -18,7 +18,7 @@ import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
-import jcchen.goodsmanager.view.adapter.PurchaseSizeViewPagerAdapter;
+import jcchen.goodsmanager.view.adapter.SizePurchaseViewPagerAdapter;
 import jcchen.goodsmanager.view.fragment.ColorSelectDialogFragment;
 import jcchen.goodsmanager.view.fragment.SizeSelectDialogFragment;
 import jcchen.goodsmanager.view.listener.OnColorSelectedListener;
@@ -35,7 +35,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     private ColorSelectDialogFragment mColorSelectDialogFragment;
     private SizeSelectDialogFragment mSizeSelectDialogFragment;
     private PurchasePresenterImpl presenter;
-    private PurchaseSizeViewPagerAdapter mPurchaseSizeViewPagerAdapter;
+    private SizePurchaseViewPagerAdapter mSizePurchaseViewPagerAdapter;
 
     private Vector<FrameLayout> pagerList;
     private Vector<ColorInfo> colorSelectList;
@@ -80,7 +80,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         sizeText = (TextView) findViewById(R.id.purchase_size_text);
 
         mViewPager = (ViewPager) findViewById(R.id.purchase_pager);
-        mViewPager.setAdapter(mPurchaseSizeViewPagerAdapter);
+        mViewPager.setAdapter(mSizePurchaseViewPagerAdapter);
 
         LinePageIndicator pageIndicator = (LinePageIndicator) findViewById(R.id.page_indicator);
         pageIndicator.setViewPager(mViewPager);
@@ -101,10 +101,10 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         mSizeSelectDialogFragment.setListener(this);
 
         pagerList = new Vector<>();
-        pagerList.add(new PurchaseSizeViewPagerContainer(context));
-        pagerList.add(new PurchaseSizeViewPagerContainer(context));
-        pagerList.add(new PurchaseSizeViewPagerContainer(context));
-        mPurchaseSizeViewPagerAdapter = new PurchaseSizeViewPagerAdapter(context, pagerList);
+        pagerList.add(new SizePurchaseViewPagerContainer(context));
+        pagerList.add(new SizePurchaseViewPagerContainer(context));
+        pagerList.add(new SizePurchaseViewPagerContainer(context));
+        mSizePurchaseViewPagerAdapter = new SizePurchaseViewPagerAdapter(context, pagerList);
     }
 
     @Override
