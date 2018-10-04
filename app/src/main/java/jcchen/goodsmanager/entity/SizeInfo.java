@@ -7,6 +7,11 @@ public class SizeInfo {
     private String Code;
     private int Type;
 
+    public SizeInfo(String Name, String Code) {
+        this.Name = Name;
+        this.Code = Code;
+    }
+
     public String getName() {
         return Name;
     }

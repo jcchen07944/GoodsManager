@@ -42,7 +42,14 @@ public class PurchasePresenterImpl implements PurchasePresenter {
     @Override
     public Vector<SizeInfo> getSizeList() {
         // Now using static list.
-        return null;
+        Vector<SizeInfo> sizeList = new Vector<>();
+        sizeList.add(new SizeInfo("XS", "XS"));
+        sizeList.add(new SizeInfo("S", "S"));
+        sizeList.add(new SizeInfo("M", "M"));
+        sizeList.add(new SizeInfo("L", "L"));
+        sizeList.add(new SizeInfo("XL", "XL"));
+        sizeList.add(new SizeInfo("XXL", "XXL"));
+        return sizeList;
     }
 
     @Override

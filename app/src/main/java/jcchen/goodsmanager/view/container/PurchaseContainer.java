@@ -70,6 +70,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         sizeSelect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                mSizeSelectDialogFragment.loadSavedData(sizeSelectList);
                 mSizeSelectDialogFragment.show(((Activity) context).getFragmentManager(), "SizeSelectDialogFragment");
             }
         });
@@ -103,7 +104,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         pagerList.add(new PurchaseSizeViewPagerContainer(context));
         pagerList.add(new PurchaseSizeViewPagerContainer(context));
         pagerList.add(new PurchaseSizeViewPagerContainer(context));
-        mPurchaseSizeViewPagerAdapter= new PurchaseSizeViewPagerAdapter(context, pagerList);
+        mPurchaseSizeViewPagerAdapter = new PurchaseSizeViewPagerAdapter(context, pagerList);
     }
 
     @Override
@@ -123,23 +124,27 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
     @Override
     public void onColorSelected(Vector<ColorInfo> colorSelectList) {
-        String text = "";
-        for(int i = 0; i < colorSelectList.size(); i++) {
-            if(i > 0)
-                text = text.concat("/");
-            text = text.concat(colorSelectList.get(i).getName());
+        String color = "";
+        for (int i = 0; i < colorSelectList.size(); i++) {
+            if (i > 0)
+                color = color.concat("/");
+            color = color.concat(colorSelectList.get(i).getName());
         }
-        if(colorSelectList.size() == 0)
-            text = getResources().getString(R.string.none_select);
-        colorText.setText(text);
+        if (colorSelectList.size() == 0)
+            color = getResources().getString(R.string.none_select);
+        colorText.setText(color);
         this.colorSelectList = colorSelectList;
     }
 
     @Override
-    public void onSizeSelected(Vector<SizeInfo> sizeList) {
+    public void onSizeSelected(Vector<SizeInfo> sizeSelectList) {
         String size = "";
-        for(int i = 0; i < sizeList.size(); i++)
-            size = size.concat("/" + sizeList.get(i).getName());
+        for (int i = 0; i < sizeSelectList.size(); i++) {
+            if (i > 0)
+                size = size.concat("/");
+            size = size.concat(sizeSelectList.get(i).getName());
+        }
         sizeText.setText(size);
+        this.sizeSelectList = sizeSelectList;
     }
 }
