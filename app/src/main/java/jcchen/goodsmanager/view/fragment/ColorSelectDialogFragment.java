@@ -93,6 +93,7 @@ public class ColorSelectDialogFragment extends DialogFragment {
 
         mSearchView = (SearchView) view.findViewById(R.id.color_search);
         mSearchView.setIconifiedByDefault(false);
+        mSearchView.setFocusable(false);
         mSearchView.setQueryHint(getResources().getString(R.string.search));
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
