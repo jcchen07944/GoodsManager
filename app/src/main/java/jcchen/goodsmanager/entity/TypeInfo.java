@@ -18,7 +18,9 @@ public class TypeInfo {
 
     public TypeInfo(String Type, Vector<String> Column) {
         this.Type = Type;
-        this.Column = Column;
+        if (Column == null)
+            Column = new Vector<>();
+        this.Column = (Vector<String>) Column.clone();
     }
 
     public String getType() {

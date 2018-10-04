@@ -21,4 +21,6 @@
     <string name="none_select">未選擇</string>
     <string name="color_choose">選擇顏色</string>
     <string name="submit">送出</string>
+    <string name="note">備註</string>
+    <string name="append">追加數量</string>
 </resources>

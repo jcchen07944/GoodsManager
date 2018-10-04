@@ -188,6 +188,8 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
                 size = size.concat("/");
             size = size.concat(sizeSelectList.get(i).getName());
         }
+        if (sizeSelectList.size() == 0)
+            size = "F";
         sizeText.setText(size);
         this.sizeSelectList = sizeSelectList;
     }
