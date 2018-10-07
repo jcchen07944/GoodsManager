@@ -87,6 +87,13 @@ public class PurchasePresenterImpl implements PurchasePresenter {
     }
 
     @Override
+    public Vector<PurchaseInfo> getPurchaseList() {
+        Vector<PurchaseInfo> purchaseList = new Vector<>();
+        purchaseList.add(new PurchaseInfo());
+        return purchaseList;
+    }
+
+    @Override
     public void sendPurchaseInfo(PurchaseInfo purchaseInfo) {
 
     }

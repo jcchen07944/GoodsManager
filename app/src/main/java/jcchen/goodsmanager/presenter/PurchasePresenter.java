@@ -16,6 +16,7 @@ public interface PurchasePresenter {
     Vector<TypeInfo> getTypeList();
     Vector<ColorInfo> getColorList();
     Vector<SizeInfo> getSizeList();
+    Vector<PurchaseInfo> getPurchaseList();
     void sendPurchaseInfo(PurchaseInfo purchaseInfo);
     void savePurchaseInfo(PurchaseInfo purchaseInfo);
 }
