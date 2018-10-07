@@ -2,6 +2,8 @@ package jcchen.goodsmanager.view;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,9 +24,6 @@ import jcchen.goodsmanager.view.fragment.TypeSelectDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int TOOLBAR_ANIMATION_STATE_PURCHASE = 0;
-    public static final int TOOLBAR_ANIMATION_STATE_RESUME = 1;
-
     public static final int ACTIONBAR_STATE_HOME = 0;
     public static final int ACTIONBAR_STATE_BACK = 1;
     public int ACTIONBAR_STATE;
@@ -38,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     private TypeSelectDialogFragment mTypeSelectDialogFragment = null;
     private PurchaseFragment mPurchaseFragment = null;
     private ManageFragment mManageFragment = null;
+
+    private FragmentManager mFragmentManager;
+    private Window mWindow;
 
 
     @Override
@@ -66,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         /* Init Content */
         content = (FrameLayout) findViewById(R.id.activity_main_content);
         mManageFragment = new ManageFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_content, mManageFragment).commit();
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.activity_main_content, mManageFragment).commit();
 
         /* Init FloatingActionButton */
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -95,11 +98,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         int BackStackCount = getSupportFragmentManager().getBackStackEntryCount();
+        if (BackStackCount <= 0)
+            super.onBackPressed();
         String Name = getSupportFragmentManager().getBackStackEntryAt( BackStackCount - 1).getName();
         if(Name.equals(PurchaseFragment.TAG)) {
             getSupportFragmentManager().popBackStack();
             onPurchaseEnd();
-            onAnimationEnd(TOOLBAR_ANIMATION_STATE_RESUME);
         }
         else {
             super.onBackPressed();
@@ -107,19 +111,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openDialog() {
-        /*final float OldY = mFloatingActionButton.getY();
-
-        ValueAnimator moveFab_VA = ValueAnimator.ofFloat(mFloatingActionButton.getY(),
-                                        mFloatingActionButton.getY() - (content.getHeight() / 2));
-        moveFab_VA.setDuration(300);
-        moveFab_VA.setInterpolator(new AccelerateInterpolator(0.6f));
-        moveFab_VA.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mFloatingActionButton.setY((float) animation.getAnimatedValue());
-            }
-        });
-        moveFab_VA.start();*/
         if(mTypeSelectDialogFragment == null)
             mTypeSelectDialogFragment = new TypeSelectDialogFragment();
         mTypeSelectDialogFragment.show(getFragmentManager(), "TypeSelectDialogFragment");
@@ -131,49 +122,46 @@ public class MainActivity extends AppCompatActivity {
         if(mPurchaseFragment == null)
             mPurchaseFragment = new PurchaseFragment();
         mPurchaseFragment.setSelectedType(selectedType);
-        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_content,
-                mPurchaseFragment, mPurchaseFragment.getClass().getName()).addToBackStack(PurchaseFragment.TAG).commit();
+
+        mFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.activity_main_content,
+                mPurchaseFragment, PurchaseFragment.TAG).addToBackStack(PurchaseFragment.TAG).commit();
 
         mToolbar.setTitle(selectedType.getType());
-    }
 
-    public void onAnimationEnd(int STATE) {
-        Window window = this.getWindow();
-        switch(STATE) {
-            case TOOLBAR_ANIMATION_STATE_PURCHASE:
-                mFloatingActionButton.setVisibility(View.GONE);
-                // Set StatusBar color.
-                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorSecondaryDark));
+        mFloatingActionButton.setVisibility(View.GONE);
+        // Set StatusBar color.
+        if (mWindow == null)
+            mWindow = getWindow();
+        mWindow.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        mWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        mWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.colorSecondaryDark));
 
-                // ActionBar icon & color.
-                ACTIONBAR_STATE = ACTIONBAR_STATE_BACK;
-                mToolbar.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
-                mToolbar.setNavigationIcon(R.drawable.ic_back);
-                break;
-            case TOOLBAR_ANIMATION_STATE_RESUME:
-                mFloatingActionButton.setVisibility(View.VISIBLE);
-                // Set StatusBar color.
-                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-
-                // ActionBar icon & color.
-                ACTIONBAR_STATE = ACTIONBAR_STATE_HOME;
-                mToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mToolbar.setNavigationIcon(R.drawable.ic_menu);
-                break;
-        }
+        // ActionBar icon & color.
+        ACTIONBAR_STATE = ACTIONBAR_STATE_BACK;
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
+        mToolbar.setNavigationIcon(R.drawable.ic_back);
     }
 
     public void onPurchaseEnd() {
         if(mManageFragment == null)
             mManageFragment = new ManageFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_content,
-                mManageFragment, mManageFragment.getClass().getName()).commit();
+        mFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.activity_main_content,
+                mManageFragment, ManageFragment.TAG).commit();
 
         mToolbar.setTitle(getResources().getString(R.string.app_name));
+
+        mFloatingActionButton.setVisibility(View.VISIBLE);
+        // Set StatusBar color.
+        if (mWindow == null)
+            mWindow = getWindow();
+        mWindow.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        mWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        mWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+
+        // ActionBar icon & color.
+        ACTIONBAR_STATE = ACTIONBAR_STATE_HOME;
+        mToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        mToolbar.setNavigationIcon(R.drawable.ic_menu);
     }
 
 }

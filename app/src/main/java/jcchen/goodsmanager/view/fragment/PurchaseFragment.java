@@ -16,9 +16,14 @@ public class PurchaseFragment extends Fragment {
 
     private TypeInfo selectedType;
 
+    private View savedView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.purchase_layout, container, false);
+        View view;
+        if (savedView == null)
+            savedView = inflater.inflate(R.layout.purchase_layout, container, false);
+        view = savedView;
         ((Container) view).showItem(selectedType);
         return view;
     }

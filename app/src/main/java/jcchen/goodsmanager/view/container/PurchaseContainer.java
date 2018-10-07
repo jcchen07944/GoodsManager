@@ -142,8 +142,6 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
                 onBackPressed();
             }
         });
-
-        initAnimation();
     }
 
     @Override
@@ -211,22 +209,5 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
             size = "F";
         sizeText.setText(size);
         this.sizeSelectList = sizeSelectList;
-    }
-
-    private void initAnimation() {
-        int delay = 50, duration = 400;
-        numbersLayout.animate().alpha(1f).setDuration(duration).start();
-        nameLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay).start();
-        priceLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 2).start();
-        incomeTKLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 3).start();
-        flexibleLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 4).start();
-        colorSelect.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 5).start();
-        material.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 6).start();
-        colorLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 7).start();
-        sizeSelect.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 8).start();
-        sizeLayout.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 9).start();
-        pageIndicator.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 10).start();
-        mViewPager.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 10).start();
-        submit.animate().alpha(1f).setDuration(duration).setStartDelay(delay * 11).start();
     }
 }

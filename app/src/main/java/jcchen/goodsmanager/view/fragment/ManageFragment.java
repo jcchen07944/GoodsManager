@@ -10,6 +10,8 @@ import jcchen.goodsmanager.R;
 
 public class ManageFragment extends Fragment {
 
+    public static final String TAG = "ManageFragment";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.manage_layout, container, false);
