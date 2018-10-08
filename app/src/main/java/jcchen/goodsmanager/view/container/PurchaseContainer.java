@@ -1,20 +1,17 @@
 package jcchen.goodsmanager.view.container;
 
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.viewpagerindicator.LinePageIndicator;
@@ -23,6 +20,7 @@ import java.util.Vector;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
+import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
@@ -44,8 +42,9 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     private Button colorSelect, sizeSelect, submit;
     private TextView sizeText, colorText;
     private ViewPager mViewPager;
-    private EditText material;
+    private EditText material, numbers, mall, position, name, listPrice, actualPrice, incomeK, incomeT;
     private LinePageIndicator pageIndicator;
+    private Switch flexible;
 
     private ColorSelectDialogFragment mColorSelectDialogFragment;
     private SizeSelectDialogFragment mSizeSelectDialogFragment;
@@ -82,10 +81,23 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         });
 
         numbersLayout = (LinearLayout) findViewById(R.id.purchase_numbers_layout);
+        numbers = (EditText) findViewById(R.id.purchase_numbers);
+        mall = (EditText) findViewById(R.id.purchase_mall);
+        position = (EditText) findViewById(R.id.purchase_position);
+
         nameLayout = (LinearLayout) findViewById(R.id.purchase_name_layout);
+        name = (EditText) findViewById(R.id.purchase_name);
+
         priceLayout = (LinearLayout) findViewById(R.id.purchase_price_layout);
+        listPrice = (EditText) findViewById(R.id.purchase_list_price);
+        actualPrice = (EditText) findViewById(R.id.purchase_actual_price);
+
         incomeTKLayout = (LinearLayout) findViewById(R.id.purchase_income_k_t_layout);
+        incomeK = (EditText) findViewById(R.id.purchase_income_k);
+        incomeT = (EditText) findViewById(R.id.purchase_income_t);
+
         flexibleLayout = (LinearLayout) findViewById(R.id.flexible_layout);
+        flexible = (Switch) findViewById(R.id.flexible_switch);
 
         colorSelect = (Button) findViewById(R.id.purchase_color);
         colorSelect.setOnClickListener(new OnClickListener() {
@@ -139,7 +151,10 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         submit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                if (checkNecessaryField()) {
+                    presenter.savePurchaseInfo(collectPurchaseInfo());
+                    onBackPressed();
+                }
             }
         });
     }
@@ -209,5 +224,26 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
             size = "F";
         sizeText.setText(size);
         this.sizeSelectList = sizeSelectList;
+    }
+
+    private boolean checkNecessaryField() {
+        return true;
+    }
+
+    private PurchaseInfo collectPurchaseInfo() {
+        PurchaseInfo mPurchaseInfo = new PurchaseInfo();
+        mPurchaseInfo.setNumbers(numbers.getText().toString());
+        mPurchaseInfo.setMall(mall.getText().toString());
+        mPurchaseInfo.setPosition(position.getText().toString());
+        mPurchaseInfo.setNumbers(name.getText().toString());
+        mPurchaseInfo.setListPrice(Integer.parseInt(listPrice.getText().toString()));
+        mPurchaseInfo.setActualPrice(Integer.parseInt(actualPrice.getText().toString()));
+        mPurchaseInfo.setIncomeK(Integer.parseInt(incomeK.getText().toString()));
+        mPurchaseInfo.setIncomeT(Integer.parseInt(incomeT.getText().toString()));
+        mPurchaseInfo.setFlexible(flexible.isChecked());
+        mPurchaseInfo.setColorList(colorSelectList);
+        mPurchaseInfo.setMaterial(material.getText().toString());
+        mPurchaseInfo.setSizeList(sizeSelectList);
+        return mPurchaseInfo;
     }
 }

@@ -1,8 +1,230 @@
 package jcchen.goodsmanager.entity;
 
+import java.util.Vector;
+
 /**
  * Created by JCChen on 2018/9/21.
  */
 
 public class PurchaseInfo {
+
+    public static class SizeStruct {
+        private String SizeName;
+        private String Column0;
+        private String Column1;
+        private String Column2;
+        private String Column3;
+        private String Column4;
+        private String Column5;
+        private String Column6;
+        private String Column7;
+        private String Note;
+        private String Append;
+
+        public String getSizeName() {
+            return SizeName;
+        }
+
+        public void setSizeName(String sizeName) {
+            SizeName = sizeName;
+        }
+
+        public String getColumn0() {
+            return Column0;
+        }
+
+        public void setColumn0(String column0) {
+            Column0 = column0;
+        }
+
+        public String getColumn1() {
+            return Column1;
+        }
+
+        public void setColumn1(String column1) {
+            Column1 = column1;
+        }
+
+        public String getColumn2() {
+            return Column2;
+        }
+
+        public void setColumn2(String column2) {
+            Column2 = column2;
+        }
+
+        public String getColumn3() {
+            return Column3;
+        }
+
+        public void setColumn3(String column3) {
+            Column3 = column3;
+        }
+
+        public String getColumn4() {
+            return Column4;
+        }
+
+        public void setColumn4(String column4) {
+            Column4 = column4;
+        }
+
+        public String getColumn5() {
+            return Column5;
+        }
+
+        public void setColumn5(String column5) {
+            Column5 = column5;
+        }
+
+        public String getColumn6() {
+            return Column6;
+        }
+
+        public void setColumn6(String column6) {
+            Column6 = column6;
+        }
+
+        public String getColumn7() {
+            return Column7;
+        }
+
+        public void setColumn7(String column7) {
+            Column7 = column7;
+        }
+
+        public String getNote() {
+            return Note;
+        }
+
+        public void setNote(String note) {
+            Note = note;
+        }
+
+        public String getAppend() {
+            return Append;
+        }
+
+        public void setAppend(String append) {
+            Append = append;
+        }
+    }
+
+    private String Numbers;
+    private String Mall;
+    private String Position;
+    private String Name;
+    private int ListPrice;
+    private int ActualPrice;
+    private int IncomeK;
+    private int IncomeT;
+    private boolean Flexible;
+    private Vector<ColorInfo> ColorList;
+    private String Material;
+    private Vector<SizeInfo> SizeList;
+    private Vector<SizeStruct> SizeStructList;
+
+    public String getNumbers() {
+        return Numbers;
+    }
+
+    public void setNumbers(String numbers) {
+        Numbers = numbers;
+    }
+
+    public String getMall() {
+        return Mall;
+    }
+
+    public void setMall(String mall) {
+        Mall = mall;
+    }
+
+    public String getPosition() {
+        return Position;
+    }
+
+    public void setPosition(String position) {
+        Position = position;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public int getListPrice() {
+        return ListPrice;
+    }
+
+    public void setListPrice(int listPrice) {
+        ListPrice = listPrice;
+    }
+
+    public int getActualPrice() {
+        return ActualPrice;
+    }
+
+    public void setActualPrice(int actualPrice) {
+        ActualPrice = actualPrice;
+    }
+
+    public int getIncomeK() {
+        return IncomeK;
+    }
+
+    public void setIncomeK(int incomeK) {
+        IncomeK = incomeK;
+    }
+
+    public int getIncomeT() {
+        return IncomeT;
+    }
+
+    public void setIncomeT(int incomeT) {
+        IncomeT = incomeT;
+    }
+
+    public boolean isFlexible() {
+        return Flexible;
+    }
+
+    public void setFlexible(boolean flexible) {
+        Flexible = flexible;
+    }
+
+    public Vector<ColorInfo> getColorList() {
+        return ColorList;
+    }
+
+    public void setColorList(Vector<ColorInfo> colorList) {
+        ColorList = colorList;
+    }
+
+    public String getMaterial() {
+        return Material;
+    }
+
+    public void setMaterial(String material) {
+        Material = material;
+    }
+
+    public Vector<SizeInfo> getSizeList() {
+        return SizeList;
+    }
+
+    public void setSizeList(Vector<SizeInfo> sizeList) {
+        SizeList = sizeList;
+    }
+
+    public Vector<SizeStruct> getSizeStructList() {
+        return SizeStructList;
+    }
+
+    public void setSizeStructList(Vector<SizeStruct> sizeStructList) {
+        SizeStructList = sizeStructList;
+    }
 }
