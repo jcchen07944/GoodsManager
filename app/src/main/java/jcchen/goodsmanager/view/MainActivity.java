@@ -1,6 +1,7 @@
 package jcchen.goodsmanager.view;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -162,5 +163,14 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         mToolbar.setNavigationIcon(R.drawable.ic_menu);
     }
+
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
 
 }

@@ -244,6 +244,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         mPurchaseInfo.setColorList(colorSelectList);
         mPurchaseInfo.setMaterial(material.getText().toString());
         mPurchaseInfo.setSizeList(sizeSelectList);
+        mPurchaseInfo.setSizeStructList(mSizePurchaseViewPagerAdapter.collectSizeStruct());
         return mPurchaseInfo;
     }
 }
