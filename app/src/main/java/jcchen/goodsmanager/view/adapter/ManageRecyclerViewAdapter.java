@@ -1,6 +1,7 @@
 package jcchen.goodsmanager.view.adapter;
 
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,8 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
 
     private Vector<PurchaseInfo> purchaseList;
 
+    private ViewHolder selectedCard;
+
     public ManageRecyclerViewAdapter(Context context, Vector<PurchaseInfo> purchaseList) {
         this.context = context;
         if(purchaseList == null)
@@ -32,7 +35,21 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
+        viewHolder.Card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        viewHolder.Card.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                selectedCard = viewHolder;
+                selectCard(viewHolder);
+                return true;
+            }
+        });
         viewHolder.Name.setText(purchaseList.get(position).getName());
         viewHolder.Type.setText(purchaseList.get(position).getType());
         viewHolder.Numbers.setText(purchaseList.get(position).getNumbers());
@@ -44,12 +61,22 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
+        public ConstraintLayout Card;
         public TextView Name, Type, Numbers;
         public ViewHolder(View view) {
             super(view);
+            Card = view.findViewById(R.id.manage_card);
             Name = view.findViewById(R.id.manage_goods_name);
             Type = view.findViewById(R.id.manage_type);
             Numbers = view.findViewById(R.id.manage_numbers);
         }
+    }
+
+    private void selectCard(ViewHolder viewHolder) {
+        viewHolder.Card.setElevation(8 * context.getResources().getDisplayMetrics().density);
+    }
+
+    private void resumeCard() {
+        selectedCard.Card.setElevation(1 * context.getResources().getDisplayMetrics().density);
     }
 }
