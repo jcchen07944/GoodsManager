@@ -2,8 +2,10 @@ package jcchen.goodsmanager.view.container;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -151,17 +153,27 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         submit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkNecessaryField()) {
-                    presenter.savePurchaseInfo(collectPurchaseInfo());
-                    onBackPressed();
-                }
+                new AlertDialog.Builder(context)
+                        .setMessage(R.string.confirm_message)
+                        .setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                if (checkNecessaryField()) {
+                                    presenter.savePurchaseInfo(collectPurchaseInfo());
+                                    onBackPressed();
+                                }
+                            }
+                        })
+                        .setNegativeButton(R.string.confirm_no, null)
+                        .show();
+
             }
         });
     }
 
     @Override
     public void init() {
-        presenter = new PurchasePresenterImpl();
+        presenter = new PurchasePresenterImpl(context);
 
         // Color select.
         mColorSelectDialogFragment = new ColorSelectDialogFragment();
@@ -232,14 +244,15 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
     private PurchaseInfo collectPurchaseInfo() {
         PurchaseInfo mPurchaseInfo = new PurchaseInfo();
+        mPurchaseInfo.setType(currentType.getType());
         mPurchaseInfo.setNumbers(numbers.getText().toString());
         mPurchaseInfo.setMall(mall.getText().toString());
         mPurchaseInfo.setPosition(position.getText().toString());
-        mPurchaseInfo.setNumbers(name.getText().toString());
-        mPurchaseInfo.setListPrice(Integer.parseInt(listPrice.getText().toString()));
-        mPurchaseInfo.setActualPrice(Integer.parseInt(actualPrice.getText().toString()));
-        mPurchaseInfo.setIncomeK(Integer.parseInt(incomeK.getText().toString()));
-        mPurchaseInfo.setIncomeT(Integer.parseInt(incomeT.getText().toString()));
+        mPurchaseInfo.setName(name.getText().toString());
+        mPurchaseInfo.setListPrice(MainActivity.safeParseInt(listPrice.getText().toString()));
+        mPurchaseInfo.setActualPrice(MainActivity.safeParseInt(actualPrice.getText().toString()));
+        mPurchaseInfo.setIncomeK(MainActivity.safeParseInt(incomeK.getText().toString()));
+        mPurchaseInfo.setIncomeT(MainActivity.safeParseInt(incomeT.getText().toString()));
         mPurchaseInfo.setFlexible(flexible.isChecked());
         mPurchaseInfo.setColorList(colorSelectList);
         mPurchaseInfo.setMaterial(material.getText().toString());
