@@ -1,6 +1,8 @@
 package jcchen.goodsmanager.entity;
 
-public class ColorInfo {
+import java.io.Serializable;
+
+public class ColorInfo implements Serializable {
     private String Name;
     private String Code;
 

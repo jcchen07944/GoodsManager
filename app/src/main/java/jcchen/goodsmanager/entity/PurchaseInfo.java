@@ -1,14 +1,17 @@
 package jcchen.goodsmanager.entity;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 /**
  * Created by JCChen on 2018/9/21.
  */
 
-public class PurchaseInfo {
+public class PurchaseInfo implements Serializable {
 
-    public static class SizeStruct {
+    private boolean upload;
+
+    public static class SizeStruct implements Serializable {
         private String SizeName;
         private String Column0;
         private String Column1;
@@ -109,7 +112,7 @@ public class PurchaseInfo {
             Append = append;
         }
     }
-
+    private String Type;
     private String Numbers;
     private String Mall;
     private String Position;
@@ -123,6 +126,22 @@ public class PurchaseInfo {
     private String Material;
     private Vector<SizeInfo> SizeList;
     private Vector<SizeStruct> SizeStructList;
+
+    public void setUpload(boolean upload) {
+        this.upload = upload;
+    }
+
+    public boolean isUpload() {
+        return upload;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
 
     public String getNumbers() {
         return Numbers;

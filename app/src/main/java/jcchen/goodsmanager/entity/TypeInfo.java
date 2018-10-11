@@ -1,12 +1,13 @@
 package jcchen.goodsmanager.entity;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 /**
  * Created by JCChen on 2018/9/21.
  */
 
-public class TypeInfo {
+public class TypeInfo implements Serializable {
 
     private String Type;
 

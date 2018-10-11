@@ -1,6 +1,8 @@
 package jcchen.goodsmanager.entity;
 
-public class SizeInfo {
+import java.io.Serializable;
+
+public class SizeInfo implements Serializable {
     // public static final int TYPE_
 
     private String Name;
