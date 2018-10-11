@@ -16,6 +16,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.view.fragment.ManageFragment;
@@ -55,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         /* Init Toolbar */
         ACTIONBAR_STATE = ACTIONBAR_STATE_HOME;
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(getResources().getString(R.string.app_name));
+        mToolbar.setTitle(getResources().getString(R.string.manage));
         mToolbar.setSubtitle("");
         mToolbar.setNavigationIcon(R.drawable.ic_menu);
         setSupportActionBar(mToolbar);
@@ -148,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         mFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.activity_main_content,
                 mManageFragment, ManageFragment.TAG).commit();
 
-        mToolbar.setTitle(getResources().getString(R.string.app_name));
+        mToolbar.setTitle(getResources().getString(R.string.manage));
 
         mFloatingActionButton.setVisibility(View.VISIBLE);
         // Set StatusBar color.
@@ -170,6 +176,50 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    public static int safeParseInt(String str) {
+        return str.equals("") ? 0 : Integer.parseInt(str);
+    }
+
+    public static byte[] toByteArray(Object obj) throws IOException {
+        byte[] bytes = null;
+        ByteArrayOutputStream bos = null;
+        ObjectOutputStream oos = null;
+        try {
+            bos = new ByteArrayOutputStream();
+            oos = new ObjectOutputStream(bos);
+            oos.writeObject(obj);
+            oos.flush();
+            bytes = bos.toByteArray();
+        } finally {
+            if (oos != null) {
+                oos.close();
+            }
+            if (bos != null) {
+                bos.close();
+            }
+        }
+        return bytes;
+    }
+
+    public static Object toObject(byte[] bytes) throws IOException, ClassNotFoundException {
+        Object obj = null;
+        ByteArrayInputStream bis = null;
+        ObjectInputStream ois = null;
+        try {
+            bis = new ByteArrayInputStream(bytes);
+            ois = new ObjectInputStream(bis);
+            obj = ois.readObject();
+        } finally {
+            if (bis != null) {
+                bis.close();
+            }
+            if (ois != null) {
+                ois.close();
+            }
+        }
+        return obj;
     }
 
 

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.Vector;
 
@@ -31,8 +32,10 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+        viewHolder.Name.setText(purchaseList.get(position).getName());
+        viewHolder.Type.setText(purchaseList.get(position).getType());
+        viewHolder.Numbers.setText(purchaseList.get(position).getNumbers());
     }
 
     @Override
@@ -41,9 +44,12 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
+        public TextView Name, Type, Numbers;
         public ViewHolder(View view) {
             super(view);
+            Name = view.findViewById(R.id.manage_goods_name);
+            Type = view.findViewById(R.id.manage_type);
+            Numbers = view.findViewById(R.id.manage_numbers);
         }
     }
 }

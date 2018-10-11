@@ -1,5 +1,10 @@
 package jcchen.goodsmanager.presenter.impl;
 
+import android.content.Context;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Vector;
 
 import jcchen.goodsmanager.entity.ColorInfo;
@@ -7,12 +12,19 @@ import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.PurchasePresenter;
+import jcchen.goodsmanager.view.MainActivity;
 
 /**
  * Created by JCChen on 2018/9/21.
  */
 
 public class PurchasePresenterImpl implements PurchasePresenter {
+
+    private Context context;
+
+    public PurchasePresenterImpl(Context context) {
+        this.context = context;
+    }
 
     /* Get type list from model(maybe from DB or from setting) */
     @Override
@@ -89,7 +101,23 @@ public class PurchasePresenterImpl implements PurchasePresenter {
     @Override
     public Vector<PurchaseInfo> getPurchaseList() {
         Vector<PurchaseInfo> purchaseList = new Vector<>();
-        purchaseList.add(new PurchaseInfo());
+
+        File dir = context.getFilesDir();
+        File[] subFiles = dir.listFiles();
+        if (subFiles != null) {
+            FileInputStream mFileInputStream;
+            for (File file : subFiles) {
+                try {
+                    byte buffer[] = new byte[(int) file.length()];
+                    mFileInputStream = context.openFileInput(file.getName());
+                    mFileInputStream.read(buffer);
+                    mFileInputStream.close();
+                    purchaseList.add((PurchaseInfo) MainActivity.toObject(buffer));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return purchaseList;
     }
 
@@ -100,6 +128,13 @@ public class PurchasePresenterImpl implements PurchasePresenter {
 
     @Override
     public void savePurchaseInfo(PurchaseInfo purchaseInfo) {
-
+        try {
+            String fileName = "PurchaseInfo-" + (System.currentTimeMillis() / 1000);
+            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            mFileOutputStream.write(MainActivity.toByteArray(purchaseInfo));
+            mFileOutputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.TypeInfo;
@@ -24,6 +25,7 @@ public class PurchaseFragment extends Fragment {
         if (savedView == null)
             savedView = inflater.inflate(R.layout.purchase_layout, container, false);
         view = savedView;
+        ((ScrollView) view).fullScroll(ScrollView.FOCUS_UP);
         ((Container) view).showItem(selectedType);
         return view;
     }

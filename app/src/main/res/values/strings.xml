@@ -23,4 +23,7 @@
     <string name="submit">送出</string>
     <string name="note">備註</string>
     <string name="append">追加數量</string>
+    <string name="confirm_message">確認送出？</string>
+    <string name="confirm_yes">是</string>
+    <string name="confirm_no">否</string>
 </resources>

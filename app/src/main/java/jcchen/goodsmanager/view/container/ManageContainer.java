@@ -42,7 +42,7 @@ public class ManageContainer extends ConstraintLayout implements Container {
 
     @Override
     public void init() {
-        presenter = new PurchasePresenterImpl();
+        presenter = new PurchasePresenterImpl(context);
         adapter = new ManageRecyclerViewAdapter(context, presenter.getPurchaseList());
     }
 

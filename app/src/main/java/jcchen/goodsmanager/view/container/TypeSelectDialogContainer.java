@@ -97,7 +97,7 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
     @Override
     public void init() {
         /* New presenter */
-        presenter = new PurchasePresenterImpl();
+        presenter = new PurchasePresenterImpl(context);
     }
 
     @Override
