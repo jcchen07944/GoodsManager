@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_upload"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_upload"
+        android:title="@string/upload"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_po"
+        android:icon="@drawable/ic_po"
+        android:title="@string/po"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_edit"
+        android:icon="@drawable/ic_edit"
+        android:title="@string/edit"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_delete"
+        android:icon="@drawable/ic_delete"
+        android:title="@string/delete"
+        app:showAsAction="always" />
+
+</menu>

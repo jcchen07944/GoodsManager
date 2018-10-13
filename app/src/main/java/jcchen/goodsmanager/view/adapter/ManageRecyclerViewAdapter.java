@@ -2,6 +2,7 @@ package jcchen.goodsmanager.view.adapter;
 
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import java.util.Vector;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.PurchaseInfo;
+import jcchen.goodsmanager.view.MainActivity;
 
 public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecyclerViewAdapter.ViewHolder> {
 
@@ -39,13 +41,12 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         viewHolder.Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                resumeCard();
             }
         });
         viewHolder.Card.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                selectedCard = viewHolder;
                 selectCard(viewHolder);
                 return true;
             }
@@ -73,10 +74,23 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
     }
 
     private void selectCard(ViewHolder viewHolder) {
+        resumeCard();
         viewHolder.Card.setElevation(8 * context.getResources().getDisplayMetrics().density);
+        //viewHolder.Name.setTextColor(ContextCompat.getColor(context, R.color.colorTextOnBackground));
+        viewHolder.Numbers.setBackground(ContextCompat.getDrawable(context, R.color.colorPrimaryLight));
+        selectedCard = viewHolder;
+
+        ((MainActivity) context).onCardSelectStart();
     }
 
-    private void resumeCard() {
-        selectedCard.Card.setElevation(1 * context.getResources().getDisplayMetrics().density);
+    public void resumeCard() {
+        if(selectedCard != null) {
+            selectedCard.Card.setElevation(1 * context.getResources().getDisplayMetrics().density);
+            //selectedCard.Name.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+            selectedCard.Numbers.setBackground(ContextCompat.getDrawable(context, R.drawable.manage_numbers_border));
+            selectedCard = null;
+
+            ((MainActivity) context).onCardSelectEnd();
+        }
     }
 }

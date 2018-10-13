@@ -52,8 +52,8 @@ public class ManageContainer extends ConstraintLayout implements Container {
     }
 
     @Override
-    public boolean onBackPressed() {
-        return false;
+    public void onBackPressed() {
+        adapter.resumeCard();
     }
 
     @Override

@@ -106,8 +106,7 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
     }
 
     @Override
-    public boolean onBackPressed() {
-        return false;
+    public void onBackPressed() {
     }
 
     @Override

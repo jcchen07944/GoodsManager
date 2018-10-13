@@ -26,4 +26,8 @@
     <string name="confirm_message">確認送出？</string>
     <string name="confirm_yes">是</string>
     <string name="confirm_no">否</string>
+    <string name="upload">上傳</string>
+    <string name="delete">刪除</string>
+    <string name="edit">編輯</string>
+    <string name="po">Po文</string>
 </resources>

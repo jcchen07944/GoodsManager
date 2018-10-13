@@ -200,9 +200,8 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     }
 
     @Override
-    public boolean onBackPressed() {
+    public void onBackPressed() {
         ((MainActivity) context).onBackPressed();
-        return false;
     }
 
     @Override

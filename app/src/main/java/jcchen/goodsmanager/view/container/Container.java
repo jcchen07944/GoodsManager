@@ -7,6 +7,6 @@ package jcchen.goodsmanager.view.container;
 public interface Container {
     void init();
     void showItem(Object object);
-    boolean onBackPressed();
+    void onBackPressed();
     void postResult();
 }

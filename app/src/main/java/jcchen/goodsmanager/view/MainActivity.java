@@ -1,7 +1,6 @@
 package jcchen.goodsmanager.view;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +9,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -31,7 +32,8 @@ import jcchen.goodsmanager.view.fragment.TypeSelectDialogFragment;
 public class MainActivity extends AppCompatActivity {
 
     public static final int ACTIONBAR_STATE_HOME = 0;
-    public static final int ACTIONBAR_STATE_BACK = 1;
+    public static final int ACTIONBAR_STATE_PURCHASE = 1;
+    public static final int ACTIONBAR_STATE_SELECT_CARD = 2;
     public int ACTIONBAR_STATE;
 
     private Toolbar mToolbar;
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentManager mFragmentManager;
     private Window mWindow;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +90,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        switch(ACTIONBAR_STATE) {
+            case ACTIONBAR_STATE_HOME:
+                menu.findItem(R.id.menu_upload).setVisible(true);
+                menu.findItem(R.id.menu_delete).setVisible(false);
+                menu.findItem(R.id.menu_po).setVisible(false);
+                menu.findItem(R.id.menu_edit).setVisible(false);
+                break;
+            case ACTIONBAR_STATE_PURCHASE:
+                menu.findItem(R.id.menu_upload).setVisible(false);
+                menu.findItem(R.id.menu_delete).setVisible(false);
+                menu.findItem(R.id.menu_po).setVisible(false);
+                menu.findItem(R.id.menu_edit).setVisible(false);
+                break;
+            case ACTIONBAR_STATE_SELECT_CARD:
+                menu.findItem(R.id.menu_upload).setVisible(false);
+                menu.findItem(R.id.menu_delete).setVisible(true);
+                menu.findItem(R.id.menu_po).setVisible(true);
+                menu.findItem(R.id.menu_edit).setVisible(true);
+                break;
+        }
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if(ACTIONBAR_STATE == ACTIONBAR_STATE_HOME)
+                if (ACTIONBAR_STATE == ACTIONBAR_STATE_HOME)
                     mDrawerLayout.openDrawer(GravityCompat.START);
-                if(ACTIONBAR_STATE == ACTIONBAR_STATE_BACK)
+                else if (ACTIONBAR_STATE == ACTIONBAR_STATE_PURCHASE)
                     onBackPressed();
+                else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD)
+                    onBackPressed();
+                    return true;
+            case R.id.menu_upload:
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -103,17 +135,41 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        int BackStackCount = getSupportFragmentManager().getBackStackEntryCount();
-        if (BackStackCount <= 0)
-            super.onBackPressed();
-        String Name = getSupportFragmentManager().getBackStackEntryAt( BackStackCount - 1).getName();
-        if(Name.equals(PurchaseFragment.TAG)) {
-            getSupportFragmentManager().popBackStack();
-            onPurchaseEnd();
+        if (ACTIONBAR_STATE == ACTIONBAR_STATE_PURCHASE) {
+            int BackStackCount = getSupportFragmentManager().getBackStackEntryCount();
+            if (BackStackCount <= 0)
+                super.onBackPressed();
+            String Name = getSupportFragmentManager().getBackStackEntryAt(BackStackCount - 1).getName();
+            if (Name.equals(PurchaseFragment.TAG)) {
+                getSupportFragmentManager().popBackStack();
+                onPurchaseEnd();
+            }
+            else {
+                super.onBackPressed();
+            }
         }
-        else {
-            super.onBackPressed();
+        else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD) {
+            mManageFragment.onBackPressed();
         }
+
+    }
+
+    public void setActionbarState(int state) {
+        ACTIONBAR_STATE = state;
+        switch(ACTIONBAR_STATE) {
+            case ACTIONBAR_STATE_HOME:
+                mToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mToolbar.setNavigationIcon(R.drawable.ic_menu);
+                break;
+            case ACTIONBAR_STATE_PURCHASE:
+                mToolbar.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
+                mToolbar.setNavigationIcon(R.drawable.ic_back);
+                break;
+            case ACTIONBAR_STATE_SELECT_CARD:
+                mToolbar.setNavigationIcon(R.drawable.ic_back);
+                break;
+        }
+        invalidateOptionsMenu();
     }
 
     private void openDialog() {
@@ -142,10 +198,7 @@ public class MainActivity extends AppCompatActivity {
         mWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         mWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.colorSecondaryDark));
 
-        // ActionBar icon & color.
-        ACTIONBAR_STATE = ACTIONBAR_STATE_BACK;
-        mToolbar.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
-        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        setActionbarState(ACTIONBAR_STATE_PURCHASE);
     }
 
     public void onPurchaseEnd() {
@@ -164,18 +217,15 @@ public class MainActivity extends AppCompatActivity {
         mWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         mWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 
-        // ActionBar icon & color.
-        ACTIONBAR_STATE = ACTIONBAR_STATE_HOME;
-        mToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        mToolbar.setNavigationIcon(R.drawable.ic_menu);
+        setActionbarState(ACTIONBAR_STATE_HOME);
     }
 
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+    public void onCardSelectStart() {
+        setActionbarState(ACTIONBAR_STATE_SELECT_CARD);
+    }
+
+    public void onCardSelectEnd() {
+        setActionbarState(ACTIONBAR_STATE_HOME);
     }
 
     public static int safeParseInt(String str) {

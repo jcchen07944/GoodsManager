@@ -72,8 +72,7 @@ public class SizePurchaseViewPagerContainer extends FrameLayout implements Conta
     }
 
     @Override
-    public boolean onBackPressed() {
-        return false;
+    public void onBackPressed() {
     }
 
     @Override
