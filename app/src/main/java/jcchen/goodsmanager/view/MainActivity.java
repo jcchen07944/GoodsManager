@@ -127,7 +127,9 @@ public class MainActivity extends AppCompatActivity {
                 else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD)
                     onBackPressed();
                     return true;
-            case R.id.menu_upload:
+            case R.id.menu_delete:
+                mManageFragment.removeSelectedCard();
+                setActionbarState(ACTIONBAR_STATE_HOME);
                 return true;
         }
         return super.onOptionsItemSelected(item);

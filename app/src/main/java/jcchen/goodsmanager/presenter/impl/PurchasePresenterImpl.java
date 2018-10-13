@@ -130,11 +130,18 @@ public class PurchasePresenterImpl implements PurchasePresenter {
     public void savePurchaseInfo(PurchaseInfo purchaseInfo) {
         try {
             String fileName = "PurchaseInfo-" + (System.currentTimeMillis() / 1000);
+            purchaseInfo.setFileName(fileName);
             FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             mFileOutputStream.write(MainActivity.toByteArray(purchaseInfo));
             mFileOutputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void removePurchaseInfo(PurchaseInfo purchaseInfo) {
+        File dir = context.getFilesDir(); //get your internal directory
+        (new File(dir, purchaseInfo.getFileName())).delete();
     }
 }

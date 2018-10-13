@@ -9,7 +9,8 @@ import java.util.Vector;
 
 public class PurchaseInfo implements Serializable {
 
-    private boolean upload;
+    private boolean Upload;
+    private String FileName;
 
     public static class SizeStruct implements Serializable {
         private String SizeName;
@@ -127,12 +128,20 @@ public class PurchaseInfo implements Serializable {
     private Vector<SizeInfo> SizeList;
     private Vector<SizeStruct> SizeStructList;
 
+    public String getFileName() {
+        return FileName;
+    }
+
+    public void setFileName(String fileName) {
+        FileName = fileName;
+    }
+
     public void setUpload(boolean upload) {
-        this.upload = upload;
+        this.Upload = upload;
     }
 
     public boolean isUpload() {
-        return upload;
+        return Upload;
     }
 
     public String getType() {

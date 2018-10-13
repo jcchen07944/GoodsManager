@@ -38,6 +38,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
+        viewHolder.position = position;
         viewHolder.Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +62,14 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         return purchaseList.size();
     }
 
+    public void remove(int position) {
+        purchaseList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getItemCount());
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
+        public int position;
         public ConstraintLayout Card;
         public TextView Name, Type, Numbers;
         public ViewHolder(View view) {
@@ -71,6 +79,12 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
             Type = view.findViewById(R.id.manage_type);
             Numbers = view.findViewById(R.id.manage_numbers);
         }
+    }
+
+    public int getSelectedPosition() {
+        if (selectedCard != null)
+            return selectedCard.position;
+        return -1;
     }
 
     private void selectCard(ViewHolder viewHolder) {

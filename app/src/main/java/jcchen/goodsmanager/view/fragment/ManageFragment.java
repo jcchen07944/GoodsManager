@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.view.container.Container;
+import jcchen.goodsmanager.view.container.ManageContainer;
 
 public class ManageFragment extends Fragment {
 
@@ -20,6 +21,8 @@ public class ManageFragment extends Fragment {
         View view;
         if (oldView == null)
             oldView = inflater.inflate(R.layout.manage_layout, container, false);
+        else
+            ((ManageContainer) oldView).refresh();
         view = oldView;
         return view;
     }
@@ -27,5 +30,9 @@ public class ManageFragment extends Fragment {
     public void onBackPressed() {
         if (oldView != null)
             ((Container) oldView).onBackPressed();
+    }
+
+    public void removeSelectedCard() {
+        ((ManageContainer) oldView).removeSelectedCard();
     }
 }
