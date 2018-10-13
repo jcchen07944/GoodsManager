@@ -108,6 +108,9 @@ public class PurchasePresenterImpl implements PurchasePresenter {
             FileInputStream mFileInputStream;
             for (File file : subFiles) {
                 try {
+                    if (!file.getName().contains("PurchaseInfo"))
+                        continue;
+
                     byte buffer[] = new byte[(int) file.length()];
                     mFileInputStream = context.openFileInput(file.getName());
                     mFileInputStream.read(buffer);

@@ -62,6 +62,10 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         return purchaseList.size();
     }
 
+    public PurchaseInfo getItem(int position) {
+        return purchaseList.get(position);
+    }
+
     public void remove(int position) {
         purchaseList.remove(position);
         notifyItemRemoved(position);

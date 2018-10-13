@@ -6,10 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
-import java.util.Vector;
-
 import jcchen.goodsmanager.R;
-import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
 import jcchen.goodsmanager.view.adapter.ManageRecyclerViewAdapter;
 
@@ -19,7 +16,6 @@ public class ManageContainer extends ConstraintLayout implements Container {
 
     private RecyclerView mRecyclerView;
     private ManageRecyclerViewAdapter adapter;
-    private Vector<PurchaseInfo> purchaseList;
 
     private PurchasePresenterImpl presenter;
 
@@ -46,8 +42,7 @@ public class ManageContainer extends ConstraintLayout implements Container {
     @Override
     public void init() {
         presenter = new PurchasePresenterImpl(context);
-        purchaseList = presenter.getPurchaseList();
-        adapter = new ManageRecyclerViewAdapter(context, purchaseList);
+        adapter = new ManageRecyclerViewAdapter(context, presenter.getPurchaseList());
     }
 
     @Override
@@ -68,14 +63,13 @@ public class ManageContainer extends ConstraintLayout implements Container {
     public void removeSelectedCard() {
         int selectedPosition = adapter.getSelectedPosition();
         if (selectedPosition != -1) {
-            presenter.removePurchaseInfo(purchaseList.get(selectedPosition));
+            presenter.removePurchaseInfo(adapter.getItem(selectedPosition));
             adapter.remove(selectedPosition);
         }
     }
 
     public void refresh() {
-        purchaseList = presenter.getPurchaseList();
-        adapter = new ManageRecyclerViewAdapter(context, purchaseList);
+        adapter = new ManageRecyclerViewAdapter(context, presenter.getPurchaseList());
         mRecyclerView.setAdapter(adapter);
     }
 }
