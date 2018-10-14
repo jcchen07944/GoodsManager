@@ -190,6 +190,9 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         pageList.add(new SizePurchaseViewPagerContainer(context));
         pageList.add(new SizePurchaseViewPagerContainer(context));
         mSizePurchaseViewPagerAdapter = new SizePurchaseViewPagerAdapter(context, pageList);
+
+        colorSelectList = new Vector<>();
+        sizeSelectList = new Vector<>();
     }
 
     @Override

@@ -30,4 +30,5 @@
     <string name="delete">刪除</string>
     <string name="edit">編輯</string>
     <string name="po">Po文</string>
+    <string name="size_detail">詳細尺寸</string>
 </resources>

@@ -17,13 +17,14 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/manage_numbers_border"
         android:gravity="center"
         android:textColor="@color/colorTextOnBackground"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="BKA000" />
 
     <TextView
         android:id="@+id/manage_goods_name"
@@ -35,7 +36,8 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/manage_numbers"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="測試用的標題" />
 
     <TextView
         android:id="@+id/manage_type"
@@ -45,112 +47,121 @@
         android:textColor="@color/colorTextOnBackground"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/manage_numbers"
-        app:layout_constraintTop_toBottomOf="@+id/manage_goods_name" />
+        app:layout_constraintTop_toBottomOf="@+id/manage_goods_name"
+        tools:text="種類" />
 
     <LinearLayout
         android:id="@+id/manage_position_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/manage_numbers">
+        android:layout_marginTop="20dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@id/manage_numbers"
+        app:layout_constraintTop_toBottomOf="@+id/manage_type">
 
         <TextView
             android:id="@+id/manage_mall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LUXE"
             android:textColor="@color/colorTextOnBackground"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="LUXE" />
 
         <TextView
             android:id="@+id/manage_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="4F-441"
             android:textColor="@color/colorTextOnBackground"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="4F-441" />
 
     </LinearLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:id="@+id/manage_price_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/manage_income_layout"
-        app:layout_constraintStart_toEndOf="@id/manage_numbers">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manage_numbers">
 
         <TextView
             android:id="@+id/manage_list_price_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:text="@string/list_price"
             android:textColor="@color/colorTextOnBackground"
             android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/manage_list_price"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="1650"
             android:textColor="@color/colorTextOnBackground"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/manage_list_price_text"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1650" />
 
         <TextView
             android:id="@+id/manage_actual_price_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:text="@string/actual_price"
             android:textColor="@color/colorTextOnBackground"
             android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/manage_list_price"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/manage_actual_price"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="1560"
             android:textColor="@color/colorTextOnBackground"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/manage_actual_price_text"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:text="1560" />
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:id="@+id/manage_income_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/manage_numbers">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manage_price_layout">
 
         <TextView
             android:id="@+id/manage_income_k_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:text="@string/income_k"
             android:textColor="@color/colorTextOnBackground"
             android:textSize="12sp"
@@ -159,50 +170,216 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/manage_income_k"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="31"
+            android:text=" : "
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/manage_income_k"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
             android:textColor="@color/colorTextOnBackground"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/manage_income_k_text" />
+            tools:text="31" />
 
         <TextView
             android:id="@+id/manage_income_t_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
             android:text="@string/income_t"
             android:textColor="@color/colorTextOnBackground"
             android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/manage_income_k"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/manage_income_t"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="890"
             android:textColor="@color/colorTextOnBackground"
             android:textSize="12sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/manage_income_t_text"
-            app:layout_constraintTop_toTopOf="parent" />
+            tools:text="890" />
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/manage_flexible_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manage_income_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/flexible"
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/manage_flexible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            tools:text="有" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/manage_material_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manage_flexible_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/material"
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/manage_material"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/manage_color_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manage_material_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/color"
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/manage_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/manage_size_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manage_color_layout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/size"
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/manage_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/manage_size_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/size_detail"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/manage_price_layout"
+        app:layout_constraintTop_toBottomOf="@+id/manage_position_layout" />
 
     <ImageView
-        android:id="@+id/manage_dropdown"
+        android:id="@+id/manage_expand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_drop_down"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>
