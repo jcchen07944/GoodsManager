@@ -28,6 +28,8 @@ import jcchen.goodsmanager.view.widget.RoundedImageView;
 
 public class ColorSelectDialogFragment extends DialogFragment {
 
+    public static final String TAG = "ColorSelectDialogFragment";
+
     private SearchView mSearchView;
     private ListView mListView;
     private RoundedImageView mRoundedImageView;

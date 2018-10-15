@@ -22,6 +22,8 @@ import jcchen.goodsmanager.view.widget.RoundedImageView;
 
 public class SizeSelectDialogFragment extends DialogFragment {
 
+    public static final String TAG = "SizeSelectDialogFragment";
+
     private ListView mListView;
     private RoundedImageView mRoundedImageView;
     private TextView mTextView;

@@ -1,5 +1,6 @@
 package jcchen.goodsmanager.view.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +20,7 @@ import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.view.MainActivity;
+import jcchen.goodsmanager.view.fragment.SizeDetailDialogFragment;
 
 public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecyclerViewAdapter.ViewHolder> {
 
@@ -28,11 +30,15 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
 
     private ViewHolder selectedCard, expandedCard;
 
+    private SizeDetailDialogFragment mSizeDetailDialogFragment;
+
     public ManageRecyclerViewAdapter(Context context, Vector<PurchaseInfo> purchaseList) {
         this.context = context;
         if(purchaseList == null)
             purchaseList = new Vector<>();
         this.purchaseList = (Vector<PurchaseInfo>) purchaseList.clone();
+        mSizeDetailDialogFragment = new SizeDetailDialogFragment();
+
     }
 
     @Override
@@ -42,7 +48,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         viewHolder.position = position;
         viewHolder.Card.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +64,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
             }
         });
         viewHolder.Name.setText(purchaseList.get(position).getName());
-        viewHolder.Type.setText(purchaseList.get(position).getType());
+        viewHolder.Type.setText(purchaseList.get(position).getTypeInfo().getType());
         viewHolder.Numbers.setText(purchaseList.get(position).getNumbers());
         viewHolder.Mall.setText(purchaseList.get(position).getMall());
         viewHolder.Position.setText(purchaseList.get(position).getPosition());
@@ -94,7 +100,10 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         viewHolder.SizeDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mSizeDetailDialogFragment = new SizeDetailDialogFragment();
+                mSizeDetailDialogFragment.setSizeDetail(purchaseList.get(position).getSizeStructList());
+                mSizeDetailDialogFragment.setType(purchaseList.get(position).getTypeInfo());
+                mSizeDetailDialogFragment.show(((Activity) context).getFragmentManager(), SizeDetailDialogFragment.TAG);
             }
         });
     }
@@ -198,6 +207,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         expandedCard.MaterialLayout.setVisibility(View.VISIBLE);
         expandedCard.ColorLayout.setVisibility(View.VISIBLE);
         expandedCard.SizeLayout.setVisibility(View.VISIBLE);
+        expandedCard.SizeDetail.setVisibility(View.VISIBLE);
         expandedCard.Card.invalidate();
     }
 
@@ -213,6 +223,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
             expandedCard.MaterialLayout.setVisibility(View.GONE);
             expandedCard.ColorLayout.setVisibility(View.GONE);
             expandedCard.SizeLayout.setVisibility(View.GONE);
+            expandedCard.SizeDetail.setVisibility(View.GONE);
             expandedCard.Card.invalidate();
             expandedCard = null;
         }

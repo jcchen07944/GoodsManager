@@ -106,7 +106,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
             @Override
             public void onClick(View view) {
                 mColorSelectDialogFragment.loadSavedData(colorSelectList);
-                mColorSelectDialogFragment.show(((Activity) context).getFragmentManager(), "ColorSelectDialogFragment");
+                mColorSelectDialogFragment.show(((Activity) context).getFragmentManager(), ColorSelectDialogFragment.TAG);
             }
         });
 
@@ -120,7 +120,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
             @Override
             public void onClick(View view) {
                 mSizeSelectDialogFragment.loadSavedData(sizeSelectList);
-                mSizeSelectDialogFragment.show(((Activity) context).getFragmentManager(), "SizeSelectDialogFragment");
+                mSizeSelectDialogFragment.show(((Activity) context).getFragmentManager(), SizeSelectDialogFragment.TAG);
             }
         });
 
@@ -246,7 +246,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
     private PurchaseInfo collectPurchaseInfo() {
         PurchaseInfo mPurchaseInfo = new PurchaseInfo();
-        mPurchaseInfo.setType(currentType.getType());
+        mPurchaseInfo.setTypeInfo(currentType);
         mPurchaseInfo.setNumbers(numbers.getText().toString());
         mPurchaseInfo.setMall(mall.getText().toString());
         mPurchaseInfo.setPosition(position.getText().toString());

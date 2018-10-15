@@ -31,4 +31,12 @@
     <string name="edit">編輯</string>
     <string name="po">Po文</string>
     <string name="size_detail">詳細尺寸</string>
+    <string name="size_column_1">欄位1</string>
+    <string name="size_column_2">欄位2</string>
+    <string name="size_column_3">欄位3</string>
+    <string name="size_column_4">欄位4</string>
+    <string name="size_column_5">欄位5</string>
+    <string name="size_column_6">欄位6</string>
+    <string name="size_column_7">欄位7</string>
+    <string name="size_column_8">欄位8</string>
 </resources>

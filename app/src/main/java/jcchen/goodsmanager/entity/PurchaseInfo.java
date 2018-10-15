@@ -113,7 +113,7 @@ public class PurchaseInfo implements Serializable {
             Append = append;
         }
     }
-    private String Type;
+    private TypeInfo typeInfo;
     private String Numbers;
     private String Mall;
     private String Position;
@@ -144,12 +144,12 @@ public class PurchaseInfo implements Serializable {
         return Upload;
     }
 
-    public String getType() {
-        return Type;
+    public TypeInfo getTypeInfo() {
+        return typeInfo;
     }
 
-    public void setType(String type) {
-        Type = type;
+    public void setTypeInfo(TypeInfo typeInfo) {
+        this.typeInfo = typeInfo;
     }
 
     public String getNumbers() {

@@ -38,6 +38,8 @@ public class PurchasePresenterImpl implements PurchasePresenter {
         column.add("腰寬");
         column.add("下擺寬");
         column.add("袖長");
+        column.add("");
+        column.add("");
         typeList.add(new TypeInfo("上衣", column));
         column.clear();
         column.add("全長");
@@ -46,6 +48,8 @@ public class PurchasePresenterImpl implements PurchasePresenter {
         column.add("腿寬");
         column.add("褲口寬");
         column.add("褲襠");
+        column.add("");
+        column.add("");
         typeList.add(new TypeInfo("褲子", column));
         column.clear();
         column.add("全長");
@@ -55,6 +59,7 @@ public class PurchasePresenterImpl implements PurchasePresenter {
         column.add("臀寬");
         column.add("下擺寬");
         column.add("袖長");
+        column.add("");
         typeList.add(new TypeInfo("洋裝", column));
         column.clear();
         column.add("全長");
@@ -63,12 +68,18 @@ public class PurchasePresenterImpl implements PurchasePresenter {
         column.add("腰寬");
         column.add("下擺寬");
         column.add("袖長");
+        column.add("");
+        column.add("");
         typeList.add(new TypeInfo("內外", column));
         column.clear();
         column.add("全長");
         column.add("腰寬");
         column.add("臀寬");
         column.add("下擺寬");
+        column.add("");
+        column.add("");
+        column.add("");
+        column.add("");
         typeList.add(new TypeInfo("裙子", column));
         return typeList;
     }
