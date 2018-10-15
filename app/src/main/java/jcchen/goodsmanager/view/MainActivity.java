@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentManager mFragmentManager;
     private Window mWindow;
+    private long firstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initUI();
+
+        firstTime = System.currentTimeMillis();
     }
 
     private void initUI() {
@@ -139,21 +143,25 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (ACTIONBAR_STATE == ACTIONBAR_STATE_PURCHASE) {
             int BackStackCount = getSupportFragmentManager().getBackStackEntryCount();
-            if (BackStackCount <= 0)
-                super.onBackPressed();
-            String Name = getSupportFragmentManager().getBackStackEntryAt(BackStackCount - 1).getName();
-            if (Name.equals(PurchaseFragment.TAG)) {
-                getSupportFragmentManager().popBackStack();
-                onPurchaseEnd();
+            if (BackStackCount > 0) {
+                String Name = getSupportFragmentManager().getBackStackEntryAt(BackStackCount - 1).getName();
+                if (Name.equals(PurchaseFragment.TAG)) {
+                    getSupportFragmentManager().popBackStack();
+                    onPurchaseEnd();
+                    return;
+                }
             }
-            else {
-                super.onBackPressed();
+            long secondTime = System.currentTimeMillis();
+            if (secondTime - firstTime > 2000) {
+                Toast.makeText(this, "再按一次返回鍵離開", Toast.LENGTH_SHORT).show();
+                firstTime = secondTime;
+                return;
             }
+            finish();
         }
         else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD) {
             mManageFragment.onBackPressed();
         }
-
     }
 
     public void setActionbarState(int state) {
