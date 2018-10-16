@@ -93,7 +93,6 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
             public void onClick(View view) {
                 int SelectedPosition = (mFocusListView.getLastVisiblePosition() + mFocusListView.getFirstVisiblePosition()) / 2;
                 ((MainActivity) context).onPurchaseStart((TypeInfo) adapter.getItem(SelectedPosition));
-
             }
         });
     }

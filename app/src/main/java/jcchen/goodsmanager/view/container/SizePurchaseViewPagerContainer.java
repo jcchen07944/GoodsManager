@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import java.util.Vector;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.view.MainActivity;
 
@@ -65,10 +66,26 @@ public class SizePurchaseViewPagerContainer extends FrameLayout implements Conta
 
     @Override
     public void showItem(Object object) {
-        currentType = (TypeInfo) object;
-        Vector<String> column = currentType.getColumn();
-        for(int i = 0; i < column.size(); i++)
-            sizeEditText[i].setHint(column.get(i));
+        if (object instanceof TypeInfo) {
+            currentType = (TypeInfo) object;
+            Vector<String> column = currentType.getColumn();
+            for (int i = 0; i < column.size(); i++)
+                sizeEditText[i].setHint(column.get(i));
+        }
+        if (object instanceof PurchaseInfo.SizeStruct) {
+            PurchaseInfo.SizeStruct sizeStruct = (PurchaseInfo.SizeStruct) object;
+            ((EditText) findViewById(R.id.content_size_text)).setText(sizeStruct.getSizeName());
+            sizeEditText[0].setText(sizeStruct.getColumn0());
+            sizeEditText[1].setText(sizeStruct.getColumn1());
+            sizeEditText[2].setText(sizeStruct.getColumn2());
+            sizeEditText[3].setText(sizeStruct.getColumn3());
+            sizeEditText[4].setText(sizeStruct.getColumn4());
+            sizeEditText[5].setText(sizeStruct.getColumn5());
+            sizeEditText[6].setText(sizeStruct.getColumn6());
+            sizeEditText[7].setText(sizeStruct.getColumn7());
+            ((EditText) findViewById(R.id.purchase_append)).setText(sizeStruct.getAppend());
+            ((EditText) findViewById(R.id.purchase_note)).setText(sizeStruct.getNote());
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.widget.ScrollView;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.view.container.Container;
+import jcchen.goodsmanager.view.container.PurchaseContainer;
 
 public class PurchaseFragment extends Fragment {
 
@@ -29,9 +30,15 @@ public class PurchaseFragment extends Fragment {
         if (savedView == null)
             savedView = inflater.inflate(R.layout.purchase_layout, container, false);
         view = savedView;
-        ((ScrollView) view).fullScroll(ScrollView.FOCUS_UP);
-        ((Container) view).showItem(selectedType);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((ScrollView) savedView).fullScroll(ScrollView.FOCUS_UP);
+        ((Container) savedView).showItem(selectedType);
+        ((PurchaseContainer) savedView).loadPurchaseInfo(Mode);
     }
 
     public void setSelectedType(TypeInfo selectedType) {

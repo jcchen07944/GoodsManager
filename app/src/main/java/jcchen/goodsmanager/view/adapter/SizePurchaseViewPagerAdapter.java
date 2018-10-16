@@ -49,7 +49,6 @@ public class SizePurchaseViewPagerAdapter extends PagerAdapter {
             sizeStructList.add(new PurchaseInfo.SizeStruct());
             sizeStructList.get(i).setSizeName(((EditText) pageList.get(i).findViewById(R.id.content_size_text)).getText().toString());
             sizeStructList.get(i).setColumn0(((EditText) pageList.get(i).findViewById(R.id.purchase_size_1)).getText().toString());
-            sizeStructList.get(i).setColumn1(((EditText) pageList.get(i).findViewById(R.id.purchase_size_1)).getText().toString());
             sizeStructList.get(i).setColumn1(((EditText) pageList.get(i).findViewById(R.id.purchase_size_2)).getText().toString());
             sizeStructList.get(i).setColumn2(((EditText) pageList.get(i).findViewById(R.id.purchase_size_3)).getText().toString());
             sizeStructList.get(i).setColumn3(((EditText) pageList.get(i).findViewById(R.id.purchase_size_4)).getText().toString());

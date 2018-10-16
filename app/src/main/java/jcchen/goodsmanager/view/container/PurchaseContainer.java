@@ -29,6 +29,7 @@ import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
 import jcchen.goodsmanager.view.MainActivity;
 import jcchen.goodsmanager.view.adapter.SizePurchaseViewPagerAdapter;
 import jcchen.goodsmanager.view.fragment.ColorSelectDialogFragment;
+import jcchen.goodsmanager.view.fragment.PurchaseFragment;
 import jcchen.goodsmanager.view.fragment.SizeSelectDialogFragment;
 import jcchen.goodsmanager.view.listener.OnColorSelectedListener;
 import jcchen.goodsmanager.view.listener.OnSizeSelectedListener;
@@ -56,6 +57,8 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     private Vector<SizePurchaseViewPagerContainer> pageList;
     private Vector<ColorInfo> colorSelectList;
     private Vector<SizeInfo> sizeSelectList;
+
+    private int Mode;
 
     public PurchaseContainer(Context context) {
         super(context);
@@ -159,7 +162,12 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (checkNecessaryField()) {
-                                    presenter.savePurchaseInfo(collectPurchaseInfo());
+                                    if (Mode == PurchaseFragment.MODE_ADD) {
+                                        presenter.savePurchaseInfo(collectPurchaseInfo());
+                                    }
+                                    else if (Mode == PurchaseFragment.MODE_EDIT) {
+                                        presenter.updatePurchaseInfo(((MainActivity) context).getSelectedCard(), collectPurchaseInfo());
+                                    }
                                     onBackPressed();
                                 }
                             }
@@ -261,5 +269,26 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         mPurchaseInfo.setSizeList(sizeSelectList);
         mPurchaseInfo.setSizeStructList(mSizePurchaseViewPagerAdapter.collectSizeStruct());
         return mPurchaseInfo;
+    }
+
+    public void loadPurchaseInfo(int Mode) {
+        this.Mode = Mode;
+        PurchaseInfo purchaseInfo = ((MainActivity) context).getSelectedCard();
+        if (purchaseInfo != null) {
+            numbers.setText(purchaseInfo.getNumbers());
+            mall.setText(purchaseInfo.getMall());
+            position.setText(purchaseInfo.getPosition());
+            name.setText(purchaseInfo.getName());
+            listPrice.setText(purchaseInfo.getListPrice() + "");
+            actualPrice.setText(purchaseInfo.getActualPrice() + "");
+            incomeK.setText(purchaseInfo.getIncomeK() + "");
+            incomeT.setText(purchaseInfo.getIncomeT() + "");
+            flexible.setChecked(purchaseInfo.isFlexible());
+            onSizeSelected(purchaseInfo.getSizeList());
+            onColorSelected(purchaseInfo.getColorList());
+            material.setText(purchaseInfo.getMaterial());
+            for (int i = 0; i < pageList.size(); i++)
+                pageList.get(i).showItem(purchaseInfo.getSizeStructList().get(i));
+        }
     }
 }

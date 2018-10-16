@@ -93,9 +93,14 @@ public class MainActivity extends AppCompatActivity {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mManageFragment.onBackPressed();
+                mPurchaseFragment.setMode(PurchaseFragment.MODE_ADD);
                 openDialog();
             }
         });
+
+        /* Pre init purchase fragment */
+        mPurchaseFragment = new PurchaseFragment();
     }
 
     @Override
@@ -153,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
             case R.id.menu_edit:
+                mPurchaseFragment.setMode(PurchaseFragment.MODE_EDIT);
                 mTypeSelectDialogFragment = new TypeSelectDialogFragment();
                 mTypeSelectDialogFragment.setDefaultType(selectedCard.getTypeInfo());
                 mTypeSelectDialogFragment.show(getFragmentManager(), "TypeSelectDialogFragment");
@@ -211,8 +217,6 @@ public class MainActivity extends AppCompatActivity {
     public void onPurchaseStart(TypeInfo selectedType) {
         mTypeSelectDialogFragment.dismiss();
 
-        if (mPurchaseFragment == null)
-            mPurchaseFragment = new PurchaseFragment();
         mPurchaseFragment.setSelectedType(selectedType);
 
         mFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.activity_main_content,
@@ -257,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onCardSelectEnd() {
         setActionbarState(ACTIONBAR_STATE_HOME);
+        selectedCard = null;
     }
 
     public static int safeParseInt(String str) {

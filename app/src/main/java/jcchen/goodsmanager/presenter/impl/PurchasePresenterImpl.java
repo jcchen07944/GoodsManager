@@ -158,4 +158,10 @@ public class PurchasePresenterImpl implements PurchasePresenter {
         File dir = context.getFilesDir();
         (new File(dir, purchaseInfo.getFileName())).delete();
     }
+
+    @Override
+    public void updatePurchaseInfo(PurchaseInfo oldPurchaseInfo, PurchaseInfo newPurchaseInfo) {
+        removePurchaseInfo(oldPurchaseInfo);
+        savePurchaseInfo(newPurchaseInfo);
+    }
 }

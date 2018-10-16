@@ -20,4 +20,5 @@ public interface PurchasePresenter {
     void sendPurchaseInfo(PurchaseInfo purchaseInfo);
     void removePurchaseInfo(PurchaseInfo purchaseInfo);
     void savePurchaseInfo(PurchaseInfo purchaseInfo);
+    void updatePurchaseInfo(PurchaseInfo oldPurchaseInfo, PurchaseInfo newPurchaseInfo);
 }
