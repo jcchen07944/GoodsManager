@@ -154,7 +154,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(context)
-                        .setMessage(R.string.confirm_message)
+                        .setMessage(R.string.purchase_confirm_message)
                         .setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

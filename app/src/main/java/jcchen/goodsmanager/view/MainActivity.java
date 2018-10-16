@@ -1,5 +1,6 @@
 package jcchen.goodsmanager.view;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -97,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
-        switch(ACTIONBAR_STATE) {
+        switch (ACTIONBAR_STATE) {
             case ACTIONBAR_STATE_HOME:
                 menu.findItem(R.id.menu_upload).setVisible(true);
                 menu.findItem(R.id.menu_delete).setVisible(false);
@@ -130,10 +132,25 @@ public class MainActivity extends AppCompatActivity {
                     onBackPressed();
                 else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD)
                     onBackPressed();
-                    return true;
+                return true;
             case R.id.menu_delete:
-                mManageFragment.removeSelectedCard();
-                setActionbarState(ACTIONBAR_STATE_HOME);
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.delete_confirm_message)
+                        .setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mManageFragment.removeSelectedCard();
+                                setActionbarState(ACTIONBAR_STATE_HOME);
+                            }
+                        })
+                        .setNegativeButton(R.string.confirm_no, null)
+                        .show();
+                return true;
+            case R.id.menu_po:
+
+                return true;
+            case R.id.menu_edit:
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -158,15 +175,14 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             finish();
-        }
-        else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD) {
+        } else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD) {
             mManageFragment.onBackPressed();
         }
     }
 
     public void setActionbarState(int state) {
         ACTIONBAR_STATE = state;
-        switch(ACTIONBAR_STATE) {
+        switch (ACTIONBAR_STATE) {
             case ACTIONBAR_STATE_HOME:
                 mToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mToolbar.setNavigationIcon(R.drawable.ic_menu);
@@ -183,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openDialog() {
-        if(mTypeSelectDialogFragment == null)
+        if (mTypeSelectDialogFragment == null)
             mTypeSelectDialogFragment = new TypeSelectDialogFragment();
         mTypeSelectDialogFragment.show(getFragmentManager(), "TypeSelectDialogFragment");
     }
@@ -191,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
     public void onPurchaseStart(TypeInfo selectedType) {
         mTypeSelectDialogFragment.dismiss();
 
-        if(mPurchaseFragment == null)
+        if (mPurchaseFragment == null)
             mPurchaseFragment = new PurchaseFragment();
         mPurchaseFragment.setSelectedType(selectedType);
 
@@ -212,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onPurchaseEnd() {
-        if(mManageFragment == null)
+        if (mManageFragment == null)
             mManageFragment = new ManageFragment();
         mFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.activity_main_content,
                 mManageFragment, ManageFragment.TAG).commit();
@@ -281,6 +297,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return obj;
     }
-
-
 }
