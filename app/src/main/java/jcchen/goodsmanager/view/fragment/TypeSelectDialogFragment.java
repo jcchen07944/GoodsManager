@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.TypeInfo;
+import jcchen.goodsmanager.view.container.Container;
+import jcchen.goodsmanager.view.container.TypeSelectDialogContainer;
 
 /**
  * Created by JCChen on 2018/9/26.
@@ -16,10 +19,17 @@ import jcchen.goodsmanager.R;
 
 public class TypeSelectDialogFragment extends DialogFragment {
 
+    private TypeInfo typeInfo;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.type_select_dialog_layout, container);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ((Container) view).showItem(typeInfo);
         return view;
+    }
+
+    public void setDefaultType(TypeInfo typeInfo) {
+        this.typeInfo = typeInfo;
     }
 }

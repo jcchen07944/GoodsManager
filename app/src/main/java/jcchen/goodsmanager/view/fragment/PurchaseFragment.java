@@ -14,6 +14,10 @@ import jcchen.goodsmanager.view.container.Container;
 public class PurchaseFragment extends Fragment {
 
     public static final String TAG = "PurchaseFragment";
+    public static final int MODE_ADD = 0;
+    public static final int MODE_EDIT = 1;
+
+    private int Mode;
 
     private TypeInfo selectedType;
 
@@ -32,5 +36,9 @@ public class PurchaseFragment extends Fragment {
 
     public void setSelectedType(TypeInfo selectedType) {
         this.selectedType = selectedType;
+    }
+
+    public void setMode(int Mode) {
+        this.Mode = Mode;
     }
 }

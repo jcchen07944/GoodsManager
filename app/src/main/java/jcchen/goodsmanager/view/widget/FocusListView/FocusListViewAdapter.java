@@ -50,6 +50,13 @@ public class FocusListViewAdapter extends BaseAdapter {
             return Math.abs((count / 2 - position - 1) % typeList.size() - typeList.size() + 1);
     }
 
+    public int getItemPosition(TypeInfo typeInfo) {
+        for (int i = getCount() / 2 - 1; ; i++) {
+            if (typeInfo.getType().equals(((TypeInfo) getItem(i)).getType()))
+                return i;
+        }
+    }
+
 
     public int getListSize() {
         return typeList.size();

@@ -27,6 +27,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.view.fragment.ManageFragment;
 import jcchen.goodsmanager.view.fragment.PurchaseFragment;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager mFragmentManager;
     private Window mWindow;
     private long firstTime;
+
+    private PurchaseInfo selectedCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +153,9 @@ public class MainActivity extends AppCompatActivity {
 
                 return true;
             case R.id.menu_edit:
-
+                mTypeSelectDialogFragment = new TypeSelectDialogFragment();
+                mTypeSelectDialogFragment.setDefaultType(selectedCard.getTypeInfo());
+                mTypeSelectDialogFragment.show(getFragmentManager(), "TypeSelectDialogFragment");
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -199,8 +204,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void openDialog() {
-        if (mTypeSelectDialogFragment == null)
-            mTypeSelectDialogFragment = new TypeSelectDialogFragment();
+        mTypeSelectDialogFragment = new TypeSelectDialogFragment();
         mTypeSelectDialogFragment.show(getFragmentManager(), "TypeSelectDialogFragment");
     }
 
@@ -246,8 +250,9 @@ public class MainActivity extends AppCompatActivity {
         setActionbarState(ACTIONBAR_STATE_HOME);
     }
 
-    public void onCardSelectStart() {
+    public void onCardSelectStart(PurchaseInfo purchaseInfo) {
         setActionbarState(ACTIONBAR_STATE_SELECT_CARD);
+        selectedCard = purchaseInfo;
     }
 
     public void onCardSelectEnd() {
@@ -296,5 +301,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return obj;
+    }
+
+    public PurchaseInfo getSelectedCard() {
+        return selectedCard;
     }
 }

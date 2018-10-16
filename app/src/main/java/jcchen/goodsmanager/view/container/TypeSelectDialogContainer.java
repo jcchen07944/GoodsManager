@@ -28,7 +28,11 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
     private RoundedImageView mRoundedImageView;
     private Context context;
 
+    FocusListViewAdapter adapter;
+
     private PurchasePresenterImpl presenter;
+
+    private TypeInfo defaultType;
 
     public TypeSelectDialogContainer(Context context) {
         super(context);
@@ -48,12 +52,12 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
 
         // FocusListView
         mFocusListView = (FocusListView) this.findViewById(R.id.purchase_type_list);
-        final FocusListViewAdapter adapter = new FocusListViewAdapter(context, mFocusListView, presenter.getTypeList());
+        adapter = new FocusListViewAdapter(context, mFocusListView, presenter.getTypeList());
         mFocusListView.setAdapter(adapter);
         mFocusListView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mFocusListView.setSelection(adapter.getCount() / 2 - 1);
+                mFocusListView.setSelection(defaultType == null ? adapter.getCount() / 2 - 1 : adapter.getItemPosition(defaultType));
                 mFocusListView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -98,11 +102,12 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
     public void init() {
         /* New presenter */
         presenter = new PurchasePresenterImpl(context);
+        defaultType = null;
     }
 
     @Override
     public void showItem(Object object) {
-
+        defaultType = (TypeInfo) object;
     }
 
     @Override

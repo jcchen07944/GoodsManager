@@ -171,7 +171,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         viewHolder.Numbers.setBackground(ContextCompat.getDrawable(context, R.color.colorPrimaryLight));
         selectedCard = viewHolder;
 
-        ((MainActivity) context).onCardSelectStart();
+        ((MainActivity) context).onCardSelectStart(purchaseList.get(viewHolder.position));
     }
 
     public void resumeCard() {
