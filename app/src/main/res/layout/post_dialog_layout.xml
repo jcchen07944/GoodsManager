@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/post_base_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:clickable="true"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <jcchen.goodsmanager.view.container.PostContainer
+        android:id="@+id/post_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:clickable="true">
+
+        <ImageView
+            android:id="@+id/post_copy"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_copy"
+            android:visibility="gone" />
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:background="@drawable/post_textview_style"
+            android:layout_margin="30dp"
+            android:padding="2dp"
+            android:fillViewport="true">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:fillViewport="true">
+
+                <EditText
+                    android:id="@+id/post_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:focusable="false"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/colorTextOnBackground"
+                    android:textStyle="bold"
+                    android:textSize="16sp"/>
+
+            </HorizontalScrollView>
+
+        </ScrollView>
+
+    </jcchen.goodsmanager.view.container.PostContainer>
+
+</RelativeLayout>

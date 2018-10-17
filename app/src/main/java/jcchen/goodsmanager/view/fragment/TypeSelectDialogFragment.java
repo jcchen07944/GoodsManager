@@ -19,6 +19,8 @@ import jcchen.goodsmanager.view.container.TypeSelectDialogContainer;
 
 public class TypeSelectDialogFragment extends DialogFragment {
 
+    public static final String TAG = "TypeSelectDialogFragment";
+
     private TypeInfo typeInfo;
 
     @Override
