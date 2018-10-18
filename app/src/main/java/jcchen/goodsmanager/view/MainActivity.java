@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         initUI();
 
-        firstTime = System.currentTimeMillis();
+        firstTime = System.currentTimeMillis() - 2000;
     }
 
     private void initUI() {
@@ -212,15 +212,16 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
             }
+        } else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD) {
+            mManageFragment.onBackPressed();
+        } else if (ACTIONBAR_STATE == ACTIONBAR_STATE_HOME) {
             long secondTime = System.currentTimeMillis();
             if (secondTime - firstTime > 2000) {
                 Toast.makeText(this, "再按一次返回鍵離開", Toast.LENGTH_SHORT).show();
                 firstTime = secondTime;
                 return;
             }
-            finish();
-        } else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD) {
-            mManageFragment.onBackPressed();
+            this.finishAffinity();
         }
     }
 
