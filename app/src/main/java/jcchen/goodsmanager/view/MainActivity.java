@@ -1,8 +1,10 @@
 package jcchen.goodsmanager.view;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -11,13 +13,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
@@ -41,11 +48,16 @@ public class MainActivity extends AppCompatActivity {
     public static final int ACTIONBAR_STATE_SELECT_CARD = 2;
     public int ACTIONBAR_STATE;
 
+    private Context context;
+
     private Toolbar mToolbar;
     private ActionBar mActionBar;
     private DrawerLayout mDrawerLayout;
     private FrameLayout content;
     private FloatingActionButton mFloatingActionButton;
+    private NavigationView mNavigationView;
+    private ImageView exchangeRate;
+    private TextView exchangeRateText;
 
     private TypeSelectDialogFragment mTypeSelectDialogFragment = null;
     private PurchaseFragment mPurchaseFragment = null;
@@ -62,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
 
         initUI();
 
@@ -82,6 +95,16 @@ public class MainActivity extends AppCompatActivity {
 
         /* Init Drawer */
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        exchangeRateText = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_ex_rate_text);
+        exchangeRate = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_ex_rate);
+        exchangeRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openExchangeRateDialog();
+            }
+        });
+
 
         /* Init Content */
         content = (FrameLayout) findViewById(R.id.activity_main_content);
@@ -97,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mManageFragment.onBackPressed();
                 mPurchaseFragment.setMode(PurchaseFragment.MODE_ADD);
-                openDialog();
+                openTypeDialog();
             }
         });
 
@@ -202,21 +225,53 @@ public class MainActivity extends AppCompatActivity {
             case ACTIONBAR_STATE_HOME:
                 mToolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mToolbar.setNavigationIcon(R.drawable.ic_menu);
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 break;
             case ACTIONBAR_STATE_PURCHASE:
                 mToolbar.setBackgroundColor(getResources().getColor(R.color.colorSecondary));
                 mToolbar.setNavigationIcon(R.drawable.ic_back);
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 break;
             case ACTIONBAR_STATE_SELECT_CARD:
                 mToolbar.setNavigationIcon(R.drawable.ic_back);
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 break;
         }
         invalidateOptionsMenu();
     }
 
-    private void openDialog() {
+    private void openTypeDialog() {
         mTypeSelectDialogFragment = new TypeSelectDialogFragment();
         mTypeSelectDialogFragment.show(getFragmentManager(), "TypeSelectDialogFragment");
+    }
+
+    private void openExchangeRateDialog() {
+        AlertDialog.Builder mAlertDialog = new AlertDialog.Builder(context);
+        mAlertDialog.setTitle(R.string.exchange_rate_dialog_title);
+        final EditText mEditText = new EditText(context);
+        mEditText.setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                (int) (100 * context.getResources().getDisplayMetrics().density),
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        params.setMarginStart((int) (20 * context.getResources().getDisplayMetrics().density));
+        params.setMarginEnd((int) (20 * context.getResources().getDisplayMetrics().density));
+        mEditText.setLayoutParams(params);
+        mEditText.setText(exchangeRateText.getText());
+        mAlertDialog.setView(mEditText);
+        mAlertDialog.setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                exchangeRateText.setText(mEditText.getText());
+                dialogInterface.cancel();
+            }
+        });
+        mAlertDialog.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        mAlertDialog.show();
     }
 
     public void onPurchaseStart(TypeInfo selectedType) {
