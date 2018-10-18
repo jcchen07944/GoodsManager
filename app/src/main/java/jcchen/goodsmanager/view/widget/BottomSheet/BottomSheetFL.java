@@ -3,19 +3,21 @@ package jcchen.goodsmanager.view.widget.BottomSheet;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-public class BottomSheetRL extends RelativeLayout {
+public abstract class BottomSheetFL extends RelativeLayout {
     private Context context;
 
     private BottomSheet mBottomSheet;
-    private RelativeLayout mRelativeLayout;
+    private FrameLayout mFrameLayout;
     private RecyclerViewAdapter adapter;
 
     private int peekHeight;
 
-    public BottomSheetRL(Context context) {
+    public BottomSheetFL(Context context) {
         super(context);
         this.context = context;
         RelativeLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -25,18 +27,17 @@ public class BottomSheetRL extends RelativeLayout {
 
         params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         params.addRule(RelativeLayout.OVER_SCROLL_NEVER);
-        mRelativeLayout = new RelativeLayout(context);
-        mRelativeLayout.setClipChildren(false);
-        addView(mRelativeLayout, params);
+        mFrameLayout = new FrameLayout(context);
+        mFrameLayout.setClipChildren(false);
+        addView(mFrameLayout, params);
 
         setClipChildren(false);
 
         peekHeight = -1;
     }
 
-    public BottomSheetRL(Context context, AttributeSet attributeSet) {
+    public BottomSheetFL(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
-        this.context = context;
         this.context = context;
         RelativeLayout.LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
@@ -45,9 +46,9 @@ public class BottomSheetRL extends RelativeLayout {
 
         params = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         params.addRule(RelativeLayout.OVER_SCROLL_NEVER);
-        mRelativeLayout = new RelativeLayout(context);
-        mRelativeLayout.setClipChildren(false);
-        addView(mRelativeLayout, params);
+        mFrameLayout = new FrameLayout(context);
+        mFrameLayout.setClipChildren(false);
+        addView(mFrameLayout, params);
 
         setClipChildren(false);
 
@@ -57,7 +58,7 @@ public class BottomSheetRL extends RelativeLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        mRelativeLayout.setVisibility(GONE);
+        mFrameLayout.setVisibility(GONE);
     }
 
     public void show() {
@@ -71,6 +72,7 @@ public class BottomSheetRL extends RelativeLayout {
                 @Override
                 public void onShowAnimationEnd() {
                     // show content.
+                    mFrameLayout.setVisibility(VISIBLE);
                     contentShow();
                 }
                 @Override
@@ -91,8 +93,9 @@ public class BottomSheetRL extends RelativeLayout {
 
     }
 
-    public void setAdapter(RecyclerViewAdapter adapter) {
-        this.adapter = adapter;
+    @Override
+    public void addView(View view) {
+        mFrameLayout.addView(view);
     }
 
     public void setPeekHeight(int peekHeight) {
@@ -100,7 +103,5 @@ public class BottomSheetRL extends RelativeLayout {
         mBottomSheet.setPeekHeight(peekHeight);
     }
 
-    private void contentShow() {
-        mRelativeLayout.setVisibility(VISIBLE);
-    }
+    public abstract void contentShow();
 }

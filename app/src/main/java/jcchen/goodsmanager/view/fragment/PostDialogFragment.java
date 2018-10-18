@@ -60,12 +60,10 @@ public class PostDialogFragment extends DialogFragment {
 
             }
         });
-        postText = (EditText) view.findViewById(R.id.post_text);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        postText.setText(R.string.post_text);
     }
 }
