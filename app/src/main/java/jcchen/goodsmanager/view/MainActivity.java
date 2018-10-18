@@ -36,6 +36,7 @@ import java.io.ObjectOutputStream;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
+import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.fragment.ManageFragment;
 import jcchen.goodsmanager.view.fragment.PostDialogFragment;
 import jcchen.goodsmanager.view.fragment.PurchaseFragment;
@@ -70,11 +71,14 @@ public class MainActivity extends AppCompatActivity {
 
     private PurchaseInfo selectedCard;
 
+    private SettingPresenterImpl mSettingPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
+        mSettingPresenter = new SettingPresenterImpl(this);
 
         initUI();
 
@@ -97,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
         exchangeRateText = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_ex_rate_text);
+        exchangeRateText.setText(FloatToString(mSettingPresenter.getExchangeRate()));
         exchangeRate = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_ex_rate);
         exchangeRate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 exchangeRateText.setText(mEditText.getText());
+                mSettingPresenter.saveExchangeRate(Float.parseFloat(mEditText.getText().toString()));
                 dialogInterface.cancel();
             }
         });
@@ -366,6 +372,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return obj;
+    }
+
+    public static String FloatToString(float d) {
+        if (d == (long) d)
+            return String.format("%d", (long) d);
+        else
+            return String.format("%s", d);
     }
 
     public PurchaseInfo getSelectedCard() {
