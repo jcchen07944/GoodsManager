@@ -44,5 +44,6 @@
     <string name="add">新增</string>
     <string name="exchange_rate">匯率</string>
     <string name="exchange_rate_dialog_title">更改匯率</string>
+    <string name="normal">一般</string>
     <string name="post_text">&#060;3 9月官網連線新款相簿：https://bit.ly/2C69XrV\n&#060;3 9月連線優惠活動：https://bit.ly/2oCb21a\n&#060;3 9月直播抽獎活動：https://bit.ly/2oDdOTK </string>
 </resources>

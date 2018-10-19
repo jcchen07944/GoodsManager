@@ -3,6 +3,7 @@ package jcchen.goodsmanager.view;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -40,6 +41,7 @@ import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.fragment.ManageFragment;
 import jcchen.goodsmanager.view.fragment.PostDialogFragment;
 import jcchen.goodsmanager.view.fragment.PurchaseFragment;
+import jcchen.goodsmanager.view.fragment.SettingDialogFragment;
 import jcchen.goodsmanager.view.fragment.TypeSelectDialogFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private PurchaseFragment mPurchaseFragment = null;
     private ManageFragment mManageFragment = null;
     private PostDialogFragment mPostDialogFragment = null;
+    private SettingDialogFragment mSettingDialogFragment = null;
 
     private FragmentManager mFragmentManager;
     private Window mWindow;
@@ -100,6 +103,20 @@ public class MainActivity extends AppCompatActivity {
         /* Init Drawer */
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_add:
+                        openTypeDialog();
+                        break;
+                    case R.id.nav_setting:
+                        break;
+                }
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
         exchangeRateText = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_ex_rate_text);
         exchangeRateText.setText(FloatToString(mSettingPresenter.getExchangeRate()));
         exchangeRate = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_ex_rate);
@@ -134,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
 
         /* Pre init bottom sheet */
         mPostDialogFragment = new PostDialogFragment();
+
+        /* Pre init setting dialog */
+        mSettingDialogFragment = new SettingDialogFragment();
     }
 
     @Override
