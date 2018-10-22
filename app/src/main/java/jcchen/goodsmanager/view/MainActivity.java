@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         openTypeDialog();
                         break;
                     case R.id.nav_setting:
+                        mSettingDialogFragment.show(getFragmentManager(), SettingDialogFragment.TAG);
                         break;
                 }
                 mDrawerLayout.closeDrawer(GravityCompat.START);

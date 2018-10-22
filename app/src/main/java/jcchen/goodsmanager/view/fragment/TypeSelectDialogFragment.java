@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.view.container.Container;
-import jcchen.goodsmanager.view.container.TypeSelectDialogContainer;
 
 /**
  * Created by JCChen on 2018/9/26.
