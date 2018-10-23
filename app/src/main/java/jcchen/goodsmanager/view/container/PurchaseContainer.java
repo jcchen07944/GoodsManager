@@ -25,7 +25,9 @@ import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
+import jcchen.goodsmanager.presenter.SettingPresenter;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
+import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.MainActivity;
 import jcchen.goodsmanager.view.adapter.SizePurchaseViewPagerAdapter;
 import jcchen.goodsmanager.view.fragment.ColorSelectDialogFragment;
@@ -51,7 +53,8 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
     private ColorSelectDialogFragment mColorSelectDialogFragment;
     private SizeSelectDialogFragment mSizeSelectDialogFragment;
-    private PurchasePresenterImpl presenter;
+    private SettingPresenterImpl mSettingPresenter;
+    private PurchasePresenterImpl mPurchasePresenter;
     private SizePurchaseViewPagerAdapter mSizePurchaseViewPagerAdapter;
 
     private Vector<SizePurchaseViewPagerContainer> pageList;
@@ -163,10 +166,10 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 if (checkNecessaryField()) {
                                     if (Mode == PurchaseFragment.MODE_ADD) {
-                                        presenter.savePurchaseInfo(collectPurchaseInfo());
+                                        mPurchasePresenter.savePurchaseInfo(collectPurchaseInfo());
                                     }
                                     else if (Mode == PurchaseFragment.MODE_EDIT) {
-                                        presenter.updatePurchaseInfo(((MainActivity) context).getSelectedCard(), collectPurchaseInfo());
+                                        mPurchasePresenter.updatePurchaseInfo(((MainActivity) context).getSelectedCard(), collectPurchaseInfo());
                                     }
                                     onBackPressed();
                                 }
@@ -181,16 +184,17 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
     @Override
     public void init() {
-        presenter = new PurchasePresenterImpl(context);
+        mPurchasePresenter = new PurchasePresenterImpl(context);
+        mSettingPresenter = new SettingPresenterImpl(context);
 
         // Color select.
         mColorSelectDialogFragment = new ColorSelectDialogFragment();
-        mColorSelectDialogFragment.setPresenter(presenter);
+        mColorSelectDialogFragment.setPresenter(mSettingPresenter);
         mColorSelectDialogFragment.setListener(this);
 
         // Size select.
         mSizeSelectDialogFragment = new SizeSelectDialogFragment();
-        mSizeSelectDialogFragment.setPresenter(presenter);
+        mSizeSelectDialogFragment.setPresenter(mSettingPresenter);
         mSizeSelectDialogFragment.setListener(this);
 
         pageList = new Vector<>();

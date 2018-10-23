@@ -21,7 +21,7 @@ import java.util.Vector;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
-import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
+import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.adapter.ColorListViewAdapter;
 import jcchen.goodsmanager.view.listener.OnColorSelectedListener;
 import jcchen.goodsmanager.view.widget.RoundedImageView;
@@ -36,7 +36,7 @@ public class ColorSelectDialogFragment extends DialogFragment {
     private TextView mTextView;
 
     private ColorListViewAdapter adapter;
-    private PurchasePresenterImpl presenter;
+    private SettingPresenterImpl mSettingPresenter;
     private OnColorSelectedListener listener;
 
     private Vector<ColorInfo> colorSelectList;
@@ -52,7 +52,7 @@ public class ColorSelectDialogFragment extends DialogFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mTextView = (TextView) view.findViewById(R.id.color_preview);
 
-        adapter = new ColorListViewAdapter(getActivity(), presenter.getColorList());
+        adapter = new ColorListViewAdapter(getActivity(), mSettingPresenter.getColorList());
         if (colorSelectList == null)
             colorSelectList = new Vector<>();
         for (int i = 0; i < colorSelectList.size(); i++) {
@@ -124,8 +124,8 @@ public class ColorSelectDialogFragment extends DialogFragment {
         updateTextView();
     }
 
-    public void setPresenter(PurchasePresenterImpl presenter) {
-        this.presenter = presenter;
+    public void setPresenter(SettingPresenterImpl presenter) {
+        this.mSettingPresenter = presenter;
     }
 
     public void setListener(OnColorSelectedListener listener) {

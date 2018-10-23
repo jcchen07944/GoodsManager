@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import jcchen.goodsmanager.R;
@@ -24,9 +25,9 @@ public class FocusListViewAdapter extends BaseAdapter {
 
     private Context context;
     private ListView mListView;
-    private Vector<TypeInfo> typeList;
+    private ArrayList<TypeInfo> typeList;
 
-    public FocusListViewAdapter(Context context, ListView listView, Vector<TypeInfo> typeList) {
+    public FocusListViewAdapter(Context context, ListView listView, ArrayList<TypeInfo> typeList) {
         this.context = context;
         this.mListView = listView;
         this.typeList = typeList;

@@ -10,6 +10,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import jcchen.goodsmanager.R;
@@ -18,16 +19,16 @@ import jcchen.goodsmanager.entity.ColorInfo;
 public class ColorListViewAdapter extends BaseAdapter implements Filterable {
 
     private Context context;
-    private Vector<ColorInfo> colorList, filterList;
+    private ArrayList<ColorInfo> colorList, filterList;
     private boolean[] selectList;
 
     private LayoutInflater inflater;
     private ColorFilter mColorFilter;
 
-    public ColorListViewAdapter(Context context, Vector<ColorInfo> colorList) {
+    public ColorListViewAdapter(Context context, ArrayList<ColorInfo> colorList) {
         this.context = context;
         this.colorList = colorList;
-        filterList = new Vector<>(colorList);
+        filterList = new ArrayList<>(colorList);
         selectList = new boolean[colorList.size()];
         for(int i = 0; i < colorList.size(); i++)
             selectList[i] = false;
@@ -118,7 +119,7 @@ public class ColorListViewAdapter extends BaseAdapter implements Filterable {
         @Override
         protected void publishResults(CharSequence constraint,
                                       FilterResults results) {
-            colorList = (Vector<ColorInfo>) results.values;
+            colorList = (ArrayList<ColorInfo>) results.values;
             notifyDataSetChanged();
         }
     }

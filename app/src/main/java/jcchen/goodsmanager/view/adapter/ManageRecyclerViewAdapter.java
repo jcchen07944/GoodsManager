@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import jcchen.goodsmanager.R;
@@ -26,17 +27,17 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
 
     private Context context;
 
-    private Vector<PurchaseInfo> purchaseList;
+    private ArrayList<PurchaseInfo> purchaseList;
 
     private ViewHolder selectedCard, expandedCard;
 
     private SizeDetailDialogFragment mSizeDetailDialogFragment;
 
-    public ManageRecyclerViewAdapter(Context context, Vector<PurchaseInfo> purchaseList) {
+    public ManageRecyclerViewAdapter(Context context, ArrayList<PurchaseInfo> purchaseList) {
         this.context = context;
         if(purchaseList == null)
-            purchaseList = new Vector<>();
-        this.purchaseList = (Vector<PurchaseInfo>) purchaseList.clone();
+            purchaseList = new ArrayList<>();
+        this.purchaseList = (ArrayList<PurchaseInfo>) purchaseList.clone();
         mSizeDetailDialogFragment = new SizeDetailDialogFragment();
 
     }

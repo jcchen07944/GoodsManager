@@ -4,13 +4,13 @@ import android.app.DialogFragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import java.util.Vector;
 
@@ -27,7 +27,7 @@ public class SettingDialogFragment extends DialogFragment {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
 
-    private Vector<ConstraintLayout> pageList;
+    private Vector<FrameLayout> pageList;
     private String[] pageTitle;
 
     @Override
@@ -90,6 +90,7 @@ public class SettingDialogFragment extends DialogFragment {
             container.addView(pageList.get(position));
             return pageList.get(position);
         }
+
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);

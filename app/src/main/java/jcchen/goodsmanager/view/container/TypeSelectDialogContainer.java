@@ -13,6 +13,7 @@ import android.widget.AbsListView;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
+import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.MainActivity;
 import jcchen.goodsmanager.view.widget.FocusListView.FocusListViewAdapter;
 import jcchen.goodsmanager.view.widget.FocusListView.FocusListView;
@@ -30,7 +31,7 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
 
     FocusListViewAdapter adapter;
 
-    private PurchasePresenterImpl presenter;
+    private SettingPresenterImpl mSettingPresenter;
 
     private TypeInfo defaultType;
 
@@ -52,7 +53,7 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
 
         // FocusListView
         mFocusListView = (FocusListView) this.findViewById(R.id.purchase_type_list);
-        adapter = new FocusListViewAdapter(context, mFocusListView, presenter.getTypeList());
+        adapter = new FocusListViewAdapter(context, mFocusListView, mSettingPresenter.getTypeList());
         mFocusListView.setAdapter(adapter);
         mFocusListView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -100,7 +101,7 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
     @Override
     public void init() {
         /* New presenter */
-        presenter = new PurchasePresenterImpl(context);
+        mSettingPresenter = new SettingPresenterImpl(context);
         defaultType = null;
     }
 

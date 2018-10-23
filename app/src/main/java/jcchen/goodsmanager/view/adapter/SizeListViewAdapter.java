@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import jcchen.goodsmanager.R;
@@ -16,12 +17,12 @@ import jcchen.goodsmanager.entity.SizeInfo;
 public class SizeListViewAdapter extends BaseAdapter {
 
     private Context context;
-    private Vector<SizeInfo> sizeList;
+    private ArrayList<SizeInfo> sizeList;
     private boolean[] selectList;
 
     private LayoutInflater inflater;
 
-    public SizeListViewAdapter(Context context, Vector<SizeInfo> sizeList) {
+    public SizeListViewAdapter(Context context, ArrayList<SizeInfo> sizeList) {
         this.context = context;
         this.sizeList = sizeList;
         selectList = new boolean[sizeList.size()];

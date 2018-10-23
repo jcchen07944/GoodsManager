@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import jcchen.goodsmanager.R;
@@ -68,7 +69,7 @@ public class SizePurchaseViewPagerContainer extends FrameLayout implements Conta
     public void showItem(Object object) {
         if (object instanceof TypeInfo) {
             currentType = (TypeInfo) object;
-            Vector<String> column = currentType.getColumn();
+            ArrayList<String> column = currentType.getColumn();
             for (int i = 0; i < column.size(); i++)
                 sizeEditText[i].setHint(column.get(i));
         }

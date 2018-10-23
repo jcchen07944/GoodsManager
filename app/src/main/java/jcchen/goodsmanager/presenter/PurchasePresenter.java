@@ -1,6 +1,7 @@
 package jcchen.goodsmanager.presenter;
 
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import jcchen.goodsmanager.entity.ColorInfo;
@@ -13,10 +14,7 @@ import jcchen.goodsmanager.entity.TypeInfo;
  */
 
 public interface PurchasePresenter {
-    Vector<TypeInfo> getTypeList();
-    Vector<ColorInfo> getColorList();
-    Vector<SizeInfo> getSizeList();
-    Vector<PurchaseInfo> getPurchaseList();
+    ArrayList<PurchaseInfo> getPurchaseList();
     void sendPurchaseInfo(PurchaseInfo purchaseInfo);
     void removePurchaseInfo(PurchaseInfo purchaseInfo);
     void savePurchaseInfo(PurchaseInfo purchaseInfo);

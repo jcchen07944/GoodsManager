@@ -16,6 +16,7 @@ import java.util.Vector;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
+import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.adapter.SizeListViewAdapter;
 import jcchen.goodsmanager.view.listener.OnSizeSelectedListener;
 import jcchen.goodsmanager.view.widget.RoundedImageView;
@@ -28,7 +29,7 @@ public class SizeSelectDialogFragment extends DialogFragment {
     private RoundedImageView mRoundedImageView;
     private TextView mTextView;
 
-    private PurchasePresenterImpl presenter;
+    private SettingPresenterImpl mSettingPresenter;
     private OnSizeSelectedListener listener;
     private SizeListViewAdapter adapter;
 
@@ -45,7 +46,7 @@ public class SizeSelectDialogFragment extends DialogFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         mTextView = (TextView) view.findViewById(R.id.size_preview);
 
-        adapter = new SizeListViewAdapter(getActivity(), presenter.getSizeList());
+        adapter = new SizeListViewAdapter(getActivity(), mSettingPresenter.getSizeList());
         if (sizeSelectList == null)
             sizeSelectList = new Vector<>();
         for (int i = 0; i < sizeSelectList.size(); i++) {
@@ -89,8 +90,8 @@ public class SizeSelectDialogFragment extends DialogFragment {
         updateTextView();
     }
 
-    public void setPresenter(PurchasePresenterImpl presenter) {
-        this.presenter = presenter;
+    public void setPresenter(SettingPresenterImpl presenter) {
+        this.mSettingPresenter = presenter;
     }
 
     public void setListener(OnSizeSelectedListener listener) {

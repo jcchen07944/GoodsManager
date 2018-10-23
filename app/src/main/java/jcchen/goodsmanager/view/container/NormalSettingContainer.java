@@ -3,9 +3,10 @@ package jcchen.goodsmanager.view.container;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+import android.widget.FrameLayout;
 
 
-public class NormalSettingContainer extends ConstraintLayout implements Container {
+public class NormalSettingContainer extends FrameLayout implements Container {
 
     private Context context;
 

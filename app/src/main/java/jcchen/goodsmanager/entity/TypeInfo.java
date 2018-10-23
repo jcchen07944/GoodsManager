@@ -1,6 +1,7 @@
 package jcchen.goodsmanager.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -11,17 +12,17 @@ public class TypeInfo implements Serializable {
 
     private String Type;
 
-    private Vector<String> Column;
+    private ArrayList<String> Column;
 
     public TypeInfo(String Type) {
         this.Type = Type;
     }
 
-    public TypeInfo(String Type, Vector<String> Column) {
+    public TypeInfo(String Type, ArrayList<String> Column) {
         this.Type = Type;
         if (Column == null)
-            Column = new Vector<>();
-        this.Column = (Vector<String>) Column.clone();
+            Column = new ArrayList<>();
+        this.Column = (ArrayList<String>) Column.clone();
     }
 
     public String getType() {
@@ -32,11 +33,11 @@ public class TypeInfo implements Serializable {
         Type = type;
     }
 
-    public Vector<String> getColumn() {
+    public ArrayList<String> getColumn() {
         return Column;
     }
 
-    public void setColumn(Vector<String> column) {
+    public void setColumn(ArrayList<String> column) {
         Column = column;
     }
 }

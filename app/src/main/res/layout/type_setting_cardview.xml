@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/type_setting_cardview_style"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp"
+    app:cardPreventCornerOverlap="false">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorObjectBackground"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/type_setting_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/colorTextOnBackground"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="類型" />
+
+        <LinearLayout
+            android:id="@+id/type_setting_column_layout_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/type_setting_img"
+            app:layout_constraintStart_toEndOf="@id/type_setting_name"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/size_column_1"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" : "
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/type_setting_column_1"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="欄位1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/size_column_2"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" : "
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/type_setting_column_2"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="欄位2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/type_setting_column_layout_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/type_setting_img"
+            app:layout_constraintStart_toEndOf="@id/type_setting_name"
+            app:layout_constraintTop_toBottomOf="@+id/type_setting_column_layout_1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/size_column_3"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" : "
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/type_setting_column_3"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="欄位3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/size_column_4"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" : "
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/type_setting_column_4"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="欄位4" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/type_setting_column_layout_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/type_setting_img"
+            app:layout_constraintStart_toEndOf="@id/type_setting_name"
+            app:layout_constraintTop_toBottomOf="@+id/type_setting_column_layout_2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/size_column_5"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" : "
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/type_setting_column_5"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="欄位5" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/size_column_6"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" : "
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/type_setting_column_6"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="欄位6" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/type_setting_column_layout_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/type_setting_img"
+            app:layout_constraintStart_toEndOf="@id/type_setting_name"
+            app:layout_constraintTop_toBottomOf="@+id/type_setting_column_layout_3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/size_column_7"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" : "
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/type_setting_column_7"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="欄位7" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/size_column_8"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" : "
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/type_setting_column_8"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextHint"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="欄位8" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/type_setting_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_menu_dark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
