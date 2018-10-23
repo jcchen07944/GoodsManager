@@ -6,12 +6,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Vector;
 
-import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
-import jcchen.goodsmanager.entity.SizeInfo;
-import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.PurchasePresenter;
 import jcchen.goodsmanager.view.MainActivity;
 

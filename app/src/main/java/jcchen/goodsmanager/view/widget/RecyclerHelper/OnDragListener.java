@@ -1,5 +1,7 @@
 package jcchen.goodsmanager.view.widget.RecyclerHelper;
 
+import java.util.ArrayList;
+
 public interface OnDragListener {
-    void onDragItemListener(int fromPosition, int toPosition);
+    void onDragItemListener(ArrayList list);
 }

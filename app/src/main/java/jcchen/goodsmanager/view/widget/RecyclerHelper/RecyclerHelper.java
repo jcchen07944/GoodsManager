@@ -23,27 +23,23 @@ public final class RecyclerHelper<T> extends Callback {
         return this.onDragListener;
     }
 
-    public void setOnDragListener(OnDragListener var1) {
-        this.onDragListener = var1;
-    }
-
     public OnSwipeListener getOnSwipeListener() {
         return this.onSwipeListener;
-    }
-
-    public void setOnSwipeListener(OnSwipeListener var1) {
-        this.onSwipeListener = var1;
     }
 
     public void onMoved(int fromPosition, int toPosition) {
         if (disablePosList != null) {
             for (int i = 0; i < disablePosList.size(); i++) {
-                if (fromPosition == disablePosList.get(i) || toPosition == disablePosList.get(i))
+                if (fromPosition == disablePosList.get(i) || toPosition == disablePosList.get(i)) {
+                    this.mAdapter.notifyItemChanged(toPosition);
                     return;
+                }
             }
         }
-        this.list.remove(toPosition);
-        this.mAdapter.notifyItemRemoved(toPosition);
+        if (this.onSwipeListener != null) {
+            onSwipeListener.onSwipeConfirm(list, mAdapter, toPosition);
+            onSwipeListener.onSwipeItemListener();
+        }
     }
 
     public void onItemMoved(int fromPosition, int toPosition) {
@@ -55,6 +51,9 @@ public final class RecyclerHelper<T> extends Callback {
         }
         Collections.swap((List)this.list, fromPosition, toPosition);
         this.mAdapter.notifyItemMoved(fromPosition, toPosition);
+        if (onDragListener != null) {
+            onDragListener.onDragItemListener(list);
+        }
     }
 
     public int getMovementFlags(RecyclerView recyclerView, ViewHolder viewHolder) {
@@ -81,10 +80,6 @@ public final class RecyclerHelper<T> extends Callback {
         }
 
         this.onItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-        if (this.onDragListener != null) {
-            this.onDragListener.onDragItemListener(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-        }
-
         return true;
     }
 
@@ -94,10 +89,6 @@ public final class RecyclerHelper<T> extends Callback {
         }
 
         this.onMoved(viewHolder.getOldPosition(), viewHolder.getAdapterPosition());
-        if (this.onSwipeListener != null) {
-            this.onSwipeListener.onSwipeItemListener();
-        }
-
     }
 
     public boolean isLongPressDragEnabled() {
@@ -124,12 +115,12 @@ public final class RecyclerHelper<T> extends Callback {
         return this;
     }
 
-    public RecyclerHelper setOnDragItemListener(OnDragListener onDragListener) {
+    public RecyclerHelper setOnDragListener(OnDragListener onDragListener) {
         this.onDragListener = onDragListener;
         return this;
     }
 
-    public RecyclerHelper setOnSwipeItemListener(OnSwipeListener onSwipeListener) {
+    public RecyclerHelper setOnSwipeListener(OnSwipeListener onSwipeListener) {
         this.onSwipeListener = onSwipeListener;
         return this;
     }

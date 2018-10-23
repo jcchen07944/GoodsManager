@@ -21,6 +21,7 @@ public class SettingPresenterImpl implements SettingPresenter {
         this.context = context;
     }
 
+    @Override
     public void saveExchangeRate(float exRate) {
         try {
             String fileName = "ExchangeRate";
@@ -33,6 +34,7 @@ public class SettingPresenterImpl implements SettingPresenter {
         }
     }
 
+    @Override
     public float getExchangeRate() {
         File dir = context.getFilesDir();
         File[] subFiles = dir.listFiles();
@@ -58,22 +60,169 @@ public class SettingPresenterImpl implements SettingPresenter {
     }
 
 
-    public void addType(TypeInfo typeInfo) {
 
+    @Override
+    public void saveType(ArrayList<TypeInfo> list) {
+
+        ArrayList<TypeInfo> typeList = (ArrayList<TypeInfo>) list.clone();
+
+        if (typeList.size() == 0)
+            typeList = getDefaultTypeList();
+
+        for (int i = typeList.size() - 1; i >= 0; i--)
+            if (typeList.get(i) == null)
+                typeList.remove(i);
+
+        if (typeList.size() == 0)
+            typeList = getDefaultTypeList();
+
+        try {
+            String fileName = "TypeList";
+            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            mFileOutputStream.write(MainActivity.toByteArray(typeList));
+            mFileOutputStream.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public void addColor(ColorInfo colorInfo) {
+    @Override
+    public void saveColor(ArrayList<ColorInfo> list) {
 
+        ArrayList<ColorInfo> colorList = (ArrayList<ColorInfo>) list.clone();
+
+        if (colorList.size() == 0)
+            colorList = getDefaultColorList();
+
+        for (int i = colorList.size() - 1; i >= 0; i--)
+            if (colorList.get(i) == null)
+                colorList.remove(i);
+
+        if (colorList.size() == 0)
+            colorList = getDefaultColorList();
+
+        try {
+            String fileName = "ColorList";
+            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            mFileOutputStream.write(MainActivity.toByteArray(colorList));
+            mFileOutputStream.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
-    public void addSize(SizeInfo sizeInfo) {
+    @Override
+    public void saveSize(ArrayList<SizeInfo> list) {
 
+        ArrayList<SizeInfo> sizeList = (ArrayList<SizeInfo>) list.clone();
+
+        if (sizeList.size() == 0)
+            sizeList = getDefaultSizeList();
+
+        for (int i = sizeList.size() - 1; i >= 0; i--)
+            if (sizeList.get(i) == null)
+                sizeList.remove(i);
+
+        if (sizeList.size() == 0)
+            sizeList = getDefaultSizeList();
+
+        try {
+            String fileName = "SizeList";
+            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            mFileOutputStream.write(MainActivity.toByteArray(sizeList));
+            mFileOutputStream.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
-    /* Get type list from model(maybe from DB or from setting) */
+    /**
+     *  Get type list from model(maybe from DB or from setting)
+     *
+     *  Now getting from setting.
+     **/
     @Override
     public ArrayList<TypeInfo> getTypeList() {
-        // Now using static list.
+        File dir = context.getFilesDir();
+        File[] subFiles = dir.listFiles();
+        if (subFiles != null) {
+            FileInputStream mFileInputStream;
+            for (File file : subFiles) {
+                try {
+                    if (!file.getName().contains("TypeList"))
+                        continue;
+
+                    byte buffer[] = new byte[(int) file.length()];
+                    mFileInputStream = context.openFileInput(file.getName());
+                    mFileInputStream.read(buffer);
+                    mFileInputStream.close();
+                    return (ArrayList<TypeInfo>) MainActivity.toObject(buffer);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        ArrayList<TypeInfo> typeList = getDefaultTypeList();
+        saveType(typeList);
+        return typeList;
+    }
+
+    @Override
+    public ArrayList<ColorInfo> getColorList() {
+        File dir = context.getFilesDir();
+        File[] subFiles = dir.listFiles();
+        if (subFiles != null) {
+            FileInputStream mFileInputStream;
+            for (File file : subFiles) {
+                try {
+                    if (!file.getName().contains("ColorList"))
+                        continue;
+
+                    byte buffer[] = new byte[(int) file.length()];
+                    mFileInputStream = context.openFileInput(file.getName());
+                    mFileInputStream.read(buffer);
+                    mFileInputStream.close();
+                    return (ArrayList<ColorInfo>) MainActivity.toObject(buffer);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        ArrayList<ColorInfo> colorList = getDefaultColorList();
+        saveColor(colorList);
+        return colorList;
+    }
+
+    @Override
+    public ArrayList<SizeInfo> getSizeList() {
+        File dir = context.getFilesDir();
+        File[] subFiles = dir.listFiles();
+        if (subFiles != null) {
+            FileInputStream mFileInputStream;
+            for (File file : subFiles) {
+                try {
+                    if (!file.getName().contains("SizeList"))
+                        continue;
+
+                    byte buffer[] = new byte[(int) file.length()];
+                    mFileInputStream = context.openFileInput(file.getName());
+                    mFileInputStream.read(buffer);
+                    mFileInputStream.close();
+                    return (ArrayList<SizeInfo>) MainActivity.toObject(buffer);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        ArrayList<SizeInfo> sizeList = getDefaultSizeList();
+        saveSize(sizeList);
+        return sizeList;
+    }
+
+    private ArrayList<TypeInfo> getDefaultTypeList() {
         ArrayList<TypeInfo> typeList = new ArrayList<>();
         ArrayList<String> column = new ArrayList<>();
         column.add("全長");
@@ -128,9 +277,7 @@ public class SettingPresenterImpl implements SettingPresenter {
         return typeList;
     }
 
-    @Override
-    public ArrayList<ColorInfo> getColorList() {
-        // Now using static list.
+    private ArrayList<ColorInfo> getDefaultColorList() {
         ArrayList<ColorInfo> colorList = new ArrayList<>();
         colorList.add(new ColorInfo("丈青", "NV"));
         colorList.add(new ColorInfo("黑", "KK"));
@@ -140,9 +287,7 @@ public class SettingPresenterImpl implements SettingPresenter {
         return colorList;
     }
 
-    @Override
-    public ArrayList<SizeInfo> getSizeList() {
-        // Now using static list.
+    private ArrayList<SizeInfo> getDefaultSizeList() {
         ArrayList<SizeInfo> sizeList = new ArrayList<>();
         sizeList.add(new SizeInfo("XS", "XS"));
         sizeList.add(new SizeInfo("S", "S"));

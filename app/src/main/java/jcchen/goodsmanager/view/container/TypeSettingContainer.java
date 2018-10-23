@@ -1,6 +1,8 @@
 package jcchen.goodsmanager.view.container;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +22,9 @@ import java.util.ArrayList;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
+import jcchen.goodsmanager.view.fragment.EditSettingDialogFragment;
+import jcchen.goodsmanager.view.listener.OnSettingEditListener;
+import jcchen.goodsmanager.view.widget.RecyclerHelper.OnSwipeListener;
 import jcchen.goodsmanager.view.widget.RecyclerHelper.RecyclerHelper;
 
 public class TypeSettingContainer extends FrameLayout implements Container {
@@ -37,6 +43,7 @@ public class TypeSettingContainer extends FrameLayout implements Container {
     private ArrayList<TypeInfo> typeList;
 
     private SettingPresenterImpl mSettingPresenter;
+    private EditSettingDialogFragment mEditSettingDialogFragment;
 
 
     public TypeSettingContainer(Context context) {
@@ -55,7 +62,6 @@ public class TypeSettingContainer extends FrameLayout implements Container {
     public void init() {
         mSettingPresenter = new SettingPresenterImpl(context);
         typeList = mSettingPresenter.getTypeList();
-        typeList.add(0, null); // First Card.
 
         mRecyclerViewAdapter = new RecyclerViewAdapter();
         mRecyclerHelper = new RecyclerHelper<TypeInfo>(typeList, (RecyclerView.Adapter) mRecyclerViewAdapter);
@@ -68,9 +74,47 @@ public class TypeSettingContainer extends FrameLayout implements Container {
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         addView(mRecyclerView);
 
-        mRecyclerHelper.setRecyclerItemDragEnabled(true);
+        mRecyclerHelper.setRecyclerItemDragEnabled(true).setOnDragListener(new jcchen.goodsmanager.view.widget.RecyclerHelper.OnDragListener() {
+            @Override
+            public void onDragItemListener(ArrayList list) {
+                typeList = (ArrayList<TypeInfo>) list.clone();
+            }
+        });
+        mRecyclerHelper.setRecyclerItemSwipeEnabled(true).setOnSwipeListener(new OnSwipeListener() {
+            @Override
+            public void onSwipeItemListener() {
+
+            }
+
+            @Override
+            public void onSwipeConfirm(final ArrayList list, final RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter, final int position) {
+                new android.support.v7.app.AlertDialog.Builder(context)
+                        .setMessage(R.string.delete_confirm_message)
+                        .setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                list.remove(position);
+                                mAdapter.notifyItemRemoved(position);
+                                typeList = (ArrayList<TypeInfo>) list.clone();
+                            }
+                        })
+                        .setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mAdapter.notifyItemChanged(position);
+                            }
+                        })
+                        .show();
+            }
+        });
         mRecyclerHelper.addDisablePos(0);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mSettingPresenter.saveType(typeList);
     }
 
     @Override
@@ -88,7 +132,13 @@ public class TypeSettingContainer extends FrameLayout implements Container {
 
     }
 
-    private class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+    private class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements OnSettingEditListener {
+
+        private int selectedPos;
+
+        RecyclerViewAdapter() {
+            typeList.add(0, null); // First Card.
+        }
 
         @Override
         public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -110,7 +160,11 @@ public class TypeSettingContainer extends FrameLayout implements Container {
                     viewHolder.Add.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            selectedPos = position;
+                            mEditSettingDialogFragment = new EditSettingDialogFragment();
+                            mEditSettingDialogFragment.setResID(R.layout.type_edit_setting_layout);
+                            mEditSettingDialogFragment.setListener(mRecyclerViewAdapter);
+                            mEditSettingDialogFragment.show(((Activity) context).getFragmentManager(), EditSettingDialogFragment.TAG);
                         }
                     });
                     break;
@@ -124,6 +178,16 @@ public class TypeSettingContainer extends FrameLayout implements Container {
                     viewHolder.Column6.setText(safeGetText(typeList.get(position).getColumn().get(5)));
                     viewHolder.Column7.setText(safeGetText(typeList.get(position).getColumn().get(6)));
                     viewHolder.Column8.setText(safeGetText(typeList.get(position).getColumn().get(7)));
+                    viewHolder.Edit.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            selectedPos = position;
+                            mEditSettingDialogFragment = new EditSettingDialogFragment();
+                            mEditSettingDialogFragment.setResID(R.layout.type_edit_setting_layout);
+                            mEditSettingDialogFragment.setListener(mRecyclerViewAdapter);
+                            mEditSettingDialogFragment.show(((Activity) context).getFragmentManager(), EditSettingDialogFragment.TAG);
+                        }
+                    });
                     break;
             }
         }
@@ -138,13 +202,74 @@ public class TypeSettingContainer extends FrameLayout implements Container {
             return (position == 0) ? FIRST_CARD : DEFAULT_CARD;
         }
 
+        @Override
+        public void onEditStart(final View view) {
+            switch (getItemViewType(selectedPos)) {
+                case FIRST_CARD:
+                    ((TextView) view.findViewById(R.id.type_edit_setting_title)).setText(R.string.add);
+                    break;
+                case DEFAULT_CARD:
+                    ((TextView) view.findViewById(R.id.type_edit_setting_title)).setText(R.string.edit);
+                    ((EditText) view.findViewById(R.id.type_edit_setting_type)).setText(typeList.get(selectedPos).getType());
+                    ((EditText) view.findViewById(R.id.type_edit_setting_column_1)).setText(typeList.get(selectedPos).getColumn().get(0));
+                    ((EditText) view.findViewById(R.id.type_edit_setting_column_2)).setText(typeList.get(selectedPos).getColumn().get(1));
+                    ((EditText) view.findViewById(R.id.type_edit_setting_column_3)).setText(typeList.get(selectedPos).getColumn().get(2));
+                    ((EditText) view.findViewById(R.id.type_edit_setting_column_4)).setText(typeList.get(selectedPos).getColumn().get(3));
+                    ((EditText) view.findViewById(R.id.type_edit_setting_column_5)).setText(typeList.get(selectedPos).getColumn().get(4));
+                    ((EditText) view.findViewById(R.id.type_edit_setting_column_6)).setText(typeList.get(selectedPos).getColumn().get(5));
+                    ((EditText) view.findViewById(R.id.type_edit_setting_column_7)).setText(typeList.get(selectedPos).getColumn().get(6));
+                    ((EditText) view.findViewById(R.id.type_edit_setting_column_8)).setText(typeList.get(selectedPos).getColumn().get(7));
+                    break;
+            }
+
+            view.findViewById(R.id.type_edit_setting_confirm).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onEditEnd(view);
+                    mEditSettingDialogFragment.dismiss();
+                }
+            });
+            view.findViewById(R.id.type_edit_setting_cancel).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mEditSettingDialogFragment.dismiss();
+                }
+            });
+        }
+
+        @Override
+        public void onEditEnd(View view) {
+
+            ArrayList<String> columnList = new ArrayList<>();
+            columnList.add(((EditText) view.findViewById(R.id.type_edit_setting_column_1)).getText().toString());
+            columnList.add(((EditText) view.findViewById(R.id.type_edit_setting_column_2)).getText().toString());
+            columnList.add(((EditText) view.findViewById(R.id.type_edit_setting_column_3)).getText().toString());
+            columnList.add(((EditText) view.findViewById(R.id.type_edit_setting_column_4)).getText().toString());
+            columnList.add(((EditText) view.findViewById(R.id.type_edit_setting_column_5)).getText().toString());
+            columnList.add(((EditText) view.findViewById(R.id.type_edit_setting_column_6)).getText().toString());
+            columnList.add(((EditText) view.findViewById(R.id.type_edit_setting_column_7)).getText().toString());
+            columnList.add(((EditText) view.findViewById(R.id.type_edit_setting_column_8)).getText().toString());
+            TypeInfo typeInfo = new TypeInfo(((EditText) view.findViewById(R.id.type_edit_setting_type)).getText().toString(), columnList);
+
+            switch (getItemViewType(selectedPos)) {
+                case FIRST_CARD:
+                    typeList.add(typeInfo);
+                    mRecyclerViewAdapter.notifyDataSetChanged();
+                    break;
+                case DEFAULT_CARD:
+                    typeList.set(selectedPos, typeInfo);
+                    mRecyclerViewAdapter.notifyItemChanged(selectedPos);
+                    break;
+            }
+        }
+
         private String safeGetText(String text) {
             return text.equals("") ? "(無)" : text;
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
             public TextView Name, Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8;
-            public ImageView Add;
+            public ImageView Add, Edit;
             public ViewHolder(View view) {
                 super(view);
                 Name = (TextView) view.findViewById(R.id.type_setting_name);
@@ -157,6 +282,7 @@ public class TypeSettingContainer extends FrameLayout implements Container {
                 Column7 = (TextView) view.findViewById(R.id.type_setting_column_7);
                 Column8 = (TextView) view.findViewById(R.id.type_setting_column_8);
                 Add = (ImageView) view.findViewById(R.id.setting_card_add);
+                Edit = (ImageView) view.findViewById(R.id.type_setting_img);
             }
         }
     }

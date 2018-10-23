@@ -9,9 +9,9 @@ import jcchen.goodsmanager.entity.TypeInfo;
 public interface SettingPresenter {
     void saveExchangeRate(float exRate);
     float getExchangeRate();
-    void addType(TypeInfo typeInfo);
-    void addColor(ColorInfo colorInfo);
-    void addSize(SizeInfo sizeInfo);
+    void saveType(ArrayList<TypeInfo> typeList);
+    void saveColor(ArrayList<ColorInfo> colorList);
+    void saveSize(ArrayList<SizeInfo> sizeList);
     ArrayList<TypeInfo> getTypeList();
     ArrayList<ColorInfo> getColorList();
     ArrayList<SizeInfo> getSizeList();

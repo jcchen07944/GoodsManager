@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -19,13 +20,14 @@ import jcchen.goodsmanager.view.container.ColorSettingContainer;
 import jcchen.goodsmanager.view.container.NormalSettingContainer;
 import jcchen.goodsmanager.view.container.SizeSettingContainer;
 import jcchen.goodsmanager.view.container.TypeSettingContainer;
+import jcchen.goodsmanager.view.widget.NonSwipeViewPager;
 
 public class SettingDialogFragment extends DialogFragment {
 
     public static final String TAG = "SettingDialogFragment";
 
     private TabLayout mTabLayout;
-    private ViewPager mViewPager;
+    private NonSwipeViewPager mViewPager;
 
     private Vector<FrameLayout> pageList;
     private String[] pageTitle;
@@ -49,27 +51,10 @@ public class SettingDialogFragment extends DialogFragment {
         pageTitle[3] = getActivity().getResources().getString(R.string.size);
         pageList.add(new SizeSettingContainer(getActivity()));
 
-        mViewPager = (ViewPager) view.findViewById(R.id.setting_pager);
+        mViewPager = (NonSwipeViewPager) view.findViewById(R.id.setting_pager);
         mViewPager.setAdapter(new ViewPagerAdapter());
         mTabLayout = (TabLayout) view.findViewById(R.id.setting_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
     }
 
     private class ViewPagerAdapter extends PagerAdapter {
