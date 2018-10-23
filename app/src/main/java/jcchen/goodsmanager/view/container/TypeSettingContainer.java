@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -106,10 +107,14 @@ public class TypeSettingContainer extends FrameLayout implements Container {
         public void onBindViewHolder(final RecyclerViewAdapter.ViewHolder viewHolder, final int position) {
             switch (getItemViewType(position)) {
                 case FIRST_CARD:
-                    viewHolder.type = FIRST_CARD;
+                    viewHolder.Add.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    });
                     break;
                 case DEFAULT_CARD:
-                    viewHolder.type = DEFAULT_CARD;
                     viewHolder.Name.setText(typeList.get(position).getType());
                     viewHolder.Column1.setText(safeGetText(typeList.get(position).getColumn().get(0)));
                     viewHolder.Column2.setText(safeGetText(typeList.get(position).getColumn().get(1)));
@@ -138,8 +143,8 @@ public class TypeSettingContainer extends FrameLayout implements Container {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
-            public int type;
             public TextView Name, Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8;
+            public ImageView Add;
             public ViewHolder(View view) {
                 super(view);
                 Name = (TextView) view.findViewById(R.id.type_setting_name);
@@ -151,6 +156,7 @@ public class TypeSettingContainer extends FrameLayout implements Container {
                 Column6 = (TextView) view.findViewById(R.id.type_setting_column_6);
                 Column7 = (TextView) view.findViewById(R.id.type_setting_column_7);
                 Column8 = (TextView) view.findViewById(R.id.type_setting_column_8);
+                Add = (ImageView) view.findViewById(R.id.setting_card_add);
             }
         }
     }

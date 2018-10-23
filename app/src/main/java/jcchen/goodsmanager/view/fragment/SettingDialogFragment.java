@@ -32,9 +32,8 @@ public class SettingDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.setting_dialog_layout, container);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        return view;
+        return inflater.inflate(R.layout.setting_dialog_layout, container);
     }
 
     @Override
