@@ -11,7 +11,6 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
@@ -100,7 +99,7 @@ public class ColorListViewAdapter extends BaseAdapter implements Filterable {
             FilterResults mFilterResults = new FilterResults();
 
             if(constraint != null && constraint.length() > 0) {
-                Vector<ColorInfo> newColorList = new Vector<>();
+                ArrayList<ColorInfo> newColorList = new ArrayList<>();
                 for(int i = 0; i < filterList.size(); i++) {
                     if(filterList.get(i).getName().contains(constraint.toString())) {
                         newColorList.add(filterList.get(i));
