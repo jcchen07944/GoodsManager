@@ -100,6 +100,22 @@ public class ColorListViewAdapter extends BaseAdapter implements Filterable {
         return selectList[id];
     }
 
+
+    public ArrayList<ColorInfo> sort(ArrayList<ColorInfo> unSortList) {
+        if (unSortList.size() == 0)
+            return unSortList;
+
+        ArrayList<ColorInfo> newList = new ArrayList<>();
+        for (int i = 0; i < colorList.size(); i++)
+            for (int j = 0; j < unSortList.size(); j++)
+                if (colorList.get(i).getName().equals(unSortList.get(j).getName())) {
+                    newList.add(unSortList.get(j));
+                    unSortList.remove(j);
+                    break;
+                }
+        return newList;
+    }
+
     private class ColorFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {

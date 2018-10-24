@@ -142,6 +142,8 @@ public class ColorSelectDialogFragment extends DialogFragment {
     }
 
     private void updateTextView() {
+        colorSelectList = adapter.sort(colorSelectList);
+
         String text = getResources().getString(R.string.color) + " : ";
         for(int i = 0; i < colorSelectList.size(); i++) {
             if(i > 0)

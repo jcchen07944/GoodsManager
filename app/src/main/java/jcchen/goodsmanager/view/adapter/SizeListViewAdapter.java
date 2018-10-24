@@ -79,6 +79,21 @@ public class SizeListViewAdapter extends BaseAdapter {
         return false;
     }
 
+    public ArrayList<SizeInfo> sort(ArrayList<SizeInfo> unSortList) {
+        if (unSortList.size() == 0)
+            return unSortList;
+
+        ArrayList<SizeInfo> newList = new ArrayList<>();
+        for (int i = 0; i < sizeList.size(); i++)
+            for (int j = 0; j < unSortList.size(); j++)
+                if (sizeList.get(i).getName().equals(unSortList.get(j).getName())) {
+                    newList.add(unSortList.get(j));
+                    unSortList.remove(j);
+                    break;
+                }
+        return newList;
+    }
+
     public void setSelected(int id, boolean state) {
         selectList[id] = state;
         notifyDataSetChanged();

@@ -85,7 +85,6 @@ public class SizeSelectDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
-
         updateTextView();
     }
 
@@ -107,6 +106,8 @@ public class SizeSelectDialogFragment extends DialogFragment {
     }
 
     private void updateTextView() {
+        sizeSelectList = adapter.sort(sizeSelectList);
+
         String text = getResources().getString(R.string.size) + " : ";
         for(int i = 0; i < sizeSelectList.size(); i++) {
             if(i > 0)
