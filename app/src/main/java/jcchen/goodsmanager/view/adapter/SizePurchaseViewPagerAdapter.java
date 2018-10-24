@@ -6,7 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import java.util.Vector;
+
+import java.util.ArrayList;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.PurchaseInfo;
@@ -15,9 +16,9 @@ import jcchen.goodsmanager.view.container.SizePurchaseViewPagerContainer;
 public class SizePurchaseViewPagerAdapter extends PagerAdapter {
 
     private Context context;
-    private Vector<SizePurchaseViewPagerContainer> pageList;
+    private ArrayList<SizePurchaseViewPagerContainer> pageList;
 
-    public SizePurchaseViewPagerAdapter(Context context, Vector<SizePurchaseViewPagerContainer> pageList) {
+    public SizePurchaseViewPagerAdapter(Context context, ArrayList<SizePurchaseViewPagerContainer> pageList) {
         this.context = context;
         this.pageList = pageList;
     }
@@ -43,8 +44,8 @@ public class SizePurchaseViewPagerAdapter extends PagerAdapter {
         container.removeView((View) object);
     }
 
-    public Vector<PurchaseInfo.SizeStruct> collectSizeStruct() {
-        Vector<PurchaseInfo.SizeStruct> sizeStructList = new Vector<>();
+    public ArrayList<PurchaseInfo.SizeStruct> collectSizeStruct() {
+        ArrayList<PurchaseInfo.SizeStruct> sizeStructList = new ArrayList<>();
         for (int i = 0; i < pageList.size(); i++) {
             sizeStructList.add(new PurchaseInfo.SizeStruct());
             sizeStructList.get(i).setSizeName(((EditText) pageList.get(i).findViewById(R.id.content_size_text)).getText().toString());

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.CirclePageIndicator;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.PurchaseInfo;
@@ -24,7 +24,7 @@ public class SizeDetailDialogFragment extends DialogFragment {
 
     public static final String TAG = "SizeDetailDialogFragment";
 
-    private Vector<PurchaseInfo.SizeStruct> sizeDetail;
+    private ArrayList<PurchaseInfo.SizeStruct> sizeDetail;
     private TypeInfo typeInfo;
 
     private ViewPager mViewPager;
@@ -39,7 +39,7 @@ public class SizeDetailDialogFragment extends DialogFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        Vector<SizeDetailViewPagerContainer> pageList = new Vector<>();
+        ArrayList<SizeDetailViewPagerContainer> pageList = new ArrayList<>();
         for (int i = 0; i < sizeDetail.size(); i++) {
             pageList.add(new SizeDetailViewPagerContainer(getActivity()));
             if (!sizeDetail.get(i).getSizeName().equals(""))
@@ -89,7 +89,7 @@ public class SizeDetailDialogFragment extends DialogFragment {
         mCirclePageIndicator.setViewPager(mViewPager);
     }
 
-    public void setSizeDetail(Vector<PurchaseInfo.SizeStruct> sizeDetail) {
+    public void setSizeDetail(ArrayList<PurchaseInfo.SizeStruct> sizeDetail) {
         this.sizeDetail = sizeDetail;
     }
 

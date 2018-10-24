@@ -11,11 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.SizeInfo;
-import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.adapter.SizeListViewAdapter;
 import jcchen.goodsmanager.view.listener.OnSizeSelectedListener;
@@ -33,7 +32,7 @@ public class SizeSelectDialogFragment extends DialogFragment {
     private OnSizeSelectedListener listener;
     private SizeListViewAdapter adapter;
 
-    private Vector<SizeInfo> sizeSelectList;
+    private ArrayList<SizeInfo> sizeSelectList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class SizeSelectDialogFragment extends DialogFragment {
 
         adapter = new SizeListViewAdapter(getActivity(), mSettingPresenter.getSizeList());
         if (sizeSelectList == null)
-            sizeSelectList = new Vector<>();
+            sizeSelectList = new ArrayList<>();
         for (int i = 0; i < sizeSelectList.size(); i++) {
             long id = adapter.getItemId(sizeSelectList.get(i).getName());
             if(id == -1)
@@ -98,10 +97,13 @@ public class SizeSelectDialogFragment extends DialogFragment {
         this.listener = listener;
     }
 
-    public void loadSavedData(Vector<SizeInfo> sizeSelectList) {
+    public void loadSavedData(ArrayList<SizeInfo> sizeSelectList) {
         if (sizeSelectList == null)
-            sizeSelectList = new Vector<>();
-        this.sizeSelectList = (Vector<SizeInfo>) sizeSelectList.clone();
+            sizeSelectList = new ArrayList<>();
+        this.sizeSelectList = new ArrayList<>();
+        for (int i = 0; i < sizeSelectList.size(); i++)
+            if (adapter.isExist(sizeSelectList.get(i)))
+                this.sizeSelectList.add(sizeSelectList.get(i));
     }
 
     private void updateTextView() {

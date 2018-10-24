@@ -5,16 +5,16 @@ import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import jcchen.goodsmanager.view.container.SizeDetailViewPagerContainer;
 
 public class SizeDetailViewPagerAdapter extends PagerAdapter {
 
     private Context context;
-    private Vector<SizeDetailViewPagerContainer> pageList;
+    private ArrayList<SizeDetailViewPagerContainer> pageList;
 
-    public SizeDetailViewPagerAdapter(Context context, Vector<SizeDetailViewPagerContainer> pageList) {
+    public SizeDetailViewPagerAdapter(Context context, ArrayList<SizeDetailViewPagerContainer> pageList) {
         this.context = context;
         this.pageList = pageList;
     }

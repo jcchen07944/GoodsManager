@@ -1,7 +1,7 @@
 package jcchen.goodsmanager.entity;
 
 import java.io.Serializable;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Created by JCChen on 2018/9/21.
@@ -123,10 +123,10 @@ public class PurchaseInfo implements Serializable {
     private int IncomeK;
     private int IncomeT;
     private boolean Flexible;
-    private Vector<ColorInfo> ColorList;
+    private ArrayList<ColorInfo> ColorList;
     private String Material;
-    private Vector<SizeInfo> SizeList;
-    private Vector<SizeStruct> SizeStructList;
+    private ArrayList<SizeInfo> SizeList;
+    private ArrayList<SizeStruct> SizeStructList;
 
     public String getFileName() {
         return FileName;
@@ -224,11 +224,11 @@ public class PurchaseInfo implements Serializable {
         Flexible = flexible;
     }
 
-    public Vector<ColorInfo> getColorList() {
+    public ArrayList<ColorInfo> getColorList() {
         return ColorList;
     }
 
-    public void setColorList(Vector<ColorInfo> colorList) {
+    public void setColorList(ArrayList<ColorInfo> colorList) {
         ColorList = colorList;
     }
 
@@ -240,19 +240,19 @@ public class PurchaseInfo implements Serializable {
         Material = material;
     }
 
-    public Vector<SizeInfo> getSizeList() {
+    public ArrayList<SizeInfo> getSizeList() {
         return SizeList;
     }
 
-    public void setSizeList(Vector<SizeInfo> sizeList) {
+    public void setSizeList(ArrayList<SizeInfo> sizeList) {
         SizeList = sizeList;
     }
 
-    public Vector<SizeStruct> getSizeStructList() {
+    public ArrayList<SizeStruct> getSizeStructList() {
         return SizeStructList;
     }
 
-    public void setSizeStructList(Vector<SizeStruct> sizeStructList) {
+    public void setSizeStructList(ArrayList<SizeStruct> sizeStructList) {
         SizeStructList = sizeStructList;
     }
 }

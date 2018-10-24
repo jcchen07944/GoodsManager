@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
 
 public class SizeListViewAdapter extends BaseAdapter {
@@ -69,6 +70,13 @@ public class SizeListViewAdapter extends BaseAdapter {
             sizeName.setTextColor(ContextCompat.getColor(context, R.color.colorTextOnBackground));
         }
         return view;
+    }
+
+    public boolean isExist(SizeInfo sizeInfo) {
+        for (int i = 0; i < sizeList.size(); i++)
+            if (sizeList.get(i).getName().equals(sizeInfo.getName()))
+                return true;
+        return false;
     }
 
     public void setSelected(int id, boolean state) {

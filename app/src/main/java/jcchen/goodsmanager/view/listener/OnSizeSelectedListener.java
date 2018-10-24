@@ -1,9 +1,9 @@
 package jcchen.goodsmanager.view.listener;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import jcchen.goodsmanager.entity.SizeInfo;
 
 public interface OnSizeSelectedListener {
-    void onSizeSelected(Vector<SizeInfo> sizeList);
+    void onSizeSelected(ArrayList<SizeInfo> sizeList);
 }

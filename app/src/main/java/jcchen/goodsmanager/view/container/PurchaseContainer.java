@@ -18,14 +18,13 @@ import android.widget.TextView;
 
 import com.viewpagerindicator.LinePageIndicator;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
-import jcchen.goodsmanager.presenter.SettingPresenter;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.MainActivity;
@@ -57,9 +56,9 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     private PurchasePresenterImpl mPurchasePresenter;
     private SizePurchaseViewPagerAdapter mSizePurchaseViewPagerAdapter;
 
-    private Vector<SizePurchaseViewPagerContainer> pageList;
-    private Vector<ColorInfo> colorSelectList;
-    private Vector<SizeInfo> sizeSelectList;
+    private ArrayList<SizePurchaseViewPagerContainer> pageList;
+    private ArrayList<ColorInfo> colorSelectList;
+    private ArrayList<SizeInfo> sizeSelectList;
 
     private int Mode;
 
@@ -197,14 +196,14 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         mSizeSelectDialogFragment.setPresenter(mSettingPresenter);
         mSizeSelectDialogFragment.setListener(this);
 
-        pageList = new Vector<>();
+        pageList = new ArrayList<>();
         pageList.add(new SizePurchaseViewPagerContainer(context));
         pageList.add(new SizePurchaseViewPagerContainer(context));
         pageList.add(new SizePurchaseViewPagerContainer(context));
         mSizePurchaseViewPagerAdapter = new SizePurchaseViewPagerAdapter(context, pageList);
 
-        colorSelectList = new Vector<>();
-        sizeSelectList = new Vector<>();
+        colorSelectList = new ArrayList<>();
+        sizeSelectList = new ArrayList<>();
     }
 
     @Override
@@ -225,7 +224,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     }
 
     @Override
-    public void onColorSelected(Vector<ColorInfo> colorSelectList) {
+    public void onColorSelected(ArrayList<ColorInfo> colorSelectList) {
         String color = "";
         for (int i = 0; i < colorSelectList.size(); i++) {
             if (i > 0)
@@ -239,7 +238,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     }
 
     @Override
-    public void onSizeSelected(Vector<SizeInfo> sizeSelectList) {
+    public void onSizeSelected(ArrayList<SizeInfo> sizeSelectList) {
         String size = "";
         for (int i = 0; i < sizeSelectList.size(); i++) {
             if (i > 0)

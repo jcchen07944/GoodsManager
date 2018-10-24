@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
@@ -76,7 +75,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         viewHolder.IncomeK.setText(purchaseList.get(position).getIncomeK() + "");
         viewHolder.IncomeT.setText(purchaseList.get(position).getIncomeT() + "");
 
-        Vector<ColorInfo> colorList = purchaseList.get(position).getColorList();
+        ArrayList<ColorInfo> colorList = purchaseList.get(position).getColorList();
         String color = "";
         for (int i = 0; i < colorList.size(); i++) {
             if (i > 0)
@@ -87,7 +86,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
             color = context.getResources().getString(R.string.none_select);
         viewHolder.Color.setText(color);
 
-        Vector<SizeInfo> sizeList = purchaseList.get(position).getSizeList();
+        ArrayList<SizeInfo> sizeList = purchaseList.get(position).getSizeList();
         String size = "";
         for (int i = 0; i < sizeList.size(); i++) {
             if (i > 0)

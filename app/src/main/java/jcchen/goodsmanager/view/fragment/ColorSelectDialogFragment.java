@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
@@ -39,7 +39,7 @@ public class ColorSelectDialogFragment extends DialogFragment {
     private SettingPresenterImpl mSettingPresenter;
     private OnColorSelectedListener listener;
 
-    private Vector<ColorInfo> colorSelectList;
+    private ArrayList<ColorInfo> colorSelectList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class ColorSelectDialogFragment extends DialogFragment {
 
         adapter = new ColorListViewAdapter(getActivity(), mSettingPresenter.getColorList());
         if (colorSelectList == null)
-            colorSelectList = new Vector<>();
+            colorSelectList = new ArrayList<>();
         for (int i = 0; i < colorSelectList.size(); i++) {
             long id = adapter.getItemId(colorSelectList.get(i).getName());
             if(id == -1)
@@ -132,10 +132,13 @@ public class ColorSelectDialogFragment extends DialogFragment {
         this.listener = listener;
     }
 
-    public void loadSavedData(Vector<ColorInfo> colorSelectList) {
+    public void loadSavedData(ArrayList<ColorInfo> colorSelectList) {
         if (colorSelectList == null)
-            colorSelectList = new Vector<>();
-        this.colorSelectList = (Vector<ColorInfo>) colorSelectList.clone();
+            colorSelectList = new ArrayList<>();
+        this.colorSelectList = new ArrayList<>();
+        for (int i = 0; i < colorSelectList.size(); i++)
+            if (adapter.isExist(colorSelectList.get(i)))
+                this.colorSelectList.add(colorSelectList.get(i));
     }
 
     private void updateTextView() {
