@@ -58,7 +58,7 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
         mFocusListView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mFocusListView.setSelection(defaultType == null ? adapter.getCount() / 2 - 1 : adapter.getItemPosition(defaultType));
+                mFocusListView.setSelection(defaultType == null ? adapter.getCount() / 2 : adapter.getItemPosition(defaultType));
                 mFocusListView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
