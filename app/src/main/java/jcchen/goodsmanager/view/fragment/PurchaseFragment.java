@@ -48,4 +48,8 @@ public class PurchaseFragment extends Fragment {
     public void setMode(int Mode) {
         this.Mode = Mode;
     }
+
+    public void clear() {
+        ((PurchaseContainer) savedView).clear();
+    }
 }

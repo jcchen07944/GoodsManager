@@ -167,18 +167,21 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.menu_delete).setVisible(false);
                 menu.findItem(R.id.menu_po).setVisible(false);
                 menu.findItem(R.id.menu_edit).setVisible(false);
+                menu.findItem(R.id.menu_clear).setVisible(false);
                 break;
             case ACTIONBAR_STATE_PURCHASE:
                 menu.findItem(R.id.menu_upload).setVisible(false);
                 menu.findItem(R.id.menu_delete).setVisible(false);
                 menu.findItem(R.id.menu_po).setVisible(false);
                 menu.findItem(R.id.menu_edit).setVisible(false);
+                menu.findItem(R.id.menu_clear).setVisible(true);
                 break;
             case ACTIONBAR_STATE_SELECT_CARD:
                 menu.findItem(R.id.menu_upload).setVisible(false);
                 menu.findItem(R.id.menu_delete).setVisible(true);
                 menu.findItem(R.id.menu_po).setVisible(true);
                 menu.findItem(R.id.menu_edit).setVisible(true);
+                menu.findItem(R.id.menu_clear).setVisible(false);
                 break;
         }
         return true;
@@ -216,6 +219,9 @@ public class MainActivity extends AppCompatActivity {
                 mTypeSelectDialogFragment = new TypeSelectDialogFragment();
                 mTypeSelectDialogFragment.setDefaultType(selectedCard.getTypeInfo());
                 mTypeSelectDialogFragment.show(getFragmentManager(), TypeSelectDialogFragment.TAG);
+                return true;
+            case R.id.menu_clear:
+                mPurchaseFragment.clear();
                 return true;
         }
         return super.onOptionsItemSelected(item);

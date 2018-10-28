@@ -253,6 +253,34 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         this.sizeSelectList = sizeSelectList;
     }
 
+    public void clear() {
+        new AlertDialog.Builder(context)
+                .setMessage(R.string.purchase_clear_confirm)
+                .setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        numbers.setText("");
+                        mall.setText("");
+                        position.setText("");
+                        name.setText("");
+                        listPrice.setText("");
+                        actualPrice.setText("");
+                        incomeK.setText("");
+                        incomeT.setText("");
+                        flexible.setChecked(false);
+                        sizeSelectList.clear();
+                        onSizeSelected(sizeSelectList);
+                        colorSelectList.clear();
+                        onColorSelected(colorSelectList);
+                        material.setText("");
+                        for (int j = 0; j < pageList.size(); j++)
+                            pageList.get(j).showItem(new PurchaseInfo.SizeStruct());
+                    }
+                })
+                .setNegativeButton(R.string.confirm_no, null)
+                .show();
+    }
+
     private boolean checkNecessaryField() {
         return true;
     }
