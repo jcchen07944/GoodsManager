@@ -79,11 +79,13 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         super.onFinishInflate();
 
         purchaseBaseLayout = (ConstraintLayout) findViewById(R.id.purchase_base_layout);
-        purchaseBaseLayout.setOnClickListener(new OnClickListener() {
+        purchaseBaseLayout.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onClick(View view) {
-                InputMethodManager inputMethodManager = (InputMethodManager) ((MainActivity) context).getSystemService(Activity.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(((MainActivity) context).getCurrentFocus().getWindowToken(), 0);
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) ((MainActivity) context).getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(((MainActivity) context).getCurrentFocus().getWindowToken(), 0);
+                }
             }
         });
 

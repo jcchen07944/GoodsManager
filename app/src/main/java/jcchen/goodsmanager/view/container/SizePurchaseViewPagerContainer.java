@@ -72,11 +72,13 @@ public class SizePurchaseViewPagerContainer extends FrameLayout implements Conta
         }
 
         purchaseViewPagerLayout = (ConstraintLayout) view.findViewById(R.id.purchase_viewpager_layout);
-        purchaseViewPagerLayout.setOnClickListener(new OnClickListener() {
+        purchaseViewPagerLayout.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
-            public void onClick(View view) {
-                InputMethodManager inputMethodManager = (InputMethodManager) ((MainActivity) context).getSystemService(Activity.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(((MainActivity) context).getCurrentFocus().getWindowToken(), 0);
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    InputMethodManager inputMethodManager = (InputMethodManager) ((MainActivity) context).getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(((MainActivity) context).getCurrentFocus().getWindowToken(), 0);
+                }
             }
         });
 
