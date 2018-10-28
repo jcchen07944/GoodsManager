@@ -106,9 +106,9 @@ public class ColorListViewAdapter extends BaseAdapter implements Filterable {
             return unSortList;
 
         ArrayList<ColorInfo> newList = new ArrayList<>();
-        for (int i = 0; i < colorList.size(); i++)
+        for (int i = 0; i < filterList.size(); i++)
             for (int j = 0; j < unSortList.size(); j++)
-                if (colorList.get(i).getName().equals(unSortList.get(j).getName())) {
+                if (filterList.get(i).getName().equals(unSortList.get(j).getName())) {
                     newList.add(unSortList.get(j));
                     unSortList.remove(j);
                     break;
