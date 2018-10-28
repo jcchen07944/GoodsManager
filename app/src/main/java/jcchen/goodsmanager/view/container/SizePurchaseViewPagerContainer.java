@@ -3,6 +3,7 @@ package jcchen.goodsmanager.view.container;
 import android.app.Activity;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,23 @@ public class SizePurchaseViewPagerContainer extends FrameLayout implements Conta
         sizeEditText[5] = (EditText) view.findViewById(R.id.purchase_size_6);
         sizeEditText[6] = (EditText) view.findViewById(R.id.purchase_size_7);
         sizeEditText[7] = (EditText) view.findViewById(R.id.purchase_size_8);
+
+        for(int i = 0; i < 8; i++) {
+            final int index = i;
+            sizeEditText[index].setOnFocusChangeListener(new OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean hasFocus) {
+                    sizeEditText[index].setInputType(InputType.TYPE_CLASS_NUMBER);
+                }
+            });
+            sizeEditText[index].setOnLongClickListener(new OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    sizeEditText[index].setInputType(InputType.TYPE_CLASS_TEXT);
+                    return true;
+                }
+            });
+        }
 
         purchaseViewPagerLayout = (ConstraintLayout) view.findViewById(R.id.purchase_viewpager_layout);
         purchaseViewPagerLayout.setOnClickListener(new OnClickListener() {
