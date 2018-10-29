@@ -112,12 +112,6 @@ public class TypeSettingContainer extends FrameLayout implements Container {
     }
 
     @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mSettingPresenter.saveType(typeList);
-    }
-
-    @Override
     public void showItem(Object object) {
 
     }
@@ -129,7 +123,7 @@ public class TypeSettingContainer extends FrameLayout implements Container {
 
     @Override
     public void postResult() {
-
+        mSettingPresenter.saveType(typeList);
     }
 
     private class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements OnSettingEditListener {

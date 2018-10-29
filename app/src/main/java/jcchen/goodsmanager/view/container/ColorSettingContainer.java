@@ -64,12 +64,6 @@ public class ColorSettingContainer extends FrameLayout implements Container {
     }
 
     @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mSettingPresenter.saveColor(colorList);
-    }
-
-    @Override
     public void init() {
         mSettingPresenter = new SettingPresenterImpl(context);
         colorList = mSettingPresenter.getColorList();
@@ -134,7 +128,7 @@ public class ColorSettingContainer extends FrameLayout implements Container {
 
     @Override
     public void postResult() {
-
+        mSettingPresenter.saveColor(colorList);
     }
 
     private class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements OnSettingEditListener {

@@ -64,12 +64,6 @@ public class SizeSettingContainer extends FrameLayout implements Container {
     }
 
     @Override
-    public void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mSettingPresenter.saveSize(sizeList);
-    }
-
-    @Override
     public void init() {
         mSettingPresenter = new SettingPresenterImpl(context);
         sizeList = mSettingPresenter.getSizeList();
@@ -134,7 +128,7 @@ public class SizeSettingContainer extends FrameLayout implements Container {
 
     @Override
     public void postResult() {
-
+        mSettingPresenter.saveSize(sizeList);
     }
 
     private class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements OnSettingEditListener {

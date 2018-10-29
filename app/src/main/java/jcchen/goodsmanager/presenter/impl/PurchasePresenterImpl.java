@@ -70,7 +70,11 @@ public class PurchasePresenterImpl implements PurchasePresenter {
     @Override
     public void removePurchaseInfo(PurchaseInfo purchaseInfo) {
         File dir = context.getFilesDir();
-        (new File(dir, purchaseInfo.getFileName())).delete();
+        try {
+            (new File(dir, purchaseInfo.getFileName())).delete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override

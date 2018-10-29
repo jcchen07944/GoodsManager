@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,11 @@ public class SettingDialogFragment extends DialogFragment {
     private Vector<FrameLayout> pageList;
     private String[] pageTitle;
 
+    private NormalSettingContainer mNormalSettingContainer;
+    private TypeSettingContainer mTypeSettingContainer;
+    private ColorSettingContainer mColorSettingContainer;
+    private SizeSettingContainer mSizeSettingContainer;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -41,18 +47,51 @@ public class SettingDialogFragment extends DialogFragment {
         pageTitle = new String[4];
         pageList = new Vector<>();
         pageTitle[0] = getActivity().getResources().getString(R.string.normal);
-        pageList.add(new NormalSettingContainer(getActivity()));
+        mNormalSettingContainer = new NormalSettingContainer(getActivity());
+        pageList.add(mNormalSettingContainer);
         pageTitle[1] = getActivity().getResources().getString(R.string.type);
-        pageList.add(new TypeSettingContainer(getActivity()));
+        mTypeSettingContainer = new TypeSettingContainer(getActivity());
+        pageList.add(mTypeSettingContainer);
         pageTitle[2] = getActivity().getResources().getString(R.string.color);
-        pageList.add(new ColorSettingContainer(getActivity()));
+        mColorSettingContainer = new ColorSettingContainer(getActivity());
+        pageList.add(mColorSettingContainer);
         pageTitle[3] = getActivity().getResources().getString(R.string.size);
-        pageList.add(new SizeSettingContainer(getActivity()));
+        mSizeSettingContainer = new SizeSettingContainer(getActivity());
+        pageList.add(mSizeSettingContainer);
 
         mViewPager = (NonSwipeViewPager) view.findViewById(R.id.setting_pager);
         mViewPager.setAdapter(new ViewPagerAdapter());
         mTabLayout = (TabLayout) view.findViewById(R.id.setting_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+                        mNormalSettingContainer.postResult();
+                        break;
+                    case 1:
+                        mTypeSettingContainer.postResult();
+                        break;
+                    case 2:
+                        mColorSettingContainer.postResult();
+                        break;
+                    case 3:
+                        mSizeSettingContainer.postResult();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     private class ViewPagerAdapter extends PagerAdapter {

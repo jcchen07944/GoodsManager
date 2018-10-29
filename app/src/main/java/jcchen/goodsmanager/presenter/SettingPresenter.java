@@ -15,5 +15,5 @@ public interface SettingPresenter {
     ArrayList<TypeInfo> getTypeList();
     ArrayList<ColorInfo> getColorList();
     ArrayList<SizeInfo> getSizeList();
-
+    void resetSetting();
 }

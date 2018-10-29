@@ -222,6 +222,34 @@ public class SettingPresenterImpl implements SettingPresenter {
         return sizeList;
     }
 
+    @Override
+    public void resetSetting() {
+        File dir = context.getFilesDir();
+        try {
+            (new File(dir, "SizeList")).delete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            (new File(dir, "ColorList")).delete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            (new File(dir, "TypeList")).delete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            (new File(dir, "ExchangeRate")).delete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private ArrayList<TypeInfo> getDefaultTypeList() {
         ArrayList<TypeInfo> typeList = new ArrayList<>();
         ArrayList<String> column = new ArrayList<>();
