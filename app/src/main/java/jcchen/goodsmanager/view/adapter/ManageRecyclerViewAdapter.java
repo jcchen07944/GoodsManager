@@ -68,7 +68,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         viewHolder.Numbers.setText(purchaseList.get(position).getNumbers());
         viewHolder.Mall.setText(purchaseList.get(position).getMall());
         viewHolder.Position.setText(purchaseList.get(position).getPosition());
-        viewHolder.Flexible.setText(purchaseList.get(position).isFlexible() ? "有" : "無");
+        viewHolder.Flexible.setText(purchaseList.get(position).getFlexible());
         viewHolder.ActualPrice.setText(purchaseList.get(position).getActualPrice() + "");
         viewHolder.ListPrice.setText(purchaseList.get(position).getListPrice() + "");
         viewHolder.Material.setText(purchaseList.get(position).getMaterial());

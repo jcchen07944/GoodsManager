@@ -10,11 +10,12 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Switch;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.viewpagerindicator.LinePageIndicator;
@@ -49,7 +50,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     private ViewPager mViewPager;
     private EditText material, numbers, mall, position, name, listPrice, actualPrice, incomeK, incomeT;
     private LinePageIndicator pageIndicator;
-    private Switch flexible;
+    private Spinner flexible;
 
     private ColorSelectDialogFragment mColorSelectDialogFragment;
     private SizeSelectDialogFragment mSizeSelectDialogFragment;
@@ -181,7 +182,12 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         });
 
         flexibleLayout = (LinearLayout) findViewById(R.id.flexible_layout);
-        flexible = (Switch) findViewById(R.id.flexible_switch);
+        flexible = (Spinner) findViewById(R.id.flexible_spinner);
+        ArrayAdapter<CharSequence> mArrayAdapter = ArrayAdapter.createFromResource(context,
+                R.array.flexible_array, R.layout.spinner_text);
+        mArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_text);
+        flexible.setAdapter(mArrayAdapter);
+        flexible.setSelection(0);
 
         colorSelect = (Button) findViewById(R.id.purchase_color);
         colorSelect.setOnClickListener(new OnClickListener() {
@@ -342,7 +348,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
                         actualPrice.setText("");
                         incomeK.setText("");
                         incomeT.setText("");
-                        flexible.setChecked(false);
+                        flexible.setSelection(0);
                         sizeSelectList.clear();
                         onSizeSelected(sizeSelectList);
                         colorSelectList.clear();
@@ -371,7 +377,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
         mPurchaseInfo.setActualPrice(MainActivity.safeParseInt(actualPrice.getText().toString()));
         mPurchaseInfo.setIncomeK(MainActivity.safeParseInt(incomeK.getText().toString()));
         mPurchaseInfo.setIncomeT(MainActivity.safeParseInt(incomeT.getText().toString()));
-        mPurchaseInfo.setFlexible(flexible.isChecked());
+        mPurchaseInfo.setFlexible(flexible.getSelectedItem().toString());
         mPurchaseInfo.setColorList(colorSelectList);
         mPurchaseInfo.setMaterial(material.getText().toString());
         mPurchaseInfo.setSizeList(sizeSelectList);
@@ -391,7 +397,13 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
             actualPrice.setText(purchaseInfo.getActualPrice() + "");
             incomeK.setText(purchaseInfo.getIncomeK() + "");
             incomeT.setText(purchaseInfo.getIncomeT() + "");
-            flexible.setChecked(purchaseInfo.isFlexible());
+            for (int i = 0; i < context.getResources().getStringArray(R.array.flexible_array).length; i++) {
+                flexible.setSelection(0);
+                if (purchaseInfo.getFlexible().equals(context.getResources().getStringArray(R.array.flexible_array)[i])) {
+                    flexible.setSelection(i);
+                    break;
+                }
+            }
             onSizeSelected(purchaseInfo.getSizeList());
             onColorSelected(purchaseInfo.getColorList());
             material.setText(purchaseInfo.getMaterial());

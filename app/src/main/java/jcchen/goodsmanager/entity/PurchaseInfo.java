@@ -122,7 +122,7 @@ public class PurchaseInfo implements Serializable {
     private int ActualPrice;
     private int IncomeK;
     private int IncomeT;
-    private boolean Flexible;
+    private String Flexible;
     private ArrayList<ColorInfo> ColorList;
     private String Material;
     private ArrayList<SizeInfo> SizeList;
@@ -216,11 +216,11 @@ public class PurchaseInfo implements Serializable {
         IncomeT = incomeT;
     }
 
-    public boolean isFlexible() {
+    public String getFlexible() {
         return Flexible;
     }
 
-    public void setFlexible(boolean flexible) {
+    public void setFlexible(String flexible) {
         Flexible = flexible;
     }
 

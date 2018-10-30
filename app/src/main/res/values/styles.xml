@@ -5,7 +5,6 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-
         <item name="android:colorBackground">@color/colorAppBackground</item>
     </style>
 
@@ -28,5 +27,19 @@
         <item name="android:textColor">@color/colorTextOnPrimary</item>
         <item name="textAllCaps">false</item>
     </style>
+
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
+        <item name="android:textAppearance">@style/SpinnerTextAppearance</item>
+    </style>
+
+    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/colorTextOnBackground</item>
+    </style>
+
+    <style name="SpinnerTextAppearance" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorTextOnBackground</item>
+    </style>
+
 
 </resources>

@@ -260,13 +260,35 @@
                 android:textColor="@color/colorTextOnBackground"
                 android:textStyle="bold" />
 
-            <Switch
-                android:id="@+id/flexible_switch"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:checked="false"
-                app:layout_constraintStart_toEndOf="@id/flexible_text" />
+                android:layout_marginRight="3dp"
+                android:layout_weight=".28"
+                android:background="@drawable/spinner_border"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toEndOf="@id/flexible_text">
 
+                <Spinner
+                    android:id="@+id/flexible_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:spinnerMode="dropdown"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_drop_down" />
+
+            </RelativeLayout>
         </LinearLayout>
 
         <Button
