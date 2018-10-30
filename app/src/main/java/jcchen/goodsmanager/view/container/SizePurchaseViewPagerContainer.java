@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.text.InputType;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -67,6 +68,18 @@ public class SizePurchaseViewPagerContainer extends FrameLayout implements Conta
                 public boolean onLongClick(View view) {
                     sizeEditText[index].setInputType(InputType.TYPE_CLASS_TEXT);
                     return true;
+                }
+            });
+            sizeEditText[index].setOnKeyListener(new OnKeyListener() {
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                        if (index == 7)
+                            findViewById(R.id.purchase_note).requestFocus();
+                        else
+                            sizeEditText[index+1].requestFocus();
+                        return true;
+                    }
+                    return false;
                 }
             });
         }

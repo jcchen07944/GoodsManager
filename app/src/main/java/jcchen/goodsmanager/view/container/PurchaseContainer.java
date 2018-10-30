@@ -7,6 +7,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -91,19 +92,93 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
 
         numbersLayout = (LinearLayout) findViewById(R.id.purchase_numbers_layout);
         numbers = (EditText) findViewById(R.id.purchase_numbers);
+        numbers.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    mall.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
         mall = (EditText) findViewById(R.id.purchase_mall);
+        mall.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    position.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
         position = (EditText) findViewById(R.id.purchase_position);
+        position.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    name.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         nameLayout = (LinearLayout) findViewById(R.id.purchase_name_layout);
         name = (EditText) findViewById(R.id.purchase_name);
+        name.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    listPrice.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         priceLayout = (LinearLayout) findViewById(R.id.purchase_price_layout);
         listPrice = (EditText) findViewById(R.id.purchase_list_price);
+        listPrice.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    actualPrice.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
         actualPrice = (EditText) findViewById(R.id.purchase_actual_price);
+        actualPrice.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    incomeK.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         incomeTKLayout = (LinearLayout) findViewById(R.id.purchase_income_k_t_layout);
         incomeK = (EditText) findViewById(R.id.purchase_income_k);
+        incomeK.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    incomeT.requestFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
         incomeT = (EditText) findViewById(R.id.purchase_income_t);
+        incomeT.setOnKeyListener(new OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    purchaseBaseLayout.requestFocus();
+                    InputMethodManager inputMethodManager = (InputMethodManager) ((MainActivity) context).getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(((MainActivity) context).getCurrentFocus().getWindowToken(), 0);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         flexibleLayout = (LinearLayout) findViewById(R.id.flexible_layout);
         flexible = (Switch) findViewById(R.id.flexible_switch);
