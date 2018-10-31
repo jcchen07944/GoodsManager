@@ -85,8 +85,8 @@ public class ColorListViewAdapter extends BaseAdapter implements Filterable {
     }
 
     public boolean isExist(ColorInfo colorInfo) {
-        for (int i = 0; i < colorList.size(); i++)
-            if (colorList.get(i).getName().equals(colorInfo.getName()))
+        for (int i = 0; i < filterList.size(); i++)
+            if (filterList.get(i).getName().equals(colorInfo.getName()))
                 return true;
         return false;
     }
