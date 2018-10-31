@@ -29,8 +29,8 @@ import jcchen.goodsmanager.view.widget.RecyclerHelper.RecyclerHelper;
 
 public class TypeSettingContainer extends FrameLayout implements Container {
 
-    private final int FIRST_CARD = 0;
-    private final int DEFAULT_CARD = 1;
+    public static final int FIRST_CARD = 0;
+    public static final int DEFAULT_CARD = 1;
 
     private Context context;
 
@@ -76,18 +76,14 @@ public class TypeSettingContainer extends FrameLayout implements Container {
 
         mRecyclerHelper.setRecyclerItemDragEnabled(true).setOnDragListener(new jcchen.goodsmanager.view.widget.RecyclerHelper.OnDragListener() {
             @Override
-            public void onDragItemListener(ArrayList list) {
+            public void onDragItemEnd(ArrayList list) {
                 typeList = (ArrayList<TypeInfo>) list.clone();
+                mSettingPresenter.saveType(typeList);
             }
         });
         mRecyclerHelper.setRecyclerItemSwipeEnabled(true).setOnSwipeListener(new OnSwipeListener() {
             @Override
-            public void onSwipeItemListener() {
-
-            }
-
-            @Override
-            public void onSwipeConfirm(final ArrayList list, final RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter, final int position) {
+            public void onSwipeItemEnd(final ArrayList list, final RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter, final int position) {
                 new android.support.v7.app.AlertDialog.Builder(context)
                         .setMessage(context.getResources().getString(
                                 R.string.delete_confirm_message) +
@@ -98,6 +94,7 @@ public class TypeSettingContainer extends FrameLayout implements Container {
                                 list.remove(position);
                                 mAdapter.notifyItemRemoved(position);
                                 typeList = (ArrayList<TypeInfo>) list.clone();
+                                mSettingPresenter.saveType(typeList);
                             }
                         })
                         .setNegativeButton(R.string.confirm_no, null)
@@ -126,7 +123,7 @@ public class TypeSettingContainer extends FrameLayout implements Container {
 
     @Override
     public void postResult() {
-        mSettingPresenter.saveType(typeList);
+
     }
 
     private class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements OnSettingEditListener {
@@ -258,6 +255,7 @@ public class TypeSettingContainer extends FrameLayout implements Container {
                     mRecyclerViewAdapter.notifyItemChanged(selectedPos);
                     break;
             }
+            mSettingPresenter.saveType(typeList);
         }
 
         private String safeGetText(String text) {

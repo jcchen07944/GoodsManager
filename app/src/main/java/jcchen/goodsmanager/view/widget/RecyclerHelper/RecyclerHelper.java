@@ -3,10 +3,14 @@ package jcchen.goodsmanager.view.widget.RecyclerHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.support.v7.widget.helper.ItemTouchHelper.Callback;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import jcchen.goodsmanager.view.container.TypeSettingContainer;
 
 public final class RecyclerHelper<T> extends Callback {
 
@@ -37,8 +41,7 @@ public final class RecyclerHelper<T> extends Callback {
             }
         }
         if (this.onSwipeListener != null) {
-            onSwipeListener.onSwipeConfirm(list, mAdapter, toPosition);
-            onSwipeListener.onSwipeItemListener();
+            onSwipeListener.onSwipeItemEnd(list, mAdapter, toPosition);
         }
     }
 
@@ -51,25 +54,26 @@ public final class RecyclerHelper<T> extends Callback {
         }
         Collections.swap((List)this.list, fromPosition, toPosition);
         this.mAdapter.notifyItemMoved(fromPosition, toPosition);
-        if (onDragListener != null) {
-            onDragListener.onDragItemListener(list);
-        }
     }
 
+    @Override
     public int getMovementFlags(RecyclerView recyclerView, ViewHolder viewHolder) {
         int dragFlags = 0;
         int swipeFlags = 0;
-        if (this.isItemDragEnabled) {
-            dragFlags = 3;
-        }
+        if (viewHolder.getItemViewType() == TypeSettingContainer.DEFAULT_CARD) {
+            if (this.isItemDragEnabled) {
+                dragFlags = ItemTouchHelper.UP | ItemTouchHelper.DOWN;
+            }
 
-        if (this.isItemSwipeEnabled) {
-            swipeFlags = 12;
+            if (this.isItemSwipeEnabled) {
+                swipeFlags = ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT;
+            }
         }
 
         return Callback.makeMovementFlags(dragFlags, swipeFlags);
     }
 
+    @Override
     public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target) {
         if (viewHolder == null) {
             return false;
@@ -91,12 +95,22 @@ public final class RecyclerHelper<T> extends Callback {
         this.onMoved(viewHolder.getOldPosition(), viewHolder.getAdapterPosition());
     }
 
+    @Override
     public boolean isLongPressDragEnabled() {
         return true;
     }
 
+    @Override
     public boolean isItemViewSwipeEnabled() {
         return true;
+    }
+
+    @Override
+    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+        if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
+            if (onDragListener != null)
+                onDragListener.onDragItemEnd(this.list);
+        }
     }
 
     public void addDisablePos(int position) {

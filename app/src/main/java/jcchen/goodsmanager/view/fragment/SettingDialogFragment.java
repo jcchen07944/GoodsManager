@@ -1,6 +1,7 @@
 package jcchen.goodsmanager.view.fragment;
 
 import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -63,35 +64,6 @@ public class SettingDialogFragment extends DialogFragment {
         mViewPager.setAdapter(new ViewPagerAdapter());
         mTabLayout = (TabLayout) view.findViewById(R.id.setting_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
-                        mNormalSettingContainer.postResult();
-                        break;
-                    case 1:
-                        mTypeSettingContainer.postResult();
-                        break;
-                    case 2:
-                        mColorSettingContainer.postResult();
-                        break;
-                    case 3:
-                        mSizeSettingContainer.postResult();
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
     }
 
     private class ViewPagerAdapter extends PagerAdapter {

@@ -81,18 +81,14 @@ public class ColorSettingContainer extends FrameLayout implements Container {
 
         mRecyclerHelper.setRecyclerItemDragEnabled(true).setOnDragListener(new jcchen.goodsmanager.view.widget.RecyclerHelper.OnDragListener() {
             @Override
-            public void onDragItemListener(ArrayList list) {
+            public void onDragItemEnd(ArrayList list) {
                 colorList = (ArrayList<ColorInfo>) list.clone();
+                mSettingPresenter.saveColor(colorList);
             }
         });
         mRecyclerHelper.setRecyclerItemSwipeEnabled(true).setOnSwipeListener(new OnSwipeListener() {
             @Override
-            public void onSwipeItemListener() {
-
-            }
-
-            @Override
-            public void onSwipeConfirm(final ArrayList list, final RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter, final int position) {
+            public void onSwipeItemEnd(final ArrayList list, final RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter, final int position) {
                 new android.support.v7.app.AlertDialog.Builder(context)
                         .setMessage(context.getResources().getString(
                                 R.string.delete_confirm_message) +
@@ -103,6 +99,7 @@ public class ColorSettingContainer extends FrameLayout implements Container {
                                 list.remove(position);
                                 mAdapter.notifyItemRemoved(position);
                                 colorList = (ArrayList<ColorInfo>) list.clone();
+                                mSettingPresenter.saveColor(colorList);
                             }
                         })
                         .setNegativeButton(R.string.confirm_no, null)
@@ -131,7 +128,7 @@ public class ColorSettingContainer extends FrameLayout implements Container {
 
     @Override
     public void postResult() {
-        mSettingPresenter.saveColor(colorList);
+
     }
 
     private class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements OnSettingEditListener {
@@ -241,6 +238,8 @@ public class ColorSettingContainer extends FrameLayout implements Container {
                     mRecyclerViewAdapter.notifyItemChanged(selectedPos);
                     break;
             }
+
+            mSettingPresenter.saveColor(colorList);
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {

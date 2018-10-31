@@ -81,18 +81,14 @@ public class SizeSettingContainer extends FrameLayout implements Container {
 
         mRecyclerHelper.setRecyclerItemDragEnabled(true).setOnDragListener(new jcchen.goodsmanager.view.widget.RecyclerHelper.OnDragListener() {
             @Override
-            public void onDragItemListener(ArrayList list) {
+            public void onDragItemEnd(ArrayList list) {
                 sizeList = (ArrayList<SizeInfo>) list.clone();
+                mSettingPresenter.saveSize(sizeList);
             }
         });
         mRecyclerHelper.setRecyclerItemSwipeEnabled(true).setOnSwipeListener(new OnSwipeListener() {
             @Override
-            public void onSwipeItemListener() {
-
-            }
-
-            @Override
-            public void onSwipeConfirm(final ArrayList list, final RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter, final int position) {
+            public void onSwipeItemEnd(final ArrayList list, final RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter, final int position) {
                 new android.support.v7.app.AlertDialog.Builder(context)
                         .setMessage(context.getResources().getString(
                                 R.string.delete_confirm_message) +
@@ -103,6 +99,7 @@ public class SizeSettingContainer extends FrameLayout implements Container {
                                 list.remove(position);
                                 mAdapter.notifyItemRemoved(position);
                                 sizeList = (ArrayList<SizeInfo>) list.clone();
+                                mSettingPresenter.saveSize(sizeList);
                             }
                         })
                         .setNegativeButton(R.string.confirm_no, null)
@@ -131,7 +128,7 @@ public class SizeSettingContainer extends FrameLayout implements Container {
 
     @Override
     public void postResult() {
-        mSettingPresenter.saveSize(sizeList);
+
     }
 
     private class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements OnSettingEditListener {
@@ -241,6 +238,8 @@ public class SizeSettingContainer extends FrameLayout implements Container {
                     mRecyclerViewAdapter.notifyItemChanged(selectedPos);
                     break;
             }
+
+            mSettingPresenter.saveSize(sizeList);
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
