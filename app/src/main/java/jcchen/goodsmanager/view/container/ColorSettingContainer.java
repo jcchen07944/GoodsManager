@@ -105,9 +105,10 @@ public class ColorSettingContainer extends FrameLayout implements Container {
                                 colorList = (ArrayList<ColorInfo>) list.clone();
                             }
                         })
-                        .setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.confirm_no, null)
+                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                            public void onDismiss(DialogInterface dialogInterface) {
                                 mAdapter.notifyItemChanged(position);
                             }
                         })

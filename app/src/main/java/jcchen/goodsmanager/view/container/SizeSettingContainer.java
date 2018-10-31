@@ -105,9 +105,10 @@ public class SizeSettingContainer extends FrameLayout implements Container {
                                 sizeList = (ArrayList<SizeInfo>) list.clone();
                             }
                         })
-                        .setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.confirm_no, null)
+                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                            public void onDismiss(DialogInterface dialogInterface) {
                                 mAdapter.notifyItemChanged(position);
                             }
                         })
