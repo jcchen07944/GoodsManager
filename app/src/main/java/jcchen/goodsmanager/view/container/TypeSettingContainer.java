@@ -89,7 +89,9 @@ public class TypeSettingContainer extends FrameLayout implements Container {
             @Override
             public void onSwipeConfirm(final ArrayList list, final RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter, final int position) {
                 new android.support.v7.app.AlertDialog.Builder(context)
-                        .setMessage(R.string.delete_confirm_message)
+                        .setMessage(context.getResources().getString(
+                                R.string.delete_confirm_message) +
+                                " [" + ((TypeInfo) list.get(position)).getType() + "]")
                         .setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

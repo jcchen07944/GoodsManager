@@ -94,7 +94,9 @@ public class ColorSettingContainer extends FrameLayout implements Container {
             @Override
             public void onSwipeConfirm(final ArrayList list, final RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter, final int position) {
                 new android.support.v7.app.AlertDialog.Builder(context)
-                        .setMessage(R.string.delete_confirm_message)
+                        .setMessage(context.getResources().getString(
+                                R.string.delete_confirm_message) +
+                                " [" + ((ColorInfo) list.get(position)).getName() + "]")
                         .setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
