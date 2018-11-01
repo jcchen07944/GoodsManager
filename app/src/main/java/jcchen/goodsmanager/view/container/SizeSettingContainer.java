@@ -81,24 +81,22 @@ public class SizeSettingContainer extends FrameLayout implements Container {
 
         mRecyclerHelper.setRecyclerItemDragEnabled(true).setOnDragListener(new jcchen.goodsmanager.view.widget.RecyclerHelper.OnDragListener() {
             @Override
-            public void onDragItemEnd(ArrayList list) {
-                sizeList = (ArrayList<SizeInfo>) list.clone();
+            public void onDragItemEnd() {
                 mSettingPresenter.saveSize(sizeList);
             }
         });
         mRecyclerHelper.setRecyclerItemSwipeEnabled(true).setOnSwipeListener(new OnSwipeListener() {
             @Override
-            public void onSwipeItemEnd(final ArrayList list, final RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter, final int position) {
+            public void onSwipeItemEnd(final int position) {
                 new android.support.v7.app.AlertDialog.Builder(context)
                         .setMessage(context.getResources().getString(
                                 R.string.delete_confirm_message) +
-                                " [" + ((SizeInfo) list.get(position)).getName() + "]")
+                                " [" + ((SizeInfo) sizeList.get(position)).getName() + "]")
                         .setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                list.remove(position);
-                                mAdapter.notifyItemRemoved(position);
-                                sizeList = (ArrayList<SizeInfo>) list.clone();
+                                sizeList.remove(position);
+                                mRecyclerViewAdapter.notifyItemRemoved(position);
                                 mSettingPresenter.saveSize(sizeList);
                             }
                         })
@@ -106,7 +104,7 @@ public class SizeSettingContainer extends FrameLayout implements Container {
                         .setOnDismissListener(new DialogInterface.OnDismissListener() {
                             @Override
                             public void onDismiss(DialogInterface dialogInterface) {
-                                mAdapter.notifyItemChanged(position);
+                                mRecyclerViewAdapter.notifyItemChanged(position);
                             }
                         })
                         .show();
@@ -159,7 +157,7 @@ public class SizeSettingContainer extends FrameLayout implements Container {
                     viewHolder.Add.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            selectedPos = position;
+                            selectedPos = viewHolder.getAdapterPosition();
                             mEditSettingDialogFragment = new EditSettingDialogFragment();
                             mEditSettingDialogFragment.setResID(R.layout.size_edit_setting_layout);
                             mEditSettingDialogFragment.setListener(mRecyclerViewAdapter);
@@ -173,7 +171,7 @@ public class SizeSettingContainer extends FrameLayout implements Container {
                     viewHolder.Edit.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            selectedPos = position;
+                            selectedPos = viewHolder.getAdapterPosition();
                             mEditSettingDialogFragment = new EditSettingDialogFragment();
                             mEditSettingDialogFragment.setResID(R.layout.size_edit_setting_layout);
                             mEditSettingDialogFragment.setListener(mRecyclerViewAdapter);

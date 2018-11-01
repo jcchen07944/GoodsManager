@@ -41,7 +41,7 @@ public final class RecyclerHelper<T> extends Callback {
             }
         }
         if (this.onSwipeListener != null) {
-            onSwipeListener.onSwipeItemEnd(list, mAdapter, toPosition);
+            onSwipeListener.onSwipeItemEnd(toPosition);
         }
     }
 
@@ -109,7 +109,7 @@ public final class RecyclerHelper<T> extends Callback {
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
             if (onDragListener != null)
-                onDragListener.onDragItemEnd(this.list);
+                onDragListener.onDragItemEnd();
         }
     }
 
@@ -137,22 +137,6 @@ public final class RecyclerHelper<T> extends Callback {
     public RecyclerHelper setOnSwipeListener(OnSwipeListener onSwipeListener) {
         this.onSwipeListener = onSwipeListener;
         return this;
-    }
-
-    public ArrayList<T> getList() {
-        return this.list;
-    }
-
-    public void setList(ArrayList<T> var1) {
-        this.list = var1;
-    }
-
-    public Adapter getMAdapter() {
-        return this.mAdapter;
-    }
-
-    public void setMAdapter(Adapter var1) {
-        this.mAdapter = var1;
     }
 
     public RecyclerHelper( ArrayList<T> list, RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter) {
