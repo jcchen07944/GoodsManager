@@ -5,8 +5,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.SearchView;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.widget.SearchView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,7 +116,7 @@ public class ColorSelectDialogFragment extends DialogFragment {
         });
 
         // Custom SearchView.
-        EditText searchEditText = (EditText) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        EditText searchEditText = (EditText) mSearchView.findViewById(androidx.appcompat.R.id.search_src_text);
         searchEditText.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorTextOnSecondary));
         searchEditText.setHintTextColor(ContextCompat.getColor(getActivity(), R.color.colorTextHint));
         searchEditText.setGravity(Gravity.CENTER);

@@ -2,10 +2,8 @@ package jcchen.goodsmanager.view.widget.FocusListView;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.TextView;
 
 /**
  * Created by JCChen on 2018/9/26.

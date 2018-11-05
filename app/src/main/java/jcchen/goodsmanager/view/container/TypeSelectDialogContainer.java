@@ -3,7 +3,7 @@ package jcchen.goodsmanager.view.container;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +12,6 @@ import android.widget.AbsListView;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.TypeInfo;
-import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.MainActivity;
 import jcchen.goodsmanager.view.widget.FocusListView.FocusListViewAdapter;

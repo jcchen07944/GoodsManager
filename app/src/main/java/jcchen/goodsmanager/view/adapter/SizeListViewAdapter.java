@@ -1,7 +1,7 @@
 package jcchen.goodsmanager.view.adapter;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 import jcchen.goodsmanager.R;
-import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
 
 public class SizeListViewAdapter extends BaseAdapter {

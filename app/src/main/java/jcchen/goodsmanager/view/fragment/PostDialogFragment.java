@@ -1,28 +1,20 @@
 package jcchen.goodsmanager.view.fragment;
 
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.Spanned;
-import android.text.method.ScrollingMovementMethod;
+import androidx.core.content.ContextCompat;
+
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import jcchen.goodsmanager.R;
-import jcchen.goodsmanager.view.container.PostContainer;
 
 public class PostDialogFragment extends DialogFragment {
 
