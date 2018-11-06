@@ -2,10 +2,20 @@ package jcchen.goodsmanager.view.widget.FocusListView;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+
+import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.TypeInfo;
 
 /**
  * Created by JCChen on 2018/9/26.
@@ -88,6 +98,62 @@ public class FocusListView extends ListView {
             return a;
         else
             return b;
+    }
+
+    public void setTextSize(float size) {
+        ((FocusListViewAdapter) getAdapter()).textSize = size;
+    }
+
+    public static class FocusListViewAdapter<T> extends BaseAdapter {
+
+        private final int count = 10000;  // Unlimited content.
+
+        private Context context;
+        private ListView mListView;
+        private ArrayList<T> list;
+
+        public float textSize = -1;
+
+        public FocusListViewAdapter(Context context, ListView listView, ArrayList<T> list) {
+            this.context = context;
+            this.mListView = listView;
+            this.list = list;
+        }
+
+        @Override
+        public int getCount() {
+            return count;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return list.get((int) getItemId(position));
+        }
+
+        @Override
+        public long getItemId(int position) {
+            if(position >= count / 2)
+                return (position - count / 2) % list.size();
+            else
+                return Math.abs((count / 2 - position - 1) % list.size() - list.size() + 1);
+        }
+
+        public int getListSize() {
+            return list.size();
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if(convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.focus_listview_content, null);
+            }
+            ((FocusListViewContent) convertView).setParentHeight(mListView.getHeight());
+            TextView mTextView = (TextView) convertView.findViewById(R.id.focus_listview_text);
+            if (textSize != -1)
+                mTextView.setTextSize(textSize);
+            mTextView.setText(getItem(position).toString());
+            return convertView;
+        }
     }
 
 }
