@@ -13,6 +13,7 @@ import android.app.DialogFragment;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -71,6 +72,8 @@ public class DateSelectDialogFragment extends DialogFragment {
             date.setText(mDateInfo.getDate());
         }
 
+        setCancelable(false);
+
         dateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +114,7 @@ public class DateSelectDialogFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 mSettingPresenter.saveDate(new DateInfo(date.getText().toString(), Integer.parseInt(day.getText().toString())));
+                ((MainActivity) context).onDateSet();
                 dismiss();
             }
         });

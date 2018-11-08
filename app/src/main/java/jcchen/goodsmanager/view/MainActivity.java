@@ -30,6 +30,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -38,6 +40,7 @@ import java.io.ObjectOutputStream;
 import java.util.Calendar;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.DateInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
@@ -64,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton mFloatingActionButton;
     private NavigationView mNavigationView;
     private ImageView exchangeRate;
-    private TextView exchangeRateText;
+    private TextView exchangeRateText, dateText, dayText;
+    private LinearLayout dateLayout;
 
     private TypeSelectDialogFragment mTypeSelectDialogFragment = null;
     private PurchaseFragment mPurchaseFragment = null;
@@ -131,6 +135,17 @@ public class MainActivity extends AppCompatActivity {
                 openExchangeRateDialog();
             }
         });
+        dateLayout = (LinearLayout) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_date_layout);
+        dateLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
+                mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
+            }
+        });
+        dateText = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_date_text);
+        dayText = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_day_text);
+        onDateSet();
 
 
         /* Init Content */
@@ -160,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         /* Pre init setting dialog */
         mSettingDialogFragment = new SettingDialogFragment();
 
-        /* Calender */
+        /* Date setting */
         DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
         mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
 
@@ -355,6 +370,14 @@ public class MainActivity extends AppCompatActivity {
         mWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 
         setActionbarState(ACTIONBAR_STATE_HOME);
+    }
+
+    public void onDateSet() {
+        DateInfo mDateInfo = mSettingPresenter.getDate();
+        if (mDateInfo != null) {
+            dateText.setText("日期 : " + mDateInfo.getDate());
+            dayText.setText("第 " + mDateInfo.getDay() + " 天");
+        }
     }
 
     public void onCardSelectStart(PurchaseInfo purchaseInfo) {
