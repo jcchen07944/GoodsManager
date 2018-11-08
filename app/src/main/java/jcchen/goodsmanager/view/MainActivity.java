@@ -3,17 +3,19 @@ package jcchen.goodsmanager.view;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,16 +30,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Calendar;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.DateInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
+import jcchen.goodsmanager.view.fragment.DateSelectDialogFragment;
 import jcchen.goodsmanager.view.fragment.ManageFragment;
 import jcchen.goodsmanager.view.fragment.PostDialogFragment;
 import jcchen.goodsmanager.view.fragment.PurchaseFragment;
@@ -60,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton mFloatingActionButton;
     private NavigationView mNavigationView;
     private ImageView exchangeRate;
-    private TextView exchangeRateText;
+    private TextView exchangeRateText, dateText, dayText;
+    private LinearLayout dateLayout;
 
     private TypeSelectDialogFragment mTypeSelectDialogFragment = null;
     private PurchaseFragment mPurchaseFragment = null;
@@ -127,6 +135,17 @@ public class MainActivity extends AppCompatActivity {
                 openExchangeRateDialog();
             }
         });
+        dateLayout = (LinearLayout) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_date_layout);
+        dateLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
+                mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
+            }
+        });
+        dateText = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_date_text);
+        dayText = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.drawer_day_text);
+        onDateSet();
 
 
         /* Init Content */
@@ -155,6 +174,11 @@ public class MainActivity extends AppCompatActivity {
 
         /* Pre init setting dialog */
         mSettingDialogFragment = new SettingDialogFragment();
+
+        /* Date setting */
+        DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
+        mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
+
     }
 
     @Override
@@ -346,6 +370,14 @@ public class MainActivity extends AppCompatActivity {
         mWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 
         setActionbarState(ACTIONBAR_STATE_HOME);
+    }
+
+    public void onDateSet() {
+        DateInfo mDateInfo = mSettingPresenter.getDate();
+        if (mDateInfo != null) {
+            dateText.setText("日期 : " + mDateInfo.getDate());
+            dayText.setText("第 " + mDateInfo.getDay() + " 天");
+        }
     }
 
     public void onCardSelectStart(PurchaseInfo purchaseInfo) {

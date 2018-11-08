@@ -2,7 +2,7 @@ package jcchen.goodsmanager.view.container;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.PurchaseInfo;

@@ -1,6 +1,6 @@
 package jcchen.goodsmanager.view.widget.BottomSheet;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by JCChen on 2018/2/12.

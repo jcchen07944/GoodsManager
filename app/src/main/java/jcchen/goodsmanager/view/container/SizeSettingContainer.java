@@ -3,12 +3,12 @@ package jcchen.goodsmanager.view.container;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,7 +88,7 @@ public class SizeSettingContainer extends FrameLayout implements Container {
         mRecyclerHelper.setRecyclerItemSwipeEnabled(true).setOnSwipeListener(new OnSwipeListener() {
             @Override
             public void onSwipeItemEnd(final int position) {
-                new android.support.v7.app.AlertDialog.Builder(context)
+                new androidx.appcompat.app.AlertDialog.Builder(context)
                         .setMessage(context.getResources().getString(
                                 R.string.delete_confirm_message) +
                                 " [" + ((SizeInfo) sizeList.get(position)).getName() + "]")

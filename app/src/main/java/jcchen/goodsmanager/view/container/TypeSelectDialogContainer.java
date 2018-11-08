@@ -3,7 +3,7 @@ package jcchen.goodsmanager.view.container;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,10 +12,9 @@ import android.widget.AbsListView;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.TypeInfo;
-import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.MainActivity;
-import jcchen.goodsmanager.view.widget.FocusListView.FocusListViewAdapter;
+import jcchen.goodsmanager.view.adapter.TypeFocusListAdapter;
 import jcchen.goodsmanager.view.widget.FocusListView.FocusListView;
 import jcchen.goodsmanager.view.widget.RoundedImageView;
 
@@ -29,7 +28,7 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
     private RoundedImageView mRoundedImageView;
     private Context context;
 
-    FocusListViewAdapter adapter;
+    private TypeFocusListAdapter mTypeFocusListAdapter;
 
     private SettingPresenterImpl mSettingPresenter;
 
@@ -53,12 +52,12 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
 
         // FocusListView
         mFocusListView = (FocusListView) this.findViewById(R.id.purchase_type_list);
-        adapter = new FocusListViewAdapter(context, mFocusListView, mSettingPresenter.getTypeList());
-        mFocusListView.setAdapter(adapter);
+        mTypeFocusListAdapter = new TypeFocusListAdapter(context, mFocusListView, mSettingPresenter.getTypeList());
+        mFocusListView.setAdapter(mTypeFocusListAdapter);
         mFocusListView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                mFocusListView.setSelection(defaultType == null ? adapter.getCount() / 2 : adapter.getItemPosition(defaultType));
+                mFocusListView.setSelection(defaultType == null ? mTypeFocusListAdapter.getCount() / 2 : mTypeFocusListAdapter.getItemPosition(defaultType));
                 mFocusListView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -93,7 +92,7 @@ public class TypeSelectDialogContainer extends ConstraintLayout implements Conta
             @Override
             public void onClick(View view) {
                 int SelectedPosition = (mFocusListView.getLastVisiblePosition() + mFocusListView.getFirstVisiblePosition()) / 2;
-                ((MainActivity) context).onPurchaseStart((TypeInfo) adapter.getItem(SelectedPosition));
+                ((MainActivity) context).onPurchaseStart((TypeInfo) mTypeFocusListAdapter.getItem(SelectedPosition));
             }
         });
     }

@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import jcchen.goodsmanager.entity.ColorInfo;
+import jcchen.goodsmanager.entity.DateInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.SettingPresenter;
@@ -139,6 +140,19 @@ public class SettingPresenterImpl implements SettingPresenter {
         }
     }
 
+    @Override
+    public void saveDate(DateInfo dateInfo) {
+        try {
+            String fileName = "DateInfo";
+            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            mFileOutputStream.write(MainActivity.toByteArray(dateInfo));
+            mFileOutputStream.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     /**
      *  Get type list from model(maybe from DB or from setting)
      *
@@ -223,6 +237,30 @@ public class SettingPresenterImpl implements SettingPresenter {
     }
 
     @Override
+    public DateInfo getDate() {
+        File dir = context.getFilesDir();
+        File[] subFiles = dir.listFiles();
+        if (subFiles != null) {
+            FileInputStream mFileInputStream;
+            for (File file : subFiles) {
+                try {
+                    if (!file.getName().contains("DateInfo"))
+                        continue;
+
+                    byte buffer[] = new byte[(int) file.length()];
+                    mFileInputStream = context.openFileInput(file.getName());
+                    mFileInputStream.read(buffer);
+                    mFileInputStream.close();
+                    return (DateInfo) MainActivity.toObject(buffer);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void resetSetting() {
         File dir = context.getFilesDir();
         try {
@@ -245,6 +283,12 @@ public class SettingPresenterImpl implements SettingPresenter {
 
         try {
             (new File(dir, "ExchangeRate")).delete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            (new File(dir, "DateInfo")).delete();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

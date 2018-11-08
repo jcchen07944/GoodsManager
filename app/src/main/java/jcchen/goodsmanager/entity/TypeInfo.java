@@ -40,4 +40,9 @@ public class TypeInfo implements Serializable {
     public void setColumn(ArrayList<String> column) {
         Column = column;
     }
+
+    @Override
+    public String toString() {
+        return getType();
+    }
 }

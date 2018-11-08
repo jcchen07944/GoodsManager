@@ -1,14 +1,12 @@
 package jcchen.goodsmanager.view.container;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import jcchen.goodsmanager.R;
-import jcchen.goodsmanager.entity.PurchaseInfo;
 
 public class SizeDetailViewPagerContainer extends FrameLayout implements Container {
 
