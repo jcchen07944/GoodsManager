@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -33,11 +35,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Calendar;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
+import jcchen.goodsmanager.view.fragment.DateSelectDialogFragment;
 import jcchen.goodsmanager.view.fragment.ManageFragment;
 import jcchen.goodsmanager.view.fragment.PostDialogFragment;
 import jcchen.goodsmanager.view.fragment.PurchaseFragment;
@@ -155,6 +159,11 @@ public class MainActivity extends AppCompatActivity {
 
         /* Pre init setting dialog */
         mSettingDialogFragment = new SettingDialogFragment();
+
+        /* Calender */
+        DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
+        mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
+
     }
 
     @Override
