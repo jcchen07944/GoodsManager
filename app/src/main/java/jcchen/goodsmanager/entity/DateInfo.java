@@ -26,4 +26,8 @@ public class DateInfo implements Serializable {
     public void setDay(int day) {
         Day = day;
     }
+
+    public String encode() {
+        return Date + Day;
+    }
 }

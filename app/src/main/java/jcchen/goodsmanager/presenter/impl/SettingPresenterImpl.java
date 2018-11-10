@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.DateInfo;
+import jcchen.goodsmanager.entity.SettingProfile;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.SettingPresenter;
@@ -61,6 +62,18 @@ public class SettingPresenterImpl implements SettingPresenter {
     }
 
 
+    @Override
+    public void saveProfile(SettingProfile settingProfile) {
+        try {
+            String fileName = "SettingProfile";
+            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            mFileOutputStream.write(MainActivity.toByteArray(settingProfile));
+            mFileOutputStream.close();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     @Override
     public void saveType(ArrayList<TypeInfo> list) {
@@ -151,6 +164,32 @@ public class SettingPresenterImpl implements SettingPresenter {
         catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public SettingProfile getProfile() {
+        File dir = context.getFilesDir();
+        File[] subFiles = dir.listFiles();
+        if (subFiles != null) {
+            FileInputStream mFileInputStream;
+            for (File file : subFiles) {
+                try {
+                    if (!file.getName().contains("SettingProfile"))
+                        continue;
+
+                    byte buffer[] = new byte[(int) file.length()];
+                    mFileInputStream = context.openFileInput(file.getName());
+                    mFileInputStream.read(buffer);
+                    mFileInputStream.close();
+                    return (SettingProfile) MainActivity.toObject(buffer);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        SettingProfile mSettingProfile = new SettingProfile();
+        saveProfile(mSettingProfile);
+        return mSettingProfile;
     }
 
     /**

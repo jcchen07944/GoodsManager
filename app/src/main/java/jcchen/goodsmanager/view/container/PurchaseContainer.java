@@ -340,7 +340,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
                 .setPositiveButton(R.string.confirm_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        numbers.setText("");
+                        // numbers.setText("");
                         mall.setText("");
                         position.setText("");
                         name.setText("");
@@ -388,7 +388,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
     public void loadPurchaseInfo(int Mode) {
         this.Mode = Mode;
         PurchaseInfo purchaseInfo = ((MainActivity) context).getSelectedCard();
-        if (purchaseInfo != null) {
+        if (purchaseInfo != null && Mode == PurchaseFragment.MODE_EDIT) {
             numbers.setText(purchaseInfo.getNumbers());
             mall.setText(purchaseInfo.getMall());
             position.setText(purchaseInfo.getPosition());
@@ -409,6 +409,17 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
             material.setText(purchaseInfo.getMaterial());
             for (int i = 0; i < pageList.size(); i++)
                 pageList.get(i).showItem(purchaseInfo.getSizeStructList().get(i));
+        }
+        else {
+            int nextNumber = 0;
+            ArrayList<PurchaseInfo> purchaseList = mPurchasePresenter.getPurchaseList();
+            for (int i = 0; i < purchaseList.size(); i++) {
+                String num = purchaseList.get(i).getNumbers();
+                if (num.contains(mSettingPresenter.getDate().encode())) {
+                    nextNumber = Math.max(nextNumber, Integer.valueOf(num.substring(num.length() - 2, num.length())) + 1);
+                }
+            }
+            numbers.setText(mSettingPresenter.getDate().encode() + String.format("%02d", nextNumber));
         }
     }
 }
