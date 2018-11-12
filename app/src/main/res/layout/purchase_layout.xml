@@ -39,6 +39,7 @@
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:background="@drawable/purchase_edittext_style"
+                android:editable="false"
                 android:gravity="center"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"

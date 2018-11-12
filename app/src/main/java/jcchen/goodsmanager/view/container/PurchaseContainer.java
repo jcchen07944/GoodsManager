@@ -411,7 +411,7 @@ public class PurchaseContainer extends ScrollView implements Container, OnColorS
                 pageList.get(i).showItem(purchaseInfo.getSizeStructList().get(i));
         }
         else {
-            int nextNumber = 0;
+            int nextNumber = 1;
             ArrayList<PurchaseInfo> purchaseList = mPurchasePresenter.getPurchaseList();
             for (int i = 0; i < purchaseList.size(); i++) {
                 String num = purchaseList.get(i).getNumbers();
