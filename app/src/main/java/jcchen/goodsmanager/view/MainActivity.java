@@ -37,11 +37,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.DateInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
+import jcchen.goodsmanager.entity.SettingProfile;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.fragment.DateSelectDialogFragment;
@@ -76,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
     private PostDialogFragment mPostDialogFragment = null;
     private SettingDialogFragment mSettingDialogFragment = null;
 
+    private SettingProfile mSettingProfile;
+
     private FragmentManager mFragmentManager;
     private Window mWindow;
     private long firstTime;
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         context = this;
         mSettingPresenter = new SettingPresenterImpl(this);
+        mSettingProfile = mSettingPresenter.getProfile();
 
         initUI();
 
@@ -175,10 +180,16 @@ public class MainActivity extends AppCompatActivity {
         /* Pre init setting dialog */
         mSettingDialogFragment = new SettingDialogFragment();
 
-        /* Date setting */
-        DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
-        mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
-
+        /* Date dialog display*/
+        String timeStamp = new SimpleDateFormat("yyyy年MM月dd日").format(Calendar.getInstance().getTime());
+        if ((mSettingProfile.getTimeDialogShowFreq() == SettingProfile.TIME_DIALOG_MODE_ONCE &&
+                !mSettingProfile.getLastDialogShowTimeStamp().equals(timeStamp)) ||
+                mSettingProfile.getTimeDialogShowFreq() == SettingProfile.TIME_DIALOG_MODE_EVERYDAY) {
+            DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
+            mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
+            mSettingProfile.setLastDialogShowTimeStamp(timeStamp);
+            mSettingPresenter.saveProfile(mSettingProfile);
+        }
     }
 
     @Override

@@ -331,6 +331,12 @@ public class SettingPresenterImpl implements SettingPresenter {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
+        try {
+            (new File(dir, "SettingProfile")).delete();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     private ArrayList<TypeInfo> getDefaultTypeList() {

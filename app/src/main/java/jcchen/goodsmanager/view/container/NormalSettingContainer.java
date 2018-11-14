@@ -12,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.SettingProfile;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 
 
@@ -21,9 +23,12 @@ public class NormalSettingContainer extends FrameLayout implements Container {
 
     private Context context;
 
-    private LinearLayout reset;
+    private LinearLayout reset, time;
+    private TextView timeHint;
 
     private SettingPresenterImpl mSettingPresenter;
+
+    private SettingProfile mSettingProfile;
 
     public NormalSettingContainer(Context context) {
         super(context);
@@ -47,6 +52,36 @@ public class NormalSettingContainer extends FrameLayout implements Container {
         mSettingPresenter = new SettingPresenterImpl(context);
 
         final View view = LayoutInflater.from(context).inflate(R.layout.normal_setting_layout, null);
+
+        mSettingProfile = mSettingPresenter.getProfile();
+
+        timeHint = (TextView) view.findViewById(R.id.normal_setting_time_text);
+        switch (mSettingProfile.getTimeDialogShowFreq()) {
+            case SettingProfile.TIME_DIALOG_MODE_EVERYDAY:
+                timeHint.setText(context.getResources().getString(R.string.setting_every_time));
+                break;
+            case SettingProfile.TIME_DIALOG_MODE_ONCE:
+                timeHint.setText(context.getResources().getString(R.string.setting_once_a_day));
+                break;
+        }
+
+        time = (LinearLayout) view.findViewById(R.id.normal_setting_time_layout) ;
+        time.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (mSettingProfile.getTimeDialogShowFreq()) {
+                    case SettingProfile.TIME_DIALOG_MODE_EVERYDAY:
+                        mSettingProfile.setTimeDialogShowFreq(SettingProfile.TIME_DIALOG_MODE_ONCE);
+                        timeHint.setText(context.getResources().getString(R.string.setting_once_a_day));
+                        break;
+                    case SettingProfile.TIME_DIALOG_MODE_ONCE:
+                        mSettingProfile.setTimeDialogShowFreq(SettingProfile.TIME_DIALOG_MODE_EVERYDAY);
+                        timeHint.setText(context.getResources().getString(R.string.setting_every_time));
+                        break;
+                }
+                mSettingPresenter.saveProfile(mSettingProfile);
+            }
+        });
 
         reset = (LinearLayout) view.findViewById(R.id.normal_setting_reset);
         reset.setOnClickListener(new OnClickListener() {
