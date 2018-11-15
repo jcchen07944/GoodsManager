@@ -208,6 +208,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         expandedCard.ColorLayout.setVisibility(View.VISIBLE);
         expandedCard.SizeLayout.setVisibility(View.VISIBLE);
         expandedCard.SizeDetail.setVisibility(View.VISIBLE);
+        expandedCard.Expand.setRotation(180);
         expandedCard.Card.invalidate();
     }
 
@@ -224,6 +225,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
             expandedCard.ColorLayout.setVisibility(View.GONE);
             expandedCard.SizeLayout.setVisibility(View.GONE);
             expandedCard.SizeDetail.setVisibility(View.GONE);
+            expandedCard.Expand.setRotation(0);
             expandedCard.Card.invalidate();
             expandedCard = null;
         }
