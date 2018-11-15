@@ -35,4 +35,8 @@ public class ManageFragment extends Fragment {
     public void removeSelectedCard() {
         ((ManageContainer) oldView).removeSelectedCard();
     }
+
+    public void refresh() {
+        ((ManageContainer) oldView).refresh();
+    }
 }

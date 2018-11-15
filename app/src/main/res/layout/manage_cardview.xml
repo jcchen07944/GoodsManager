@@ -375,6 +375,17 @@
         app:layout_constraintTop_toBottomOf="@+id/manage_position_layout" />
 
     <ImageView
+        android:id="@+id/manage_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:tint="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
         android:id="@+id/manage_expand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -382,4 +393,5 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

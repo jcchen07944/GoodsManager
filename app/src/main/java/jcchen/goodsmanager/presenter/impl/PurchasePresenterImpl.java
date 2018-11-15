@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.presenter.PurchasePresenter;
 import jcchen.goodsmanager.view.MainActivity;
+import jcchen.goodsmanager.view.listener.OnPurchaseInfoUploadListener;
 
 /**
  * Created by JCChen on 2018/9/21.
@@ -50,14 +51,21 @@ public class PurchasePresenterImpl implements PurchasePresenter {
     }
 
     @Override
-    public void sendPurchaseInfo(PurchaseInfo purchaseInfo) {
-
+    public void uploadAllPurchaseInfo(OnPurchaseInfoUploadListener listener) {
+        ArrayList<PurchaseInfo> purchaseList = getPurchaseList();
+        for (int i = 0; i < purchaseList.size(); i++) {
+            if (!purchaseList.get(i).isUpload()) {
+                // Upload
+                listener.onUploadUpdate(purchaseList.get(i));
+            }
+        }
+        listener.onUploadEnd();
     }
 
     @Override
     public void savePurchaseInfo(PurchaseInfo purchaseInfo) {
         try {
-            String fileName = "PurchaseInfo-" + (System.currentTimeMillis() / 1000);
+            String fileName = "PurchaseInfo-" + System.currentTimeMillis();
             purchaseInfo.setFileName(fileName);
             FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             mFileOutputStream.write(MainActivity.toByteArray(purchaseInfo));

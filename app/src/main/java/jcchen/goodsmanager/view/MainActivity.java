@@ -45,6 +45,7 @@ import jcchen.goodsmanager.entity.DateInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.SettingProfile;
 import jcchen.goodsmanager.entity.TypeInfo;
+import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.fragment.DateSelectDialogFragment;
 import jcchen.goodsmanager.view.fragment.ManageFragment;
@@ -52,6 +53,7 @@ import jcchen.goodsmanager.view.fragment.PostDialogFragment;
 import jcchen.goodsmanager.view.fragment.PurchaseFragment;
 import jcchen.goodsmanager.view.fragment.SettingDialogFragment;
 import jcchen.goodsmanager.view.fragment.TypeSelectDialogFragment;
+import jcchen.goodsmanager.view.listener.OnPurchaseInfoUploadListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,12 +89,14 @@ public class MainActivity extends AppCompatActivity {
     private PurchaseInfo selectedCard;
 
     private SettingPresenterImpl mSettingPresenter;
+    private PurchasePresenterImpl mPurchasePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         context = this;
+        mPurchasePresenter = new PurchasePresenterImpl(this);
         mSettingPresenter = new SettingPresenterImpl(this);
         mSettingProfile = mSettingPresenter.getProfile();
 
@@ -257,6 +261,20 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_clear:
                 mPurchaseFragment.clear();
+                return true;
+            case R.id.menu_upload:
+                mPurchasePresenter.uploadAllPurchaseInfo(new OnPurchaseInfoUploadListener() {
+                    @Override
+                    public void onUploadUpdate(PurchaseInfo mPurchaseInfo) {
+                        mPurchaseInfo.setUpload(true);
+                        mPurchasePresenter.updatePurchaseInfo(mPurchaseInfo, mPurchaseInfo);
+                    }
+
+                    @Override
+                    public void onUploadEnd() {
+                        mManageFragment.refresh();
+                    }
+                });
                 return true;
         }
         return super.onOptionsItemSelected(item);

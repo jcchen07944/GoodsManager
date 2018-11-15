@@ -74,6 +74,8 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         viewHolder.Material.setText(purchaseList.get(position).getMaterial());
         viewHolder.IncomeK.setText(purchaseList.get(position).getIncomeK() + "");
         viewHolder.IncomeT.setText(purchaseList.get(position).getIncomeT() + "");
+        viewHolder.Upload.setImageResource(purchaseList.get(position).isUpload()?
+                R.drawable.ic_upload_ok : R.drawable.ic_upload_no);
 
         ArrayList<ColorInfo> colorList = purchaseList.get(position).getColorList();
         String color = "";
@@ -127,7 +129,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         public int position;
         public ConstraintLayout Card;
         public TextView Name, Type, Numbers, ActualPrice, ListPrice, IncomeK, IncomeT, Material, Flexible, Color, Size, Mall, Position;
-        public ImageView Expand;
+        public ImageView Expand, Upload;
         public Button SizeDetail;
         public LinearLayout PriceLayout, IncomeLayout, FlexibleLayout, MaterialLayout, ColorLayout, SizeLayout;
         public ViewHolder(View view) {
@@ -147,6 +149,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
             Mall = view.findViewById(R.id.manage_mall);
             Position = view.findViewById(R.id.manage_position);
             Expand = view.findViewById(R.id.manage_expand);
+            Upload = view.findViewById(R.id.manage_upload);
             SizeDetail = view.findViewById(R.id.manage_size_detail);
             PriceLayout = view.findViewById(R.id.manage_price_layout);
             IncomeLayout = view.findViewById(R.id.manage_income_layout);
