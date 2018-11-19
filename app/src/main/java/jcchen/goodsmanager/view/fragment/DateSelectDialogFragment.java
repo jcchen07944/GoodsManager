@@ -63,14 +63,12 @@ public class DateSelectDialogFragment extends DialogFragment {
         date = (TextView) view.findViewById(R.id.date_text);
         dateLayout = (LinearLayout) view.findViewById(R.id.date_layout);
 
-        if (mDateInfo == null) {
-            SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+        SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+        date.setText(mSimpleDateFormat.format(Calendar.getInstance().getTime()));
+        if (mDateInfo == null)
             day.setText("1");
-            date.setText(mSimpleDateFormat.format(Calendar.getInstance().getTime()));
-        } else {
+        else
             day.setText(mDateInfo.getDay() + "");
-            date.setText(mDateInfo.getDate());
-        }
 
         setCancelable(false);
 
@@ -85,9 +83,12 @@ public class DateSelectDialogFragment extends DialogFragment {
                                 date.setText(year + "年" + String.format("%02d", monthOfYear + 1) + "月" + String.format("%02d", dayOfMonth) + "日");
                             }
                         },
-                        mDateInfo == null ? now.get(Calendar.YEAR) : parseDate(MODE_YEAR, mDateInfo.getDate()),
-                        mDateInfo == null ? now.get(Calendar.MONTH) : parseDate(MODE_MONTH, mDateInfo.getDate()) - 1,
-                        mDateInfo == null ? now.get(Calendar.DAY_OF_MONTH) : parseDate(MODE_DAY, mDateInfo.getDate())
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                        //mDateInfo == null ? now.get(Calendar.YEAR) : parseDate(MODE_YEAR, mDateInfo.getDate()),
+                        //mDateInfo == null ? now.get(Calendar.MONTH) : parseDate(MODE_MONTH, mDateInfo.getDate()) - 1,
+                        //mDateInfo == null ? now.get(Calendar.DAY_OF_MONTH) : parseDate(MODE_DAY, mDateInfo.getDate())
                 );
                 mDatePickerDialog.setAccentColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
                 mDatePickerDialog.show(((MainActivity) context).getSupportFragmentManager(), "DatePickerDialog");
