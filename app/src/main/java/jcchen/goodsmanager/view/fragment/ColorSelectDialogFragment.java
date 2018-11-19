@@ -133,6 +133,8 @@ public class ColorSelectDialogFragment extends DialogFragment {
     }
 
     public void loadSavedData(ArrayList<ColorInfo> colorSelectList) {
+        if (adapter == null)
+            adapter = new ColorListViewAdapter(getActivity(), mSettingPresenter.getColorList());
         if (colorSelectList == null)
             colorSelectList = new ArrayList<>();
         this.colorSelectList = new ArrayList<>();
@@ -142,6 +144,8 @@ public class ColorSelectDialogFragment extends DialogFragment {
     }
 
     private void updateTextView() {
+        if (adapter == null)
+            adapter = new ColorListViewAdapter(getActivity(), mSettingPresenter.getColorList());
         colorSelectList = adapter.sort(colorSelectList);
 
         String text = getResources().getString(R.string.color) + " : ";
