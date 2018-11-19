@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.core.content.ContextCompat;
@@ -23,14 +23,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -73,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView exchangeRate;
     private TextView exchangeRateText, dateText, dayText;
     private LinearLayout dateLayout;
+    private MaterialSearchView mMaterialSearchView;
 
     private TypeSelectDialogFragment mTypeSelectDialogFragment = null;
     private PurchaseFragment mPurchaseFragment = null;
@@ -113,6 +113,27 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setTitle(getResources().getString(R.string.manage));
         mToolbar.setSubtitle("");
         mToolbar.setNavigationIcon(R.drawable.ic_menu);
+        mMaterialSearchView = (MaterialSearchView) findViewById(R.id.toolbar_search);
+        mMaterialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                // Hide input window.
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(mMaterialSearchView.getWindowToken(), 0);
+                mMaterialSearchView.clearFocus();
+                mMaterialSearchView.setVisibility(View.GONE);
+                mToolbar.getMenu().findItem(R.id.menu_resume).setVisible(true);
+                mToolbar.getMenu().findItem(R.id.menu_search).setVisible(false);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mManageFragment.getAdapter().getFilter().filter(newText);
+                return false;
+            }
+        });
         setSupportActionBar(mToolbar);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
@@ -200,8 +221,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
+        // mMaterialSearchView.setMenuItem(menu.findItem(R.id.menu_search));
+        mMaterialSearchView.setVoiceSearch(false);
         switch (ACTIONBAR_STATE) {
             case ACTIONBAR_STATE_HOME:
+                if (mManageFragment.getAdapter() != null) {
+                    if (mManageFragment.getAdapter().isFiltered()) {
+                        menu.findItem(R.id.menu_search).setVisible(false);
+                        menu.findItem(R.id.menu_resume).setVisible(true);
+                    }
+                    else {
+                        menu.findItem(R.id.menu_search).setVisible(true);
+                        menu.findItem(R.id.menu_resume).setVisible(false);
+                    }
+                }
                 menu.findItem(R.id.menu_upload).setVisible(true);
                 menu.findItem(R.id.menu_delete).setVisible(false);
                 menu.findItem(R.id.menu_po).setVisible(false);
@@ -209,6 +242,8 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.menu_clear).setVisible(false);
                 break;
             case ACTIONBAR_STATE_PURCHASE:
+                menu.findItem(R.id.menu_search).setVisible(false);
+                menu.findItem(R.id.menu_resume).setVisible(false);
                 menu.findItem(R.id.menu_upload).setVisible(false);
                 menu.findItem(R.id.menu_delete).setVisible(false);
                 menu.findItem(R.id.menu_po).setVisible(false);
@@ -216,6 +251,8 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.menu_clear).setVisible(true);
                 break;
             case ACTIONBAR_STATE_SELECT_CARD:
+                menu.findItem(R.id.menu_search).setVisible(false);
+                menu.findItem(R.id.menu_resume).setVisible(false);
                 menu.findItem(R.id.menu_upload).setVisible(false);
                 menu.findItem(R.id.menu_delete).setVisible(true);
                 menu.findItem(R.id.menu_po).setVisible(true);
@@ -275,6 +312,16 @@ public class MainActivity extends AppCompatActivity {
                         mManageFragment.refresh();
                     }
                 });
+                return true;
+            case R.id.menu_resume:
+                mManageFragment.getAdapter().getFilter().filter("");
+                mToolbar.getMenu().findItem(R.id.menu_search).setVisible(true);
+                mToolbar.getMenu().findItem(R.id.menu_resume).setVisible(false);
+                return true;
+            case R.id.menu_search:
+                mMaterialSearchView.closeSearch();
+                mMaterialSearchView.setVisibility(View.VISIBLE);
+                mMaterialSearchView.showSearch();
                 return true;
         }
         return super.onOptionsItemSelected(item);

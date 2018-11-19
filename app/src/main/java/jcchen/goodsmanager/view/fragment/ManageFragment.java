@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.view.adapter.ManageRecyclerViewAdapter;
 import jcchen.goodsmanager.view.container.Container;
 import jcchen.goodsmanager.view.container.ManageContainer;
 
@@ -38,5 +39,9 @@ public class ManageFragment extends Fragment {
 
     public void refresh() {
         ((ManageContainer) oldView).refresh();
+    }
+
+    public ManageRecyclerViewAdapter getAdapter() {
+        return ((ManageContainer) oldView).getAdapter();
     }
 }

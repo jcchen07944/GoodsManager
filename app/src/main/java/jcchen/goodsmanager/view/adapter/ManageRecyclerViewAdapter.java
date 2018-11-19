@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,23 +24,28 @@ import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.view.MainActivity;
 import jcchen.goodsmanager.view.fragment.SizeDetailDialogFragment;
 
-public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecyclerViewAdapter.ViewHolder> {
+public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecyclerViewAdapter.ViewHolder> implements Filterable {
 
     private Context context;
 
-    private ArrayList<PurchaseInfo> purchaseList;
+    private ArrayList<PurchaseInfo> purchaseList, filterList;
 
     private ViewHolder selectedCard, expandedCard;
 
+    private ManageFilter mManageFilter;
+
     private SizeDetailDialogFragment mSizeDetailDialogFragment;
+
+    private boolean filtered;
 
     public ManageRecyclerViewAdapter(Context context, ArrayList<PurchaseInfo> purchaseList) {
         this.context = context;
         if(purchaseList == null)
             purchaseList = new ArrayList<>();
         this.purchaseList = (ArrayList<PurchaseInfo>) purchaseList.clone();
+        this.filterList = new ArrayList<>(purchaseList);
         mSizeDetailDialogFragment = new SizeDetailDialogFragment();
-
+        filtered = false;
     }
 
     @Override
@@ -113,6 +120,17 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
     @Override
     public int getItemCount() {
         return purchaseList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        if(mManageFilter == null)
+            mManageFilter = new ManageFilter();
+        return mManageFilter;
+    }
+
+    public boolean isFiltered() {
+        return filtered;
     }
 
     public PurchaseInfo getItem(int position) {
@@ -231,6 +249,38 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
             expandedCard.Expand.setRotation(0);
             expandedCard.Card.invalidate();
             expandedCard = null;
+        }
+    }
+
+    private class ManageFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults mFilterResults = new FilterResults();
+
+            if(constraint != null && constraint.length() > 0) {
+                ArrayList<PurchaseInfo> newPurchaseList = new ArrayList<>();
+                for(int i = 0; i < filterList.size(); i++) {
+                    if(filterList.get(i).getName().toLowerCase().contains(constraint.toString().toLowerCase()) ||
+                       filterList.get(i).getNumbers().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        newPurchaseList.add(filterList.get(i));
+                    }
+                }
+                mFilterResults.count = newPurchaseList.size();
+                mFilterResults.values = newPurchaseList;
+                filtered = true;
+            }
+            else {
+                mFilterResults.count = filterList.size();
+                mFilterResults.values = filterList;
+                filtered = false;
+            }
+            return mFilterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            purchaseList = (ArrayList<PurchaseInfo>) results.values;
+            notifyDataSetChanged();
         }
     }
 }

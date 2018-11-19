@@ -3,11 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_resume"
+        android:icon="@drawable/ic_resume"
+        android:title="@string/resume"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menu_upload"
         android:layout_height="wrap_content"
         android:icon="@drawable/ic_upload"
         android:title="@string/upload"
         app:showAsAction="always" />
+
 
     <item
         android:id="@+id/menu_po"

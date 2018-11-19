@@ -72,4 +72,8 @@ public class ManageContainer extends ConstraintLayout implements Container {
         adapter = new ManageRecyclerViewAdapter(context, presenter.getPurchaseList());
         mRecyclerView.setAdapter(adapter);
     }
+
+    public ManageRecyclerViewAdapter getAdapter() {
+        return adapter;
+    }
 }
