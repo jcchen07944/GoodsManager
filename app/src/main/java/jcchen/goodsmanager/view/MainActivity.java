@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -170,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
+                mDateSelectDialogFragment.setCancelable(true);
                 mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
             }
         });
@@ -211,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
                 !mSettingProfile.getLastDialogShowTimeStamp().equals(timeStamp)) ||
                 mSettingProfile.getTimeDialogShowFreq() == SettingProfile.TIME_DIALOG_MODE_EVERYDAY) {
             DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
+            mDateSelectDialogFragment.setCancelable(false);
             mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
             mSettingProfile.setLastDialogShowTimeStamp(timeStamp);
             mSettingPresenter.saveProfile(mSettingProfile);
@@ -300,16 +303,27 @@ public class MainActivity extends AppCompatActivity {
                 mPurchaseFragment.clear();
                 return true;
             case R.id.menu_upload:
+                int padding = (int) (16 * context.getResources().getDisplayMetrics().density);
+                ProgressBar mProgressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleSmall);
+                mProgressBar.setPadding(padding, padding, padding, padding);
+                mProgressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(
+                        this, android.R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+                mToolbar.getMenu().findItem(R.id.menu_upload).setActionView(mProgressBar);
                 mPurchasePresenter.uploadAllPurchaseInfo(new OnPurchaseInfoUploadListener() {
                     @Override
                     public void onUploadUpdate(PurchaseInfo mPurchaseInfo) {
                         mPurchaseInfo.setUpload(true);
                         mPurchasePresenter.updatePurchaseInfo(mPurchaseInfo, mPurchaseInfo);
                     }
-
                     @Override
                     public void onUploadEnd() {
                         mManageFragment.refresh();
+                        item.getActionView().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                item.setActionView(null);
+                            }
+                        }, 1000);
                     }
                 });
                 return true;

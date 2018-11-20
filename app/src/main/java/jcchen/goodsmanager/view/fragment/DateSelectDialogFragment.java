@@ -64,13 +64,13 @@ public class DateSelectDialogFragment extends DialogFragment {
         dateLayout = (LinearLayout) view.findViewById(R.id.date_layout);
 
         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
-        date.setText(mSimpleDateFormat.format(Calendar.getInstance().getTime()));
-        if (mDateInfo == null)
+        if (mDateInfo == null) {
             day.setText("1");
-        else
+        }
+        else {
             day.setText(mDateInfo.getDay() + "");
-
-        setCancelable(false);
+            date.setText(isCancelable()? mDateInfo.getDate() : mSimpleDateFormat.format(Calendar.getInstance().getTime()));
+        }
 
         dateLayout.setOnClickListener(new View.OnClickListener() {
             @Override
