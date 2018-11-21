@@ -123,6 +123,16 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
     public Filter getFilter() {
         if(mManageFilter == null)
             mManageFilter = new ManageFilter();
