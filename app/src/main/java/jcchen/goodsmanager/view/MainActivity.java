@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         content = (FrameLayout) findViewById(R.id.activity_main_content);
         mManageFragment = new ManageFragment();
         mFragmentManager = getSupportFragmentManager();
-        mFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.activity_main_content, mManageFragment).commit();
+        mFragmentManager.beginTransaction().replace(R.id.activity_main_content, mManageFragment).commit();
 
         /* Init FloatingActionButton */
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -344,11 +344,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (ACTIONBAR_STATE == ACTIONBAR_STATE_PURCHASE) {
-            int BackStackCount = getSupportFragmentManager().getBackStackEntryCount();
+            int BackStackCount = mFragmentManager.getBackStackEntryCount();
             if (BackStackCount > 0) {
-                String Name = getSupportFragmentManager().getBackStackEntryAt(BackStackCount - 1).getName();
+                String Name = mFragmentManager.getBackStackEntryAt(BackStackCount - 1).getName();
                 if (Name.equals(PurchaseFragment.TAG)) {
-                    getSupportFragmentManager().popBackStack();
+                    mFragmentManager.popBackStack();
                     onPurchaseEnd();
                     return;
                 }
