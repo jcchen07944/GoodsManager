@@ -66,6 +66,7 @@ public class DateSelectDialogFragment extends DialogFragment {
         SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
         if (mDateInfo == null) {
             day.setText("1");
+            date.setText(mSimpleDateFormat.format(Calendar.getInstance().getTime()));
         }
         else {
             day.setText(mDateInfo.getDay() + "");
