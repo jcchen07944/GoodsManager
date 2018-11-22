@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import jcchen.goodsmanager.R;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int ACTIONBAR_STATE_HOME = 0;
     public static final int ACTIONBAR_STATE_PURCHASE = 1;
     public static final int ACTIONBAR_STATE_SELECT_CARD = 2;
+    public static final int ACTIONBAR_STATE_MULTI_SELECT_CARD = 3;
     public int ACTIONBAR_STATE;
 
     private Context context;
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private Window mWindow;
     private long firstTime;
 
-    private PurchaseInfo selectedCard;
+    private ArrayList<PurchaseInfo> selectedCard;
 
     private SettingPresenterImpl mSettingPresenter;
     private PurchasePresenterImpl mPurchasePresenter;
@@ -262,6 +264,15 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.menu_edit).setVisible(true);
                 menu.findItem(R.id.menu_clear).setVisible(false);
                 break;
+            case ACTIONBAR_STATE_MULTI_SELECT_CARD:
+                menu.findItem(R.id.menu_search).setVisible(false);
+                menu.findItem(R.id.menu_resume).setVisible(false);
+                menu.findItem(R.id.menu_upload).setVisible(false);
+                menu.findItem(R.id.menu_delete).setVisible(true);
+                menu.findItem(R.id.menu_po).setVisible(false);
+                menu.findItem(R.id.menu_edit).setVisible(false);
+                menu.findItem(R.id.menu_clear).setVisible(false);
+                break;
         }
         return true;
     }
@@ -275,6 +286,8 @@ public class MainActivity extends AppCompatActivity {
                 else if (ACTIONBAR_STATE == ACTIONBAR_STATE_PURCHASE)
                     onBackPressed();
                 else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD)
+                    onBackPressed();
+                else if (ACTIONBAR_STATE == ACTIONBAR_STATE_MULTI_SELECT_CARD)
                     onBackPressed();
                 return true;
             case R.id.menu_delete:
@@ -296,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_edit:
                 mPurchaseFragment.setMode(PurchaseFragment.MODE_EDIT);
                 mTypeSelectDialogFragment = new TypeSelectDialogFragment();
-                mTypeSelectDialogFragment.setDefaultType(selectedCard.getTypeInfo());
+                mTypeSelectDialogFragment.setDefaultType(selectedCard.get(0).getTypeInfo());
                 mTypeSelectDialogFragment.show(getFragmentManager(), TypeSelectDialogFragment.TAG);
                 return true;
             case R.id.menu_clear:
@@ -361,6 +374,8 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD) {
             mManageFragment.onBackPressed();
+        } else if (ACTIONBAR_STATE == ACTIONBAR_STATE_MULTI_SELECT_CARD) {
+            mManageFragment.onBackPressed();
         } else if (ACTIONBAR_STATE == ACTIONBAR_STATE_HOME) {
             long secondTime = System.currentTimeMillis();
             if (secondTime - firstTime > 2000) {
@@ -386,6 +401,10 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 break;
             case ACTIONBAR_STATE_SELECT_CARD:
+                mToolbar.setNavigationIcon(R.drawable.ic_back);
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                break;
+            case ACTIONBAR_STATE_MULTI_SELECT_CARD:
                 mToolbar.setNavigationIcon(R.drawable.ic_back);
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 break;
@@ -476,9 +495,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onCardSelectStart(PurchaseInfo purchaseInfo) {
-        setActionbarState(ACTIONBAR_STATE_SELECT_CARD);
-        selectedCard = purchaseInfo;
+    public void onCardSelectStart(ArrayList<PurchaseInfo> purchaseInfoList) {
+        if (purchaseInfoList.size() == 1)
+            setActionbarState(ACTIONBAR_STATE_SELECT_CARD);
+        else
+            setActionbarState(ACTIONBAR_STATE_MULTI_SELECT_CARD);
+        selectedCard = purchaseInfoList;
     }
 
     public void onCardSelectEnd() {
@@ -538,6 +560,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public PurchaseInfo getSelectedCard() {
-        return selectedCard;
+        if (selectedCard != null && !selectedCard.isEmpty())
+            return selectedCard.get(0);
+        return null;
     }
 }

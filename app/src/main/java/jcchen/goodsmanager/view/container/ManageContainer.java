@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 
+import java.util.ArrayList;
+
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
 import jcchen.goodsmanager.view.adapter.ManageRecyclerViewAdapter;
@@ -52,7 +54,9 @@ public class ManageContainer extends ConstraintLayout implements Container {
 
     @Override
     public void onBackPressed() {
-        adapter.resumeCard();
+        ArrayList<Integer> selectedPosition = adapter.getSelectedPosition();
+        for (int i = 0; i < selectedPosition.size(); i++)
+            adapter.resumeCard(selectedPosition.get(i));
     }
 
     @Override
@@ -61,10 +65,10 @@ public class ManageContainer extends ConstraintLayout implements Container {
     }
 
     public void removeSelectedCard() {
-        int selectedPosition = adapter.getSelectedPosition();
-        if (selectedPosition != -1) {
-            presenter.removePurchaseInfo(adapter.getItem(selectedPosition));
-            adapter.remove(selectedPosition);
+        ArrayList<Integer> selectedPosition = adapter.getSelectedPosition();
+        for (int i = selectedPosition.size() - 1; i >= 0; i--) {
+            presenter.removePurchaseInfo(adapter.getItem(selectedPosition.get(i)));
+            adapter.remove(selectedPosition.get(i));
         }
     }
 
