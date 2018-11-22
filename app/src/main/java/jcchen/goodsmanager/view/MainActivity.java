@@ -343,7 +343,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (ACTIONBAR_STATE == ACTIONBAR_STATE_PURCHASE) {
+        if (mMaterialSearchView.isSearchOpen()) {
+            mMaterialSearchView.closeSearch();
+            mToolbar.getMenu().findItem(R.id.menu_search).setVisible(true);
+            mToolbar.getMenu().findItem(R.id.menu_resume).setVisible(false);
+            return;
+        }
+        else if (ACTIONBAR_STATE == ACTIONBAR_STATE_PURCHASE) {
             int BackStackCount = mFragmentManager.getBackStackEntryCount();
             if (BackStackCount > 0) {
                 String Name = mFragmentManager.getBackStackEntryAt(BackStackCount - 1).getName();
