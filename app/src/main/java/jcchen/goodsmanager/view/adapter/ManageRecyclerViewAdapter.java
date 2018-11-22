@@ -157,16 +157,14 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         return purchaseList.get(position);
     }
 
-    public void remove(int position) {
-        for (int i = 0; i < selectedCard.size(); i++) {
-            if (selectedCard.get(i).position == position) {
-                selectedCard.remove(i);
-                break;
-            }
+    public void removeSelectedCard() {
+        ArrayList<Integer> selectedPosition = getSelectedPosition();
+        for (int i = selectedPosition.size() - 1; i >= 0; i--) {
+            purchaseList.remove((int) selectedPosition.get(i));
+            notifyItemRemoved(selectedPosition.get(i));
         }
-        purchaseList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, getItemCount());
+        selectedCard.clear();
+        notifyItemRangeChanged(0, getItemCount());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

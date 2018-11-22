@@ -4,6 +4,8 @@ import android.content.Context;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Handler;
 import android.util.AttributeSet;
 
 import java.util.ArrayList;
@@ -68,8 +70,15 @@ public class ManageContainer extends ConstraintLayout implements Container {
         ArrayList<Integer> selectedPosition = adapter.getSelectedPosition();
         for (int i = selectedPosition.size() - 1; i >= 0; i--) {
             presenter.removePurchaseInfo(adapter.getItem(selectedPosition.get(i)));
-            adapter.remove(selectedPosition.get(i));
         }
+        adapter.removeSelectedCard();
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                refresh();
+            }
+        }, 500);
     }
 
     public void refresh() {
