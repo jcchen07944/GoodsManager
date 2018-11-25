@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
@@ -30,7 +31,9 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
 
     private ArrayList<PurchaseInfo> purchaseList, filterList;
 
-    private ViewHolder selectedCard, expandedCard;
+    private ViewHolder expandedCard;
+
+    private ArrayList<ViewHolder> selectedCard;
 
     private ManageFilter mManageFilter;
 
@@ -46,6 +49,7 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         this.filterList = new ArrayList<>(purchaseList);
         mSizeDetailDialogFragment = new SizeDetailDialogFragment();
         filtered = false;
+        selectedCard = new ArrayList<>();
     }
 
     @Override
@@ -60,14 +64,20 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         viewHolder.Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                expand(viewHolder);
+                if (selectedCard.isEmpty())
+                    expand(viewHolder);
+                else
+                    selectCard(viewHolder);
             }
         });
         viewHolder.Card.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                selectCard(viewHolder);
-                return true;
+                if (selectedCard.isEmpty()) {
+                    selectCard(viewHolder);
+                    return true;
+                }
+                return false;
             }
         });
         viewHolder.Name.setText(purchaseList.get(position).getName());
@@ -147,10 +157,14 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         return purchaseList.get(position);
     }
 
-    public void remove(int position) {
-        purchaseList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, getItemCount());
+    public void removeSelectedCard() {
+        ArrayList<Integer> selectedPosition = getSelectedPosition();
+        for (int i = selectedPosition.size() - 1; i >= 0; i--) {
+            purchaseList.remove((int) selectedPosition.get(i));
+            notifyItemRemoved(selectedPosition.get(i));
+        }
+        selectedCard.clear();
+        notifyItemRangeChanged(0, getItemCount());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -188,32 +202,49 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         }
     }
 
-    public int getSelectedPosition() {
-        if (selectedCard != null)
-            return selectedCard.position;
-        return -1;
+    public ArrayList<Integer> getSelectedPosition() {
+        ArrayList<Integer> selectedPosition = new ArrayList<>();
+        for (int i = 0; i < selectedCard.size(); i++)
+            selectedPosition.add(selectedCard.get(i).position);
+        Collections.sort(selectedPosition);
+        return selectedPosition;
     }
 
     private void selectCard(ViewHolder viewHolder) {
-        resumeCard();
+        if (selectedCard.contains(viewHolder)) {
+            resumeCard(viewHolder.position);
+            return;
+        }
         contract();
         viewHolder.Card.setElevation(8 * context.getResources().getDisplayMetrics().density);
-        //viewHolder.Name.setTextColor(ContextCompat.getColor(context, R.color.colorTextOnBackground));
         viewHolder.Numbers.setBackground(ContextCompat.getDrawable(context, R.color.colorPrimaryLight));
-        selectedCard = viewHolder;
+        selectedCard.add(viewHolder);
 
-        ((MainActivity) context).onCardSelectStart(purchaseList.get(viewHolder.position));
+        ArrayList<PurchaseInfo> tmpList = new ArrayList<>();
+        for (int i = 0; i < selectedCard.size(); i++)
+            tmpList.add(purchaseList.get(selectedCard.get(i).position));
+        ((MainActivity) context).onCardSelectStart(tmpList);
     }
 
-    public void resumeCard() {
-        if(selectedCard != null) {
-            selectedCard.Card.setElevation(1 * context.getResources().getDisplayMetrics().density);
-            //selectedCard.Name.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-            selectedCard.Numbers.setBackground(ContextCompat.getDrawable(context, R.drawable.manage_numbers_border));
-            selectedCard = null;
+    public void resumeCard(int position) {
+        ViewHolder viewHolder = null;
+        for (int i = 0; i < selectedCard.size(); i++)
+            if (selectedCard.get(i).position == position)
+                viewHolder = selectedCard.get(i);
+        if (viewHolder == null)
+            return;
+        viewHolder.Card.setElevation(1 * context.getResources().getDisplayMetrics().density);
+        viewHolder.Numbers.setBackground(ContextCompat.getDrawable(context, R.drawable.manage_numbers_border));
+        selectedCard.remove(viewHolder);
 
-            ((MainActivity) context).onCardSelectEnd();
+        if (!selectedCard.isEmpty()) {
+            ArrayList<PurchaseInfo> tmpList = new ArrayList<>();
+            for (int i = 0; i < selectedCard.size(); i++)
+                tmpList.add(purchaseList.get(selectedCard.get(i).position));
+            ((MainActivity) context).onCardSelectStart(tmpList);
         }
+        else
+            ((MainActivity) context).onCardSelectEnd();
     }
 
     /**
@@ -222,10 +253,6 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
     private void expand(ViewHolder viewHolder) {
         if (expandedCard == viewHolder) {
             contract();
-            return;
-        }
-        if (selectedCard != null) {
-            resumeCard();
             return;
         }
         contract();
