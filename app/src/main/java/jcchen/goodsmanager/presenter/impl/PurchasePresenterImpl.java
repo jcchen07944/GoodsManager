@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import jcchen.goodsmanager.entity.PurchaseInfo;
+import jcchen.goodsmanager.model.impl.LocalModelImpl;
 import jcchen.goodsmanager.presenter.PurchasePresenter;
 import jcchen.goodsmanager.view.MainActivity;
 import jcchen.goodsmanager.view.listener.OnPurchaseInfoUploadListener;
@@ -20,33 +21,27 @@ public class PurchasePresenterImpl implements PurchasePresenter {
 
     private Context context;
 
+    private LocalModelImpl mLocalModel;
+
     public PurchasePresenterImpl(Context context) {
         this.context = context;
+        this.mLocalModel = new LocalModelImpl(context);
     }
 
     @Override
     public ArrayList<PurchaseInfo> getPurchaseList() {
         ArrayList<PurchaseInfo> purchaseList = new ArrayList<>();
 
-        File dir = context.getFilesDir();
-        File[] subFiles = dir.listFiles();
-        if (subFiles != null) {
-            FileInputStream mFileInputStream;
-            for (File file : subFiles) {
-                try {
-                    if (!file.getName().contains("PurchaseInfo"))
-                        continue;
-
-                    byte buffer[] = new byte[(int) file.length()];
-                    mFileInputStream = context.openFileInput(file.getName());
-                    mFileInputStream.read(buffer);
-                    mFileInputStream.close();
-                    purchaseList.add((PurchaseInfo) MainActivity.toObject(buffer));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        Object object;
+        while ((object = mLocalModel.getPrivateObject("PurchaseInfo", true)) != null) {
+            try {
+                purchaseList.add((PurchaseInfo) object);
+            } catch (Exception e) {
+                // if cast fail.
+                e.printStackTrace();
             }
         }
+
         return purchaseList;
     }
 
@@ -64,25 +59,12 @@ public class PurchasePresenterImpl implements PurchasePresenter {
 
     @Override
     public void savePurchaseInfo(PurchaseInfo purchaseInfo) {
-        try {
-            String fileName = "PurchaseInfo-" + System.currentTimeMillis();
-            purchaseInfo.setFileName(fileName);
-            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            mFileOutputStream.write(MainActivity.toByteArray(purchaseInfo));
-            mFileOutputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        mLocalModel.savePrivateObject("PurchaseInfo", purchaseInfo, true);
     }
 
     @Override
     public void removePurchaseInfo(PurchaseInfo purchaseInfo) {
-        File dir = context.getFilesDir();
-        try {
-            (new File(dir, purchaseInfo.getFileName())).delete();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        mLocalModel.removePrivateObject(purchaseInfo.getFileName());
     }
 
     @Override

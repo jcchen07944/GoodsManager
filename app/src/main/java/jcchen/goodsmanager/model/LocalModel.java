@@ -1,6 +1,7 @@
 package jcchen.goodsmanager.model;
 
 public interface LocalModel {
-
-    void save
+    String savePrivateObject(String objectName, Object object, boolean hasTimeStamp);
+    Object getPrivateObject(String objectName, boolean hasTimeStamp);
+    void removePrivateObject(String objectName);
 }
