@@ -42,7 +42,7 @@ public class PurchasePresenterImpl implements PurchasePresenter {
             }
         }
 
-        return purchaseList;
+        return sortPurchaseList(purchaseList);
     }
 
     @Override
