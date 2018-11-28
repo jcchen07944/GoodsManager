@@ -61,7 +61,9 @@ public class PurchasePresenterImpl implements PurchasePresenter {
 
     @Override
     public void savePurchaseInfo(PurchaseInfo purchaseInfo) {
-        mLocalModel.savePrivateObject("PurchaseInfo", purchaseInfo, true);
+        String objectName = mLocalModel.savePrivateObject("PurchaseInfo", purchaseInfo, true);
+        purchaseInfo.setFileName(objectName);
+        mLocalModel.updatePrivateObject(objectName, purchaseInfo);
     }
 
     @Override
@@ -71,8 +73,8 @@ public class PurchasePresenterImpl implements PurchasePresenter {
 
     @Override
     public void updatePurchaseInfo(PurchaseInfo oldPurchaseInfo, PurchaseInfo newPurchaseInfo) {
-        removePurchaseInfo(oldPurchaseInfo);
-        savePurchaseInfo(newPurchaseInfo);
+        newPurchaseInfo.setFileName(oldPurchaseInfo.getFileName());
+        mLocalModel.updatePrivateObject(oldPurchaseInfo.getFileName(), newPurchaseInfo);
     }
 
     private ArrayList<PurchaseInfo> sortPurchaseList(ArrayList<PurchaseInfo> purchaseList) {

@@ -46,6 +46,12 @@ public class LocalModelImpl implements LocalModel {
     }
 
     @Override
+    public void updatePrivateObject(String objectName, Object object) {
+        removePrivateObject(objectName);
+        savePrivateObject(objectName, object, false);
+    }
+
+    @Override
     public Object getPrivateObject(String objectName, boolean hasTimeStamp) {
         if (objectName.equals(""))
             return null;
