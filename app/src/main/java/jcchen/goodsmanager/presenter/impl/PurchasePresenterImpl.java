@@ -41,7 +41,6 @@ public class PurchasePresenterImpl implements PurchasePresenter {
                 e.printStackTrace();
             }
         }
-
         return sortPurchaseList(purchaseList);
     }
 
