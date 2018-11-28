@@ -11,24 +11,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <FrameLayout
+            android:id="@+id/toolbar_container"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:elevation="4dp"
             android:minHeight="?attr/actionBarSize"
-            android:weightSum="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:theme="@style/ToolbarItem" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:theme="@style/ToolbarItem" />
+
+            <com.miguelcatalan.materialsearchview.MaterialSearchView
+                android:id="@+id/toolbar_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:theme="@style/MaterialSearchViewStyle" />
+
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/activity_main_content"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_container"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

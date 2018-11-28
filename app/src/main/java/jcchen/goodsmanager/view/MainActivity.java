@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.core.content.ContextCompat;
@@ -23,14 +23,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import jcchen.goodsmanager.R;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int ACTIONBAR_STATE_HOME = 0;
     public static final int ACTIONBAR_STATE_PURCHASE = 1;
     public static final int ACTIONBAR_STATE_SELECT_CARD = 2;
+    public static final int ACTIONBAR_STATE_MULTI_SELECT_CARD = 3;
     public int ACTIONBAR_STATE;
 
     private Context context;
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView exchangeRate;
     private TextView exchangeRateText, dateText, dayText;
     private LinearLayout dateLayout;
+    private MaterialSearchView mMaterialSearchView;
 
     private TypeSelectDialogFragment mTypeSelectDialogFragment = null;
     private PurchaseFragment mPurchaseFragment = null;
@@ -86,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private Window mWindow;
     private long firstTime;
 
-    private PurchaseInfo selectedCard;
+    private ArrayList<PurchaseInfo> selectedCard;
 
     private SettingPresenterImpl mSettingPresenter;
     private PurchasePresenterImpl mPurchasePresenter;
@@ -113,6 +116,27 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setTitle(getResources().getString(R.string.manage));
         mToolbar.setSubtitle("");
         mToolbar.setNavigationIcon(R.drawable.ic_menu);
+        mMaterialSearchView = (MaterialSearchView) findViewById(R.id.toolbar_search);
+        mMaterialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                // Hide input window.
+                if (imm != null)
+                    imm.hideSoftInputFromWindow(mMaterialSearchView.getWindowToken(), 0);
+                mMaterialSearchView.clearFocus();
+                mMaterialSearchView.setVisibility(View.GONE);
+                mToolbar.getMenu().findItem(R.id.menu_resume).setVisible(true);
+                mToolbar.getMenu().findItem(R.id.menu_search).setVisible(false);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mManageFragment.getAdapter().getFilter().filter(newText);
+                return false;
+            }
+        });
         setSupportActionBar(mToolbar);
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
@@ -149,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
+                mDateSelectDialogFragment.setCancelable(true);
                 mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
             }
         });
@@ -161,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         content = (FrameLayout) findViewById(R.id.activity_main_content);
         mManageFragment = new ManageFragment();
         mFragmentManager = getSupportFragmentManager();
-        mFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(R.id.activity_main_content, mManageFragment).commit();
+        mFragmentManager.beginTransaction().replace(R.id.activity_main_content, mManageFragment).commit();
 
         /* Init FloatingActionButton */
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
@@ -190,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 !mSettingProfile.getLastDialogShowTimeStamp().equals(timeStamp)) ||
                 mSettingProfile.getTimeDialogShowFreq() == SettingProfile.TIME_DIALOG_MODE_EVERYDAY) {
             DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
+            mDateSelectDialogFragment.setCancelable(false);
             mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
             mSettingProfile.setLastDialogShowTimeStamp(timeStamp);
             mSettingPresenter.saveProfile(mSettingProfile);
@@ -200,8 +226,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
+        // mMaterialSearchView.setMenuItem(menu.findItem(R.id.menu_search));
+        mMaterialSearchView.setVoiceSearch(false);
         switch (ACTIONBAR_STATE) {
             case ACTIONBAR_STATE_HOME:
+                if (mManageFragment.getAdapter() != null) {
+                    if (mManageFragment.getAdapter().isFiltered()) {
+                        menu.findItem(R.id.menu_search).setVisible(false);
+                        menu.findItem(R.id.menu_resume).setVisible(true);
+                    }
+                    else {
+                        menu.findItem(R.id.menu_search).setVisible(true);
+                        menu.findItem(R.id.menu_resume).setVisible(false);
+                    }
+                }
                 menu.findItem(R.id.menu_upload).setVisible(true);
                 menu.findItem(R.id.menu_delete).setVisible(false);
                 menu.findItem(R.id.menu_po).setVisible(false);
@@ -209,6 +247,8 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.menu_clear).setVisible(false);
                 break;
             case ACTIONBAR_STATE_PURCHASE:
+                menu.findItem(R.id.menu_search).setVisible(false);
+                menu.findItem(R.id.menu_resume).setVisible(false);
                 menu.findItem(R.id.menu_upload).setVisible(false);
                 menu.findItem(R.id.menu_delete).setVisible(false);
                 menu.findItem(R.id.menu_po).setVisible(false);
@@ -216,10 +256,21 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.menu_clear).setVisible(true);
                 break;
             case ACTIONBAR_STATE_SELECT_CARD:
+                menu.findItem(R.id.menu_search).setVisible(false);
+                menu.findItem(R.id.menu_resume).setVisible(false);
                 menu.findItem(R.id.menu_upload).setVisible(false);
                 menu.findItem(R.id.menu_delete).setVisible(true);
                 menu.findItem(R.id.menu_po).setVisible(true);
                 menu.findItem(R.id.menu_edit).setVisible(true);
+                menu.findItem(R.id.menu_clear).setVisible(false);
+                break;
+            case ACTIONBAR_STATE_MULTI_SELECT_CARD:
+                menu.findItem(R.id.menu_search).setVisible(false);
+                menu.findItem(R.id.menu_resume).setVisible(false);
+                menu.findItem(R.id.menu_upload).setVisible(false);
+                menu.findItem(R.id.menu_delete).setVisible(true);
+                menu.findItem(R.id.menu_po).setVisible(false);
+                menu.findItem(R.id.menu_edit).setVisible(false);
                 menu.findItem(R.id.menu_clear).setVisible(false);
                 break;
         }
@@ -235,6 +286,8 @@ public class MainActivity extends AppCompatActivity {
                 else if (ACTIONBAR_STATE == ACTIONBAR_STATE_PURCHASE)
                     onBackPressed();
                 else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD)
+                    onBackPressed();
+                else if (ACTIONBAR_STATE == ACTIONBAR_STATE_MULTI_SELECT_CARD)
                     onBackPressed();
                 return true;
             case R.id.menu_delete:
@@ -256,25 +309,46 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_edit:
                 mPurchaseFragment.setMode(PurchaseFragment.MODE_EDIT);
                 mTypeSelectDialogFragment = new TypeSelectDialogFragment();
-                mTypeSelectDialogFragment.setDefaultType(selectedCard.getTypeInfo());
+                mTypeSelectDialogFragment.setDefaultType(selectedCard.get(0).getTypeInfo());
                 mTypeSelectDialogFragment.show(getFragmentManager(), TypeSelectDialogFragment.TAG);
                 return true;
             case R.id.menu_clear:
                 mPurchaseFragment.clear();
                 return true;
             case R.id.menu_upload:
+                int padding = (int) (16 * context.getResources().getDisplayMetrics().density);
+                ProgressBar mProgressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleSmall);
+                mProgressBar.setPadding(padding, padding, padding, padding);
+                mProgressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(
+                        this, android.R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+                mToolbar.getMenu().findItem(R.id.menu_upload).setActionView(mProgressBar);
                 mPurchasePresenter.uploadAllPurchaseInfo(new OnPurchaseInfoUploadListener() {
                     @Override
                     public void onUploadUpdate(PurchaseInfo mPurchaseInfo) {
                         mPurchaseInfo.setUpload(true);
                         mPurchasePresenter.updatePurchaseInfo(mPurchaseInfo, mPurchaseInfo);
                     }
-
                     @Override
                     public void onUploadEnd() {
                         mManageFragment.refresh();
+                        item.getActionView().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                item.setActionView(null);
+                            }
+                        }, 1000);
                     }
                 });
+                return true;
+            case R.id.menu_resume:
+                mManageFragment.getAdapter().getFilter().filter("");
+                mToolbar.getMenu().findItem(R.id.menu_search).setVisible(true);
+                mToolbar.getMenu().findItem(R.id.menu_resume).setVisible(false);
+                return true;
+            case R.id.menu_search:
+                mMaterialSearchView.closeSearch();
+                mMaterialSearchView.setVisibility(View.VISIBLE);
+                mMaterialSearchView.showSearch();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -282,17 +356,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (ACTIONBAR_STATE == ACTIONBAR_STATE_PURCHASE) {
-            int BackStackCount = getSupportFragmentManager().getBackStackEntryCount();
+        if (mMaterialSearchView.isSearchOpen()) {
+            mMaterialSearchView.closeSearch();
+            mToolbar.getMenu().findItem(R.id.menu_search).setVisible(true);
+            mToolbar.getMenu().findItem(R.id.menu_resume).setVisible(false);
+            return;
+        }
+        else if (ACTIONBAR_STATE == ACTIONBAR_STATE_PURCHASE) {
+            int BackStackCount = mFragmentManager.getBackStackEntryCount();
             if (BackStackCount > 0) {
-                String Name = getSupportFragmentManager().getBackStackEntryAt(BackStackCount - 1).getName();
+                String Name = mFragmentManager.getBackStackEntryAt(BackStackCount - 1).getName();
                 if (Name.equals(PurchaseFragment.TAG)) {
-                    getSupportFragmentManager().popBackStack();
+                    mFragmentManager.popBackStack();
                     onPurchaseEnd();
                     return;
                 }
             }
         } else if (ACTIONBAR_STATE == ACTIONBAR_STATE_SELECT_CARD) {
+            mManageFragment.onBackPressed();
+        } else if (ACTIONBAR_STATE == ACTIONBAR_STATE_MULTI_SELECT_CARD) {
             mManageFragment.onBackPressed();
         } else if (ACTIONBAR_STATE == ACTIONBAR_STATE_HOME) {
             long secondTime = System.currentTimeMillis();
@@ -319,6 +401,10 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 break;
             case ACTIONBAR_STATE_SELECT_CARD:
+                mToolbar.setNavigationIcon(R.drawable.ic_back);
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                break;
+            case ACTIONBAR_STATE_MULTI_SELECT_CARD:
                 mToolbar.setNavigationIcon(R.drawable.ic_back);
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
                 break;
@@ -409,9 +495,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onCardSelectStart(PurchaseInfo purchaseInfo) {
-        setActionbarState(ACTIONBAR_STATE_SELECT_CARD);
-        selectedCard = purchaseInfo;
+    public void onCardSelectStart(ArrayList<PurchaseInfo> purchaseInfoList) {
+        if (purchaseInfoList.size() == 1)
+            setActionbarState(ACTIONBAR_STATE_SELECT_CARD);
+        else
+            setActionbarState(ACTIONBAR_STATE_MULTI_SELECT_CARD);
+        selectedCard = purchaseInfoList;
     }
 
     public void onCardSelectEnd() {
@@ -431,6 +520,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public PurchaseInfo getSelectedCard() {
-        return selectedCard;
+        if (selectedCard != null && !selectedCard.isEmpty())
+            return selectedCard.get(0);
+        return null;
     }
 }

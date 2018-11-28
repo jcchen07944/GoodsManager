@@ -41,5 +41,11 @@
         <item name="android:textColor">@color/colorTextOnBackground</item>
     </style>
 
+    <style name="MaterialSearchViewStyle">
+        <item name="searchBackground">@color/colorObjectBackground</item>
+        <item name="android:textColor">@color/colorTextOnBackground</item>
+        <item name="android:textColorHint">@color/colorTextHint</item>
+        <item name="android:hint">@string/search_hint</item>
+    </style>
 
 </resources>

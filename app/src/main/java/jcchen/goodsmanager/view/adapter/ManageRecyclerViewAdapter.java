@@ -9,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
@@ -22,23 +25,31 @@ import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.view.MainActivity;
 import jcchen.goodsmanager.view.fragment.SizeDetailDialogFragment;
 
-public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecyclerViewAdapter.ViewHolder> {
+public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecyclerViewAdapter.ViewHolder> implements Filterable {
 
     private Context context;
 
-    private ArrayList<PurchaseInfo> purchaseList;
+    private ArrayList<PurchaseInfo> purchaseList, filterList;
 
-    private ViewHolder selectedCard, expandedCard;
+    private ViewHolder expandedCard;
+
+    private ArrayList<ViewHolder> selectedCard;
+
+    private ManageFilter mManageFilter;
 
     private SizeDetailDialogFragment mSizeDetailDialogFragment;
+
+    private boolean filtered;
 
     public ManageRecyclerViewAdapter(Context context, ArrayList<PurchaseInfo> purchaseList) {
         this.context = context;
         if(purchaseList == null)
             purchaseList = new ArrayList<>();
         this.purchaseList = (ArrayList<PurchaseInfo>) purchaseList.clone();
+        this.filterList = new ArrayList<>(purchaseList);
         mSizeDetailDialogFragment = new SizeDetailDialogFragment();
-
+        filtered = false;
+        selectedCard = new ArrayList<>();
     }
 
     @Override
@@ -53,14 +64,20 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         viewHolder.Card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                expand(viewHolder);
+                if (selectedCard.isEmpty())
+                    expand(viewHolder);
+                else
+                    selectCard(viewHolder);
             }
         });
         viewHolder.Card.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                selectCard(viewHolder);
-                return true;
+                if (selectedCard.isEmpty()) {
+                    selectCard(viewHolder);
+                    return true;
+                }
+                return false;
             }
         });
         viewHolder.Name.setText(purchaseList.get(position).getName());
@@ -115,14 +132,39 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         return purchaseList.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public Filter getFilter() {
+        if(mManageFilter == null)
+            mManageFilter = new ManageFilter();
+        return mManageFilter;
+    }
+
+    public boolean isFiltered() {
+        return filtered;
+    }
+
     public PurchaseInfo getItem(int position) {
         return purchaseList.get(position);
     }
 
-    public void remove(int position) {
-        purchaseList.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, getItemCount());
+    public void removeSelectedCard() {
+        ArrayList<Integer> selectedPosition = getSelectedPosition();
+        for (int i = selectedPosition.size() - 1; i >= 0; i--) {
+            purchaseList.remove((int) selectedPosition.get(i));
+            notifyItemRemoved(selectedPosition.get(i));
+        }
+        selectedCard.clear();
+        notifyItemRangeChanged(0, getItemCount());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -160,32 +202,49 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         }
     }
 
-    public int getSelectedPosition() {
-        if (selectedCard != null)
-            return selectedCard.position;
-        return -1;
+    public ArrayList<Integer> getSelectedPosition() {
+        ArrayList<Integer> selectedPosition = new ArrayList<>();
+        for (int i = 0; i < selectedCard.size(); i++)
+            selectedPosition.add(selectedCard.get(i).position);
+        Collections.sort(selectedPosition);
+        return selectedPosition;
     }
 
     private void selectCard(ViewHolder viewHolder) {
-        resumeCard();
+        if (selectedCard.contains(viewHolder)) {
+            resumeCard(viewHolder.position);
+            return;
+        }
         contract();
         viewHolder.Card.setElevation(8 * context.getResources().getDisplayMetrics().density);
-        //viewHolder.Name.setTextColor(ContextCompat.getColor(context, R.color.colorTextOnBackground));
         viewHolder.Numbers.setBackground(ContextCompat.getDrawable(context, R.color.colorPrimaryLight));
-        selectedCard = viewHolder;
+        selectedCard.add(viewHolder);
 
-        ((MainActivity) context).onCardSelectStart(purchaseList.get(viewHolder.position));
+        ArrayList<PurchaseInfo> tmpList = new ArrayList<>();
+        for (int i = 0; i < selectedCard.size(); i++)
+            tmpList.add(purchaseList.get(selectedCard.get(i).position));
+        ((MainActivity) context).onCardSelectStart(tmpList);
     }
 
-    public void resumeCard() {
-        if(selectedCard != null) {
-            selectedCard.Card.setElevation(1 * context.getResources().getDisplayMetrics().density);
-            //selectedCard.Name.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-            selectedCard.Numbers.setBackground(ContextCompat.getDrawable(context, R.drawable.manage_numbers_border));
-            selectedCard = null;
+    public void resumeCard(int position) {
+        ViewHolder viewHolder = null;
+        for (int i = 0; i < selectedCard.size(); i++)
+            if (selectedCard.get(i).position == position)
+                viewHolder = selectedCard.get(i);
+        if (viewHolder == null)
+            return;
+        viewHolder.Card.setElevation(1 * context.getResources().getDisplayMetrics().density);
+        viewHolder.Numbers.setBackground(ContextCompat.getDrawable(context, R.drawable.manage_numbers_border));
+        selectedCard.remove(viewHolder);
 
-            ((MainActivity) context).onCardSelectEnd();
+        if (!selectedCard.isEmpty()) {
+            ArrayList<PurchaseInfo> tmpList = new ArrayList<>();
+            for (int i = 0; i < selectedCard.size(); i++)
+                tmpList.add(purchaseList.get(selectedCard.get(i).position));
+            ((MainActivity) context).onCardSelectStart(tmpList);
         }
+        else
+            ((MainActivity) context).onCardSelectEnd();
     }
 
     /**
@@ -194,10 +253,6 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
     private void expand(ViewHolder viewHolder) {
         if (expandedCard == viewHolder) {
             contract();
-            return;
-        }
-        if (selectedCard != null) {
-            resumeCard();
             return;
         }
         contract();
@@ -231,6 +286,38 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
             expandedCard.Expand.setRotation(0);
             expandedCard.Card.invalidate();
             expandedCard = null;
+        }
+    }
+
+    private class ManageFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults mFilterResults = new FilterResults();
+
+            if(constraint != null && constraint.length() > 0) {
+                ArrayList<PurchaseInfo> newPurchaseList = new ArrayList<>();
+                for(int i = 0; i < filterList.size(); i++) {
+                    if(filterList.get(i).getName().toLowerCase().contains(constraint.toString().toLowerCase()) ||
+                       filterList.get(i).getNumbers().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        newPurchaseList.add(filterList.get(i));
+                    }
+                }
+                mFilterResults.count = newPurchaseList.size();
+                mFilterResults.values = newPurchaseList;
+                filtered = true;
+            }
+            else {
+                mFilterResults.count = filterList.size();
+                mFilterResults.values = filterList;
+                filtered = false;
+            }
+            return mFilterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            purchaseList = (ArrayList<PurchaseInfo>) results.values;
+            notifyDataSetChanged();
         }
     }
 }

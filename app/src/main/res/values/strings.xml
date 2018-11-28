@@ -57,7 +57,7 @@
     <string name="setting_once_a_day">一天顯示一次</string>
     <string name="setting_every_time">每次開啟顯示</string>
     <string name="post_text">&#060;3 9月官網連線新款相簿：https://bit.ly/2C69XrV\n&#060;3 9月連線優惠活動：https://bit.ly/2oCb21a\n&#060;3 9月直播抽獎活動：https://bit.ly/2oDdOTK </string>
-
+    <string name="resume">恢復</string>
 
     <string-array name="flexible_array">
         <item>無</item>

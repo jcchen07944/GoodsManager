@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.view.adapter.ManageRecyclerViewAdapter;
 import jcchen.goodsmanager.view.container.Container;
 import jcchen.goodsmanager.view.container.ManageContainer;
 
@@ -15,6 +16,12 @@ public class ManageFragment extends Fragment {
     public static final String TAG = "ManageFragment";
 
     private View oldView;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,5 +45,9 @@ public class ManageFragment extends Fragment {
 
     public void refresh() {
         ((ManageContainer) oldView).refresh();
+    }
+
+    public ManageRecyclerViewAdapter getAdapter() {
+        return ((ManageContainer) oldView).getAdapter();
     }
 }
