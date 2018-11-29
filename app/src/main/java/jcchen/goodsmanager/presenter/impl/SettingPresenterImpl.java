@@ -12,6 +12,7 @@ import jcchen.goodsmanager.entity.DateInfo;
 import jcchen.goodsmanager.entity.SettingProfile;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
+import jcchen.goodsmanager.model.impl.LocalModelImpl;
 import jcchen.goodsmanager.presenter.SettingPresenter;
 import jcchen.goodsmanager.view.MainActivity;
 
@@ -19,44 +20,24 @@ public class SettingPresenterImpl implements SettingPresenter {
 
     private Context context;
 
+    private LocalModelImpl mLocalModel;
+
     public SettingPresenterImpl(Context context) {
         this.context = context;
+        this.mLocalModel = new LocalModelImpl(context);
     }
 
     @Override
     public void saveExchangeRate(float exRate) {
-        try {
-            String fileName = "ExchangeRate";
-            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            mFileOutputStream.write(MainActivity.toByteArray(exRate));
-            mFileOutputStream.close();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        mLocalModel.savePrivateObject("ExchangeRate", exRate, false);
     }
 
     @Override
     public float getExchangeRate() {
-        File dir = context.getFilesDir();
-        File[] subFiles = dir.listFiles();
-        if (subFiles != null) {
-            FileInputStream mFileInputStream;
-            for (File file : subFiles) {
-                try {
-                    if (!file.getName().contains("ExchangeRate"))
-                        continue;
-
-                    byte buffer[] = new byte[(int) file.length()];
-                    mFileInputStream = context.openFileInput(file.getName());
-                    mFileInputStream.read(buffer);
-                    mFileInputStream.close();
-                    return (float) MainActivity.toObject(buffer);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        Object object = mLocalModel.getPrivateObject("ExchangeRate", false);
+        if (object != null)
+            return (float) object;
+        // Default ExchangeRate.
         saveExchangeRate(35.0f);
         return 35.0f;
     }
@@ -64,24 +45,13 @@ public class SettingPresenterImpl implements SettingPresenter {
 
     @Override
     public void saveProfile(SettingProfile settingProfile) {
-        try {
-            String fileName = "SettingProfile";
-            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            mFileOutputStream.write(MainActivity.toByteArray(settingProfile));
-            mFileOutputStream.close();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        mLocalModel.savePrivateObject("SettingProfile", settingProfile, false);
     }
 
     @Override
     public void saveType(ArrayList<TypeInfo> list) {
 
-        ArrayList<TypeInfo> typeList = (ArrayList<TypeInfo>) list.clone();
-
-        if (typeList.size() == 0)
-            typeList = getDefaultTypeList();
+        ArrayList<TypeInfo> typeList = new ArrayList<>(list);
 
         for (int i = typeList.size() - 1; i >= 0; i--)
             if (typeList.get(i) == null)
@@ -90,24 +60,13 @@ public class SettingPresenterImpl implements SettingPresenter {
         if (typeList.size() == 0)
             typeList = getDefaultTypeList();
 
-        try {
-            String fileName = "TypeList";
-            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            mFileOutputStream.write(MainActivity.toByteArray(typeList));
-            mFileOutputStream.close();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        mLocalModel.savePrivateObject("TypeList", typeList, false);
     }
 
     @Override
     public void saveColor(ArrayList<ColorInfo> list) {
 
-        ArrayList<ColorInfo> colorList = (ArrayList<ColorInfo>) list.clone();
-
-        if (colorList.size() == 0)
-            colorList = getDefaultColorList();
+        ArrayList<ColorInfo> colorList = new ArrayList<>(list);
 
         for (int i = colorList.size() - 1; i >= 0; i--)
             if (colorList.get(i) == null)
@@ -116,24 +75,13 @@ public class SettingPresenterImpl implements SettingPresenter {
         if (colorList.size() == 0)
             colorList = getDefaultColorList();
 
-        try {
-            String fileName = "ColorList";
-            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            mFileOutputStream.write(MainActivity.toByteArray(colorList));
-            mFileOutputStream.close();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        mLocalModel.savePrivateObject("ColorList", colorList, false);
     }
 
     @Override
     public void saveSize(ArrayList<SizeInfo> list) {
 
-        ArrayList<SizeInfo> sizeList = (ArrayList<SizeInfo>) list.clone();
-
-        if (sizeList.size() == 0)
-            sizeList = getDefaultSizeList();
+        ArrayList<SizeInfo> sizeList = new ArrayList<>(list);
 
         for (int i = sizeList.size() - 1; i >= 0; i--)
             if (sizeList.get(i) == null)
@@ -142,51 +90,20 @@ public class SettingPresenterImpl implements SettingPresenter {
         if (sizeList.size() == 0)
             sizeList = getDefaultSizeList();
 
-        try {
-            String fileName = "SizeList";
-            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            mFileOutputStream.write(MainActivity.toByteArray(sizeList));
-            mFileOutputStream.close();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        mLocalModel.savePrivateObject("SizeList", sizeList, false);
     }
 
     @Override
     public void saveDate(DateInfo dateInfo) {
-        try {
-            String fileName = "DateInfo";
-            FileOutputStream mFileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
-            mFileOutputStream.write(MainActivity.toByteArray(dateInfo));
-            mFileOutputStream.close();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        mLocalModel.savePrivateObject("DateInfo", dateInfo, false);
     }
 
     @Override
     public SettingProfile getProfile() {
-        File dir = context.getFilesDir();
-        File[] subFiles = dir.listFiles();
-        if (subFiles != null) {
-            FileInputStream mFileInputStream;
-            for (File file : subFiles) {
-                try {
-                    if (!file.getName().contains("SettingProfile"))
-                        continue;
+        Object object = mLocalModel.getPrivateObject("SettingProfile", false);
+        if (object != null)
+            return (SettingProfile) object;
 
-                    byte buffer[] = new byte[(int) file.length()];
-                    mFileInputStream = context.openFileInput(file.getName());
-                    mFileInputStream.read(buffer);
-                    mFileInputStream.close();
-                    return (SettingProfile) MainActivity.toObject(buffer);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         SettingProfile mSettingProfile = new SettingProfile();
         saveProfile(mSettingProfile);
         return mSettingProfile;
@@ -199,25 +116,10 @@ public class SettingPresenterImpl implements SettingPresenter {
      **/
     @Override
     public ArrayList<TypeInfo> getTypeList() {
-        File dir = context.getFilesDir();
-        File[] subFiles = dir.listFiles();
-        if (subFiles != null) {
-            FileInputStream mFileInputStream;
-            for (File file : subFiles) {
-                try {
-                    if (!file.getName().contains("TypeList"))
-                        continue;
+        Object object = mLocalModel.getPrivateObject("TypeList", false);
+        if (object != null)
+            return (ArrayList<TypeInfo>) object;
 
-                    byte buffer[] = new byte[(int) file.length()];
-                    mFileInputStream = context.openFileInput(file.getName());
-                    mFileInputStream.read(buffer);
-                    mFileInputStream.close();
-                    return (ArrayList<TypeInfo>) MainActivity.toObject(buffer);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         ArrayList<TypeInfo> typeList = getDefaultTypeList();
         saveType(typeList);
         return typeList;
@@ -225,25 +127,10 @@ public class SettingPresenterImpl implements SettingPresenter {
 
     @Override
     public ArrayList<ColorInfo> getColorList() {
-        File dir = context.getFilesDir();
-        File[] subFiles = dir.listFiles();
-        if (subFiles != null) {
-            FileInputStream mFileInputStream;
-            for (File file : subFiles) {
-                try {
-                    if (!file.getName().contains("ColorList"))
-                        continue;
+        Object object = mLocalModel.getPrivateObject("ColorList", false);
+        if (object != null)
+            return (ArrayList<ColorInfo>) object;
 
-                    byte buffer[] = new byte[(int) file.length()];
-                    mFileInputStream = context.openFileInput(file.getName());
-                    mFileInputStream.read(buffer);
-                    mFileInputStream.close();
-                    return (ArrayList<ColorInfo>) MainActivity.toObject(buffer);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         ArrayList<ColorInfo> colorList = getDefaultColorList();
         saveColor(colorList);
         return colorList;
@@ -251,25 +138,10 @@ public class SettingPresenterImpl implements SettingPresenter {
 
     @Override
     public ArrayList<SizeInfo> getSizeList() {
-        File dir = context.getFilesDir();
-        File[] subFiles = dir.listFiles();
-        if (subFiles != null) {
-            FileInputStream mFileInputStream;
-            for (File file : subFiles) {
-                try {
-                    if (!file.getName().contains("SizeList"))
-                        continue;
+        Object object = mLocalModel.getPrivateObject("SizeList", false);
+        if (object != null)
+            return (ArrayList<SizeInfo>) object;
 
-                    byte buffer[] = new byte[(int) file.length()];
-                    mFileInputStream = context.openFileInput(file.getName());
-                    mFileInputStream.read(buffer);
-                    mFileInputStream.close();
-                    return (ArrayList<SizeInfo>) MainActivity.toObject(buffer);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         ArrayList<SizeInfo> sizeList = getDefaultSizeList();
         saveSize(sizeList);
         return sizeList;
@@ -277,66 +149,21 @@ public class SettingPresenterImpl implements SettingPresenter {
 
     @Override
     public DateInfo getDate() {
-        File dir = context.getFilesDir();
-        File[] subFiles = dir.listFiles();
-        if (subFiles != null) {
-            FileInputStream mFileInputStream;
-            for (File file : subFiles) {
-                try {
-                    if (!file.getName().contains("DateInfo"))
-                        continue;
+        Object object = mLocalModel.getPrivateObject("DateInfo", false);
+        if (object != null)
+            return (DateInfo) object;
 
-                    byte buffer[] = new byte[(int) file.length()];
-                    mFileInputStream = context.openFileInput(file.getName());
-                    mFileInputStream.read(buffer);
-                    mFileInputStream.close();
-                    return (DateInfo) MainActivity.toObject(buffer);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
         return null;
     }
 
     @Override
     public void resetSetting() {
-        File dir = context.getFilesDir();
-        try {
-            (new File(dir, "SizeList")).delete();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            (new File(dir, "ColorList")).delete();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            (new File(dir, "TypeList")).delete();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            (new File(dir, "ExchangeRate")).delete();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            (new File(dir, "DateInfo")).delete();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            (new File(dir, "SettingProfile")).delete();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        mLocalModel.removePrivateObject("SizeList");
+        mLocalModel.removePrivateObject("ColorList");
+        mLocalModel.removePrivateObject("TypeList");
+        mLocalModel.removePrivateObject("ExchangeRate");
+        mLocalModel.removePrivateObject("DateInfo");
+        mLocalModel.removePrivateObject("SettingProfile");
     }
 
     private ArrayList<TypeInfo> getDefaultTypeList() {
