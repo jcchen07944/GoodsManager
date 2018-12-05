@@ -2,31 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/setting_title"
-        android:layout_width="300dp"
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:text="@string/setting"
-        android:textColor="@color/colorTextOnPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:minHeight="?attr/actionBarSize">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:theme="@style/ToolbarItem" />
+
+    </FrameLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/setting_tabs"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/SettingTabLayout"/>
 
     <jcchen.goodsmanager.view.widget.NonSwipeViewPager
         android:id="@+id/setting_pager"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/colorObjectBackground"/>
 
 </LinearLayout>
