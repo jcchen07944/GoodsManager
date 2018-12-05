@@ -13,7 +13,6 @@ import android.app.DialogFragment;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -21,11 +20,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.DateInfo;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
-import jcchen.goodsmanager.view.MainActivity;
+import jcchen.goodsmanager.view.activity.MainActivity;
 
 public class DateSelectDialogFragment extends DialogFragment {
 

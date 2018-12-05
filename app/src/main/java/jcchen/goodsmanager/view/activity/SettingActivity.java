@@ -1,15 +1,17 @@
-package jcchen.goodsmanager.view.fragment;
+package jcchen.goodsmanager.view.activity;
 
-import android.app.DialogFragment;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.PagerAdapter;
 
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import java.util.Vector;
@@ -21,9 +23,9 @@ import jcchen.goodsmanager.view.container.SizeSettingContainer;
 import jcchen.goodsmanager.view.container.TypeSettingContainer;
 import jcchen.goodsmanager.view.widget.NonSwipeViewPager;
 
-public class SettingDialogFragment extends DialogFragment {
+public class SettingActivity extends AppCompatActivity {
 
-    public static final String TAG = "SettingDialogFragment";
+    public static final String TAG = "SettingActivity";
 
     private TabLayout mTabLayout;
     private NonSwipeViewPager mViewPager;
@@ -36,33 +38,51 @@ public class SettingDialogFragment extends DialogFragment {
     private ColorSettingContainer mColorSettingContainer;
     private SizeSettingContainer mSizeSettingContainer;
 
+    private ActionBar mActionBar;
+    private Toolbar mToolbar;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        return inflater.inflate(R.layout.setting_dialog_layout, container);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.setting_layout);
+
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        // Toolbar
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+
+        pageTitle = new String[4];
+        pageList = new Vector<>();
+        pageTitle[0] = this.getResources().getString(R.string.normal);
+        mNormalSettingContainer = new NormalSettingContainer(this);
+        pageList.add(mNormalSettingContainer);
+        pageTitle[1] = this.getResources().getString(R.string.type);
+        mTypeSettingContainer = new TypeSettingContainer(this);
+        pageList.add(mTypeSettingContainer);
+        pageTitle[2] = this.getResources().getString(R.string.color);
+        mColorSettingContainer = new ColorSettingContainer(this);
+        pageList.add(mColorSettingContainer);
+        pageTitle[3] = this.getResources().getString(R.string.size);
+        mSizeSettingContainer = new SizeSettingContainer(this);
+        pageList.add(mSizeSettingContainer);
+
+        mViewPager = (NonSwipeViewPager) findViewById(R.id.setting_pager);
+        mViewPager.setAdapter(new ViewPagerAdapter());
+        mTabLayout = (TabLayout) findViewById(R.id.setting_tabs);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        pageTitle = new String[4];
-        pageList = new Vector<>();
-        pageTitle[0] = getActivity().getResources().getString(R.string.normal);
-        mNormalSettingContainer = new NormalSettingContainer(getActivity());
-        pageList.add(mNormalSettingContainer);
-        pageTitle[1] = getActivity().getResources().getString(R.string.type);
-        mTypeSettingContainer = new TypeSettingContainer(getActivity());
-        pageList.add(mTypeSettingContainer);
-        pageTitle[2] = getActivity().getResources().getString(R.string.color);
-        mColorSettingContainer = new ColorSettingContainer(getActivity());
-        pageList.add(mColorSettingContainer);
-        pageTitle[3] = getActivity().getResources().getString(R.string.size);
-        mSizeSettingContainer = new SizeSettingContainer(getActivity());
-        pageList.add(mSizeSettingContainer);
-
-        mViewPager = (NonSwipeViewPager) view.findViewById(R.id.setting_pager);
-        mViewPager.setAdapter(new ViewPagerAdapter());
-        mTabLayout = (TabLayout) view.findViewById(R.id.setting_tabs);
-        mTabLayout.setupWithViewPager(mViewPager);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private class ViewPagerAdapter extends PagerAdapter {

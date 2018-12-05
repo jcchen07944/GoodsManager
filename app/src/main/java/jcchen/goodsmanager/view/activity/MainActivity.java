@@ -1,7 +1,8 @@
-package jcchen.goodsmanager.view;
+package jcchen.goodsmanager.view.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,15 +33,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import androidx.fragment.app.FragmentTransaction;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.DateInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
@@ -52,7 +49,6 @@ import jcchen.goodsmanager.view.fragment.DateSelectDialogFragment;
 import jcchen.goodsmanager.view.fragment.ManageFragment;
 import jcchen.goodsmanager.view.fragment.PostDialogFragment;
 import jcchen.goodsmanager.view.fragment.PurchaseFragment;
-import jcchen.goodsmanager.view.fragment.SettingDialogFragment;
 import jcchen.goodsmanager.view.fragment.TypeSelectDialogFragment;
 import jcchen.goodsmanager.view.listener.OnPurchaseInfoUploadListener;
 
@@ -81,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private PurchaseFragment mPurchaseFragment = null;
     private ManageFragment mManageFragment = null;
     private PostDialogFragment mPostDialogFragment = null;
-    private SettingDialogFragment mSettingDialogFragment = null;
+    private SettingActivity mSettingActivity = null;
 
     private SettingProfile mSettingProfile;
 
@@ -152,7 +148,8 @@ public class MainActivity extends AppCompatActivity {
                         openTypeDialog();
                         break;
                     case R.id.nav_setting:
-                        mSettingDialogFragment.show(getFragmentManager(), SettingDialogFragment.TAG);
+                        Intent intent = new Intent(context, SettingActivity.class);
+                        startActivity(intent);
                         break;
                 }
                 mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -207,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         mPostDialogFragment = new PostDialogFragment();
 
         /* Pre init setting dialog */
-        mSettingDialogFragment = new SettingDialogFragment();
+        mSettingActivity = new SettingActivity();
 
         /* Date dialog display*/
         String timeStamp = new SimpleDateFormat("yyyy年MM月dd日").format(Calendar.getInstance().getTime());
@@ -226,7 +223,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.toolbar_menu, menu);
-        // mMaterialSearchView.setMenuItem(menu.findItem(R.id.menu_search));
         mMaterialSearchView.setVoiceSearch(false);
         switch (ACTIONBAR_STATE) {
             case ACTIONBAR_STATE_HOME:

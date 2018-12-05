@@ -29,7 +29,7 @@ import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.impl.PurchasePresenterImpl;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
-import jcchen.goodsmanager.view.MainActivity;
+import jcchen.goodsmanager.view.activity.MainActivity;
 import jcchen.goodsmanager.view.adapter.SizePurchaseViewPagerAdapter;
 import jcchen.goodsmanager.view.fragment.ColorSelectDialogFragment;
 import jcchen.goodsmanager.view.fragment.PurchaseFragment;

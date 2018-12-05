@@ -1,11 +1,7 @@
 package jcchen.goodsmanager.presenter.impl;
 
 import android.content.Context;
-import android.util.Log;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -13,7 +9,6 @@ import jcchen.goodsmanager.entity.DateInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.model.impl.LocalModelImpl;
 import jcchen.goodsmanager.presenter.PurchasePresenter;
-import jcchen.goodsmanager.view.MainActivity;
 import jcchen.goodsmanager.view.listener.OnPurchaseInfoUploadListener;
 
 /**

@@ -10,6 +10,7 @@ import androidx.preference.Preference;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class NormalSettingContainer extends FrameLayout implements Container {
 
     private LinearLayout reset, time;
     private TextView timeHint;
+    private EditText ipAddress, port;
 
     private SettingPresenterImpl mSettingPresenter;
 
@@ -33,6 +35,8 @@ public class NormalSettingContainer extends FrameLayout implements Container {
     public NormalSettingContainer(Context context) {
         super(context);
         this.context = context;
+        mSettingPresenter = new SettingPresenterImpl(context);
+
         init();
     }
 
@@ -49,11 +53,15 @@ public class NormalSettingContainer extends FrameLayout implements Container {
 
     @Override
     public void init() {
-        mSettingPresenter = new SettingPresenterImpl(context);
-
         final View view = LayoutInflater.from(context).inflate(R.layout.normal_setting_layout, null);
 
         mSettingProfile = mSettingPresenter.getProfile();
+
+        ipAddress = (EditText) view.findViewById(R.id.normal_setting_ip);
+        ipAddress.clearFocus();
+        port = (EditText) view.findViewById(R.id.normal_setting_port);
+        port.clearFocus();
+
 
         timeHint = (TextView) view.findViewById(R.id.normal_setting_time_text);
         switch (mSettingProfile.getTimeDialogShowFreq()) {

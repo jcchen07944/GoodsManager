@@ -22,7 +22,7 @@ import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.SizeInfo;
-import jcchen.goodsmanager.view.MainActivity;
+import jcchen.goodsmanager.view.activity.MainActivity;
 import jcchen.goodsmanager.view.fragment.SizeDetailDialogFragment;
 
 public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecyclerViewAdapter.ViewHolder> implements Filterable {

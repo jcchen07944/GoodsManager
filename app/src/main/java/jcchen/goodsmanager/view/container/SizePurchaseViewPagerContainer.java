@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.PurchaseInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
-import jcchen.goodsmanager.view.MainActivity;
+import jcchen.goodsmanager.view.activity.MainActivity;
 
 public class SizePurchaseViewPagerContainer extends FrameLayout implements Container{
 

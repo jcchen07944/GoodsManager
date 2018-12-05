@@ -13,7 +13,7 @@ import android.widget.AbsListView;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
-import jcchen.goodsmanager.view.MainActivity;
+import jcchen.goodsmanager.view.activity.MainActivity;
 import jcchen.goodsmanager.view.adapter.TypeFocusListAdapter;
 import jcchen.goodsmanager.view.widget.FocusListView.FocusListView;
 import jcchen.goodsmanager.view.widget.RoundedImageView;

@@ -2,9 +2,6 @@ package jcchen.goodsmanager.presenter.impl;
 
 import android.content.Context;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import jcchen.goodsmanager.entity.ColorInfo;
@@ -14,7 +11,6 @@ import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
 import jcchen.goodsmanager.model.impl.LocalModelImpl;
 import jcchen.goodsmanager.presenter.SettingPresenter;
-import jcchen.goodsmanager.view.MainActivity;
 
 public class SettingPresenterImpl implements SettingPresenter {
 
