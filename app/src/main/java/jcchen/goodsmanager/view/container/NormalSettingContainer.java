@@ -43,6 +43,8 @@ public class NormalSettingContainer extends FrameLayout implements Container {
     public NormalSettingContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         this.context = context;
+        mSettingPresenter = new SettingPresenterImpl(context);
+
         init();
     }
 
