@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/post_edit_setting_title"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/colorTextOnPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@color/colorObjectBackground">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
+
+            <EditText
+                android:id="@+id/post_edit_setting_text"
+                android:layout_width="150dp"
+                android:layout_height="110dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/manage_numbers_border"
+                android:gravity="center"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:singleLine="false"
+                android:textColor="@color/colorTextOnBackground"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/post_edit_setting_confirm"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
+                    android:text="@string/confirm"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/post_edit_setting_cancel"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
+                    android:text="@string/cancel"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

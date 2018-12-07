@@ -12,6 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 import androidx.core.content.ContextCompat;
@@ -22,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.entity.PostBlock;
 import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
+import jcchen.goodsmanager.view.fragment.EditSettingDialogFragment;
+import jcchen.goodsmanager.view.listener.OnSettingEditListener;
 import jcchen.goodsmanager.view.widget.RecyclerHelper.OnSwipeListener;
 import jcchen.goodsmanager.view.widget.RecyclerHelper.RecyclerHelper;
 
@@ -34,12 +38,17 @@ public class PostSettingContainer extends FrameLayout implements Container {
 
     private SettingPresenterImpl mSettingPresenter;
 
+    private EditSettingDialogFragment mEditSettingDialogFragment;
+
     private RecyclerHelper mRecyclerHelper;
     private ItemTouchHelper mItemTouchHelper;
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mRecyclerViewAdapter;
+    private FloatingActionButton mFloatingActionButton;
 
     private ArrayList<PostBlock> postList;
+
+    private int selectedPos;
 
     public PostSettingContainer(Context context) {
         super(context);
@@ -108,6 +117,18 @@ public class PostSettingContainer extends FrameLayout implements Container {
         });
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
 
+        mFloatingActionButton = (FloatingActionButton) view.findViewById(R.id.fab);
+        mFloatingActionButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedPos = -1;
+                mEditSettingDialogFragment = new EditSettingDialogFragment();
+                mEditSettingDialogFragment.setResID(R.layout.post_edit_setting_layout);
+                mEditSettingDialogFragment.setListener(mRecyclerViewAdapter);
+                mEditSettingDialogFragment.show(((Activity) context).getFragmentManager(), EditSettingDialogFragment.TAG);
+            }
+        });
+
         addView(view);
     }
 
@@ -126,7 +147,7 @@ public class PostSettingContainer extends FrameLayout implements Container {
 
     }
 
-    private class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+    private class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements OnSettingEditListener {
 
         @Override
         public RecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -138,17 +159,21 @@ public class PostSettingContainer extends FrameLayout implements Container {
         public void onBindViewHolder(final RecyclerViewAdapter.ViewHolder viewHolder, final int position) {
             switch (getItemViewType(position)) {
                 case CUSTOMIZED_CARD:
-                    viewHolder.textView.setText(postList.get(position).getContent());
-                    viewHolder.action.setOnClickListener(new OnClickListener() {
+                    viewHolder.Text.setText(postList.get(position).getContent());
+                    viewHolder.Edit.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
+                            selectedPos = viewHolder.getAdapterPosition();
+                            mEditSettingDialogFragment = new EditSettingDialogFragment();
+                            mEditSettingDialogFragment.setResID(R.layout.post_edit_setting_layout);
+                            mEditSettingDialogFragment.setListener(mRecyclerViewAdapter);
+                            mEditSettingDialogFragment.show(((Activity) context).getFragmentManager(), EditSettingDialogFragment.TAG);
                         }
                     });
                     break;
                 case DEFAULT_CARD:
-                    viewHolder.textView.setText("商品資訊");
-                    viewHolder.action.setVisibility(GONE);
+                    viewHolder.Text.setText("商品資訊");
+                    viewHolder.Edit.setVisibility(GONE);
                     break;
             }
         }
@@ -163,15 +188,53 @@ public class PostSettingContainer extends FrameLayout implements Container {
             return postList.get(position).isDefault() ? DEFAULT_CARD : CUSTOMIZED_CARD;
         }
 
+        @Override
+        public void onEditStart(View view) {
+            if (selectedPos == -1) {
+                ((TextView) view.findViewById(R.id.post_edit_setting_title)).setText(R.string.add);
+            }
+            else {
+                ((TextView) view.findViewById(R.id.post_edit_setting_title)).setText(R.string.edit);
+                ((EditText) view.findViewById(R.id.post_edit_setting_text)).setText(postList.get(selectedPos).getContent());
+            }
+
+            view.findViewById(R.id.post_edit_setting_confirm).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onEditEnd(view);
+                    mEditSettingDialogFragment.dismiss();
+                }
+            });
+            view.findViewById(R.id.post_edit_setting_cancel).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mEditSettingDialogFragment.dismiss();
+                }
+            });
+        }
+
+        @Override
+        public void onEditEnd(View view) {
+            PostBlock postBlock = new PostBlock(false, ((EditText) view.findViewById(R.id.post_edit_setting_text)).getText().toString());
+
+            if (selectedPos == -1) {
+                postList.add(postBlock);
+            }
+            else {
+                postList.set(selectedPos, postBlock);
+            }
+
+            mRecyclerViewAdapter.notifyDataSetChanged();
+            mSettingPresenter.savePostList(postList);
+        }
+
         public class ViewHolder extends RecyclerView.ViewHolder {
-            public TextView textView;
-            public EditText editText;
-            public ImageView action;
+            public TextView Text;
+            public ImageView Edit;
             public ViewHolder(View view) {
                 super(view);
-                textView = (TextView) view.findViewById(R.id.post_setting_text);
-                editText = (EditText) view.findViewById(R.id.post_setting_edit);
-                action = (ImageView) view.findViewById(R.id.post_setting_img);
+                Text = (TextView) view.findViewById(R.id.post_setting_text);
+                Edit = (ImageView) view.findViewById(R.id.post_setting_edit);
             }
         }
     }
