@@ -19,6 +19,7 @@ import java.util.Vector;
 import jcchen.goodsmanager.R;
 import jcchen.goodsmanager.view.container.ColorSettingContainer;
 import jcchen.goodsmanager.view.container.NormalSettingContainer;
+import jcchen.goodsmanager.view.container.PostSettingContainer;
 import jcchen.goodsmanager.view.container.SizeSettingContainer;
 import jcchen.goodsmanager.view.container.TypeSettingContainer;
 import jcchen.goodsmanager.view.widget.NonSwipeViewPager;
@@ -34,6 +35,7 @@ public class SettingActivity extends AppCompatActivity {
     private String[] pageTitle;
 
     private NormalSettingContainer mNormalSettingContainer;
+    private PostSettingContainer mPostSettingContainer;
     private TypeSettingContainer mTypeSettingContainer;
     private ColorSettingContainer mColorSettingContainer;
     private SizeSettingContainer mSizeSettingContainer;
@@ -54,18 +56,21 @@ public class SettingActivity extends AppCompatActivity {
         mActionBar = getSupportActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
 
-        pageTitle = new String[4];
+        pageTitle = new String[5];
         pageList = new Vector<>();
         pageTitle[0] = this.getResources().getString(R.string.normal);
         mNormalSettingContainer = new NormalSettingContainer(this);
         pageList.add(mNormalSettingContainer);
-        pageTitle[1] = this.getResources().getString(R.string.type);
+        pageTitle[1] = this.getResources().getString(R.string.post);
+        mPostSettingContainer = new PostSettingContainer(this);
+        pageList.add(mPostSettingContainer);
+        pageTitle[2] = this.getResources().getString(R.string.type);
         mTypeSettingContainer = new TypeSettingContainer(this);
         pageList.add(mTypeSettingContainer);
-        pageTitle[2] = this.getResources().getString(R.string.color);
+        pageTitle[3] = this.getResources().getString(R.string.color);
         mColorSettingContainer = new ColorSettingContainer(this);
         pageList.add(mColorSettingContainer);
-        pageTitle[3] = this.getResources().getString(R.string.size);
+        pageTitle[4] = this.getResources().getString(R.string.size);
         mSizeSettingContainer = new SizeSettingContainer(this);
         pageList.add(mSizeSettingContainer);
 

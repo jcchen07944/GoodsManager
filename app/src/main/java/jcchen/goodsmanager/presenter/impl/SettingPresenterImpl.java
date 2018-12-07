@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.DateInfo;
+import jcchen.goodsmanager.entity.PostBlock;
 import jcchen.goodsmanager.entity.SettingProfile;
 import jcchen.goodsmanager.entity.SizeInfo;
 import jcchen.goodsmanager.entity.TypeInfo;
@@ -42,6 +43,11 @@ public class SettingPresenterImpl implements SettingPresenter {
     @Override
     public void saveProfile(SettingProfile settingProfile) {
         mLocalModel.savePrivateObject("SettingProfile", settingProfile, false);
+    }
+
+    @Override
+    public void savePostList(ArrayList<PostBlock> postList) {
+        mLocalModel.savePrivateObject("PostList", postList, false);
     }
 
     @Override
@@ -105,6 +111,17 @@ public class SettingPresenterImpl implements SettingPresenter {
         return mSettingProfile;
     }
 
+    @Override
+    public ArrayList<PostBlock> getPostList() {
+        Object object = mLocalModel.getPrivateObject("PostList", false);
+        if (object != null)
+            return (ArrayList<PostBlock>) object;
+
+        ArrayList<PostBlock> postList = getDefaultPostList();
+        savePostList(postList);
+        return postList;
+    }
+
     /**
      *  Get type list from model(maybe from DB or from setting)
      *
@@ -160,6 +177,17 @@ public class SettingPresenterImpl implements SettingPresenter {
         mLocalModel.removePrivateObject("ExchangeRate");
         mLocalModel.removePrivateObject("DateInfo");
         mLocalModel.removePrivateObject("SettingProfile");
+        mLocalModel.removePrivateObject("PostList");
+    }
+
+    private ArrayList<PostBlock> getDefaultPostList() {
+        ArrayList<PostBlock> postList = new ArrayList<>();
+        postList.add(new PostBlock(false, "<3 12月官網連線新款相簿：\n" + "https://reurl.cc/e66vm"));
+        postList.add(new PostBlock(true, ""));
+        postList.add(new PostBlock(false, "<3 12月連線優惠活動：\n" + "https://reurl.cc/LpnQx"));
+        postList.add(new PostBlock(false, "<3 12月直播抽獎活動：\n" + "https://reurl.cc/jkrm2"));
+
+        return postList;
     }
 
     private ArrayList<TypeInfo> getDefaultTypeList() {
