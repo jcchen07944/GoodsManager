@@ -125,6 +125,17 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
                 mSizeDetailDialogFragment.show(((Activity) context).getFragmentManager(), SizeDetailDialogFragment.TAG);
             }
         });
+
+        float density = context.getResources().getDisplayMetrics().density;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int)(100 * density));
+        if (position == getItemCount() - 1) {
+            params.setMargins((int)(5 * density), (int)(10 * density), (int)(5 * density), (int)(80 * density));
+            viewHolder.Card.setLayoutParams(params);
+        }
+        else {
+            params.setMargins((int)(5 * density), (int)(10 * density), (int)(5 * density), 0);
+            viewHolder.Card.setLayoutParams(params);
+        }
     }
 
     @Override
