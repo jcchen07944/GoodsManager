@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -176,6 +178,16 @@ public class PostSettingContainer extends FrameLayout implements Container {
                     viewHolder.Edit.setVisibility(GONE);
                     break;
             }
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            if (position == getItemCount() - 1) {
+                params.setMargins(0, 0, 0, (int)(80 * context.getResources().getDisplayMetrics().density));
+                viewHolder.BaseLayout.setLayoutParams(params);
+            }
+            else {
+                params.setMargins(0, 0, 0, 0);
+                viewHolder.BaseLayout.setLayoutParams(params);
+            }
         }
 
         @Override
@@ -229,10 +241,12 @@ public class PostSettingContainer extends FrameLayout implements Container {
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {
+            public CardView BaseLayout;
             public TextView Text;
             public ImageView Edit;
             public ViewHolder(View view) {
                 super(view);
+                BaseLayout = (CardView) view.findViewById(R.id.post_setting_cardview_base);
                 Text = (TextView) view.findViewById(R.id.post_setting_text);
                 Edit = (ImageView) view.findViewById(R.id.post_setting_edit);
             }
