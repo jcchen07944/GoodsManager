@@ -113,6 +113,18 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setSubtitle("");
         mToolbar.setNavigationIcon(R.drawable.ic_menu);
         mMaterialSearchView = (MaterialSearchView) findViewById(R.id.toolbar_search);
+        mMaterialSearchView.setVisibility(View.INVISIBLE);
+        mMaterialSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                mMaterialSearchView.setVisibility(View.INVISIBLE);
+            }
+        });
         mMaterialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -121,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 if (imm != null)
                     imm.hideSoftInputFromWindow(mMaterialSearchView.getWindowToken(), 0);
                 mMaterialSearchView.clearFocus();
-                mMaterialSearchView.setVisibility(View.GONE);
+                mMaterialSearchView.setVisibility(View.INVISIBLE);
                 mToolbar.getMenu().findItem(R.id.menu_resume).setVisible(true);
                 mToolbar.getMenu().findItem(R.id.menu_search).setVisible(false);
                 return true;
@@ -352,8 +364,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (mMaterialSearchView.isSearchOpen()) {
+        if (mMaterialSearchView.getVisibility() == View.VISIBLE) {
             mMaterialSearchView.closeSearch();
+            mMaterialSearchView.setVisibility(View.INVISIBLE);
             mToolbar.getMenu().findItem(R.id.menu_search).setVisible(true);
             mToolbar.getMenu().findItem(R.id.menu_resume).setVisible(false);
             return;
