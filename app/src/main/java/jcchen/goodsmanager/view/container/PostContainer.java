@@ -18,7 +18,12 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.PostBlock;
+import jcchen.goodsmanager.entity.PurchaseInfo;
+import jcchen.goodsmanager.presenter.impl.SettingPresenterImpl;
 import jcchen.goodsmanager.view.widget.BottomSheet.BottomSheetFL;
 
 public class PostContainer extends BottomSheetFL implements Container {
@@ -30,15 +35,22 @@ public class PostContainer extends BottomSheetFL implements Container {
     private EditText postText;
     private ScrollView verticalScroll;
 
+    private SettingPresenterImpl mSettingPresenter;
+    private ArrayList<PostBlock> postList;
+
     public PostContainer(Context context) {
         super(context);
         this.context = context;
+        mSettingPresenter = new SettingPresenterImpl(context);
+
         init();
     }
 
     public PostContainer(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         this.context = context;
+        mSettingPresenter = new SettingPresenterImpl(context);
+
         init();
     }
 
@@ -104,7 +116,37 @@ public class PostContainer extends BottomSheetFL implements Container {
 
     @Override
     public void showItem(Object object) {
+        if (object == null)
+            return;
 
+        PurchaseInfo purchaseInfo = (PurchaseInfo) object;
+        String text = "";
+        for (int i = 0; i < postList.size(); i++) {
+            if (postList.get(i).isDefault()) {
+                // Goods' information.
+                text += purchaseInfo.getNumbers() + purchaseInfo.getName() + '\n';
+                text += "連線價：" + convertToFullwidth(purchaseInfo.getActualPrice() + "") + '\n';
+                text += "尺寸：";
+                for (int j = 0; j < purchaseInfo.getSizeList().size(); j++) {
+                    if(j > 0)
+                        text += "/";
+                    text += purchaseInfo.getSizeList().get(j).getName();
+                }
+                text += '\n';
+
+
+
+
+                text += '\n';
+            }
+            else {
+                // Other's.
+                text += postList.get(i).getContent();
+                if (i  < postList.size() - 1)
+                    text += "\n\n";
+            }
+        }
+        postText.setText(text);
     }
 
     @Override
@@ -124,8 +166,9 @@ public class PostContainer extends BottomSheetFL implements Container {
             }
         });
         verticalScroll = (ScrollView) view.findViewById(R.id.post_scroll_vertical);
+
+        postList = mSettingPresenter.getPostList();
         postText = (EditText) view.findViewById(R.id.post_text);
-        postText.setText(R.string.post_text);
         getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -140,5 +183,15 @@ public class PostContainer extends BottomSheetFL implements Container {
     @Override
     public void postResult() {
 
+    }
+
+    private String convertToFullwidth(String str){
+        for(char c:str.toCharArray()){
+            str = str.replaceAll("　", " ");
+            if((int)c >= 65281 && (int)c <= 65374){
+                str = str.replace(c, (char)(((int)c)-65248));
+            }
+        }
+        return str;
     }
 }

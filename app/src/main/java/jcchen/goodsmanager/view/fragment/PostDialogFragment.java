@@ -15,12 +15,16 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import jcchen.goodsmanager.R;
+import jcchen.goodsmanager.entity.PurchaseInfo;
+import jcchen.goodsmanager.view.container.Container;
 
 public class PostDialogFragment extends DialogFragment {
 
     public static final String TAG = "PostDialogFragment";
 
     private TextView postText;
+
+    private PurchaseInfo mPurchaseInfo;
 
     @Override
     public void onStart() {
@@ -52,10 +56,17 @@ public class PostDialogFragment extends DialogFragment {
 
             }
         });
+
+        if (mPurchaseInfo != null)
+            ((Container) view.findViewById(R.id.post_bottom_sheet)).showItem(mPurchaseInfo);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    public void setSelectedItem(PurchaseInfo purchaseInfo) {
+        mPurchaseInfo = purchaseInfo;
     }
 }

@@ -57,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:focusable="false"
-                android:gravity="center_horizontal"
+                android:gravity="start"
                 android:textColor="@color/colorTextOnBackground"
                 android:textSize="16sp"
                 android:textStyle="bold" />

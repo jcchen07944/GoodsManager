@@ -312,6 +312,7 @@ public class MainActivity extends AppCompatActivity {
                         .show();
                 return true;
             case R.id.menu_po:
+                mPostDialogFragment.setSelectedItem(selectedCard.get(0));
                 mPostDialogFragment.show(getFragmentManager(), PostDialogFragment.TAG);
                 return true;
             case R.id.menu_edit:
