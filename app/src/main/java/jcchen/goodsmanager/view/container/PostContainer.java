@@ -16,6 +16,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class PostContainer extends BottomSheetFL implements Container {
     private View view;
     private EditText postText;
     private ScrollView verticalScroll;
+    private TextView postTitle;
 
     private SettingPresenterImpl mSettingPresenter;
     private ArrayList<PostBlock> postList;
@@ -56,13 +58,30 @@ public class PostContainer extends BottomSheetFL implements Container {
 
     @Override
     public void contentShow() {
-        // Copy layout animation.
-        ObjectAnimator translationY = ObjectAnimator.ofFloat(copyLayout, "translationY", 300, 0);
+        // Title animation.
+        ObjectAnimator translationY = ObjectAnimator.ofFloat(postTitle, "translationY", 300, 0);
         translationY.setDuration(250);
         translationY.setInterpolator(new OvershootInterpolator(2f));
-        ObjectAnimator alphaIn = ObjectAnimator.ofFloat(copyLayout, "alpha", 0, 1);
+        ObjectAnimator alphaIn = ObjectAnimator.ofFloat(postTitle, "alpha", 0, 1);
         alphaIn.setDuration(100);
         AnimatorSet mAnimationSet = new AnimatorSet();
+        mAnimationSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                postTitle.setAlpha(0f);
+            }
+        });
+        mAnimationSet.playTogether(translationY, alphaIn);
+        mAnimationSet.start();
+
+        // Copy layout animation.
+        translationY = ObjectAnimator.ofFloat(copyLayout, "translationY", 300, 0);
+        translationY.setDuration(250);
+        translationY.setInterpolator(new OvershootInterpolator(2f));
+        alphaIn = ObjectAnimator.ofFloat(copyLayout, "alpha", 0, 1);
+        alphaIn.setDuration(100);
+        mAnimationSet = new AnimatorSet();
         mAnimationSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -71,6 +90,7 @@ public class PostContainer extends BottomSheetFL implements Container {
             }
         });
         mAnimationSet.playTogether(translationY, alphaIn);
+        mAnimationSet.setStartDelay(100);
         mAnimationSet.start();
 
         // Text animation.
@@ -199,6 +219,21 @@ public class PostContainer extends BottomSheetFL implements Container {
     @Override
     public void init() {
         view = LayoutInflater.from(context).inflate(R.layout.post_dialog_content, null);
+
+        postTitle = (TextView) view.findViewById(R.id.post_title);
+
+        postList = mSettingPresenter.getPostList();
+        postText = (EditText) view.findViewById(R.id.post_text);
+        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                setPeekHeight((int) (300 * context.getResources().getDisplayMetrics().density));
+                addView(view);
+                show();
+                getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+
         copyLayout = (LinearLayout) view.findViewById(R.id.post_copy_layout);
         copyLayout.setOnClickListener(new OnClickListener() {
             @Override
@@ -214,17 +249,6 @@ public class PostContainer extends BottomSheetFL implements Container {
         });
         verticalScroll = (ScrollView) view.findViewById(R.id.post_scroll_vertical);
 
-        postList = mSettingPresenter.getPostList();
-        postText = (EditText) view.findViewById(R.id.post_text);
-        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                setPeekHeight((int) (300 * context.getResources().getDisplayMetrics().density));
-                addView(view);
-                show();
-                getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
     }
 
     @Override

@@ -25,7 +25,7 @@
     <item
         android:id="@+id/menu_po"
         android:icon="@drawable/ic_po"
-        android:title="@string/po"
+        android:title="@string/post"
         app:showAsAction="always" />
 
     <item
