@@ -58,6 +58,7 @@
     <string name="setting_every_time">每次開啟顯示</string>
     <string name="resume">恢復</string>
     <string name="post">Po文</string>
+    <string name="copy_to_clipboard">複製到剪貼簿</string>
 
     <string-array name="flexible_array">
         <item></item>
