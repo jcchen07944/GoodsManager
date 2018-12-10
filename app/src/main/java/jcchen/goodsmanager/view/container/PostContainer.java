@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.VibrationEffect;
@@ -238,7 +240,11 @@ public class PostContainer extends BottomSheetFL implements Container {
         copyLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, context.getText(R.string.copy), Toast.LENGTH_SHORT).show();
+                ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Post", postText.getText().toString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(context, context.getText(R.string.copy_to_clipboard), Toast.LENGTH_SHORT).show();
+
                 Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     v.vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE));
