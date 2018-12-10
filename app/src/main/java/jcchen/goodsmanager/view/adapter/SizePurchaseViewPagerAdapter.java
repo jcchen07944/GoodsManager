@@ -49,14 +49,14 @@ public class SizePurchaseViewPagerAdapter extends PagerAdapter {
         for (int i = 0; i < pageList.size(); i++) {
             sizeStructList.add(new PurchaseInfo.SizeStruct());
             sizeStructList.get(i).setSizeName(((EditText) pageList.get(i).findViewById(R.id.content_size_text)).getText().toString());
-            sizeStructList.get(i).setColumn0(((EditText) pageList.get(i).findViewById(R.id.purchase_size_1)).getText().toString());
-            sizeStructList.get(i).setColumn1(((EditText) pageList.get(i).findViewById(R.id.purchase_size_2)).getText().toString());
-            sizeStructList.get(i).setColumn2(((EditText) pageList.get(i).findViewById(R.id.purchase_size_3)).getText().toString());
-            sizeStructList.get(i).setColumn3(((EditText) pageList.get(i).findViewById(R.id.purchase_size_4)).getText().toString());
-            sizeStructList.get(i).setColumn4(((EditText) pageList.get(i).findViewById(R.id.purchase_size_5)).getText().toString());
-            sizeStructList.get(i).setColumn5(((EditText) pageList.get(i).findViewById(R.id.purchase_size_6)).getText().toString());
-            sizeStructList.get(i).setColumn6(((EditText) pageList.get(i).findViewById(R.id.purchase_size_7)).getText().toString());
-            sizeStructList.get(i).setColumn7(((EditText) pageList.get(i).findViewById(R.id.purchase_size_8)).getText().toString());
+            sizeStructList.get(i).setColumn(0, ((EditText) pageList.get(i).findViewById(R.id.purchase_size_1)).getText().toString());
+            sizeStructList.get(i).setColumn(1, ((EditText) pageList.get(i).findViewById(R.id.purchase_size_2)).getText().toString());
+            sizeStructList.get(i).setColumn(2, ((EditText) pageList.get(i).findViewById(R.id.purchase_size_3)).getText().toString());
+            sizeStructList.get(i).setColumn(3, ((EditText) pageList.get(i).findViewById(R.id.purchase_size_4)).getText().toString());
+            sizeStructList.get(i).setColumn(4, ((EditText) pageList.get(i).findViewById(R.id.purchase_size_5)).getText().toString());
+            sizeStructList.get(i).setColumn(5, ((EditText) pageList.get(i).findViewById(R.id.purchase_size_6)).getText().toString());
+            sizeStructList.get(i).setColumn(6, ((EditText) pageList.get(i).findViewById(R.id.purchase_size_7)).getText().toString());
+            sizeStructList.get(i).setColumn(7, ((EditText) pageList.get(i).findViewById(R.id.purchase_size_8)).getText().toString());
             sizeStructList.get(i).setAppend(((EditText) pageList.get(i).findViewById(R.id.purchase_append)).getText().toString());
             sizeStructList.get(i).setNote(((EditText) pageList.get(i).findViewById(R.id.purchase_note)).getText().toString());
         }

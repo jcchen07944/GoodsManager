@@ -13,17 +13,16 @@ public class PurchaseInfo implements Serializable {
     private String FileName;
 
     public static class SizeStruct implements Serializable {
+        private final int COLUMN_SIZE = 8;
+
         private String SizeName;
-        private String Column0;
-        private String Column1;
-        private String Column2;
-        private String Column3;
-        private String Column4;
-        private String Column5;
-        private String Column6;
-        private String Column7;
+        private String[] Column;
         private String Note;
         private String Append;
+
+        public SizeStruct() {
+            this.Column = new String[COLUMN_SIZE];
+        }
 
         public String getSizeName() {
             return SizeName;
@@ -33,68 +32,20 @@ public class PurchaseInfo implements Serializable {
             SizeName = sizeName;
         }
 
-        public String getColumn0() {
-            return Column0;
+        public int getMaxColumnSize() {
+            return COLUMN_SIZE;
         }
 
-        public void setColumn0(String column0) {
-            Column0 = column0;
+        public String getColumn(int index) {
+            if (index >= COLUMN_SIZE || index < 0)
+                return "";
+            return Column[index];
         }
 
-        public String getColumn1() {
-            return Column1;
-        }
-
-        public void setColumn1(String column1) {
-            Column1 = column1;
-        }
-
-        public String getColumn2() {
-            return Column2;
-        }
-
-        public void setColumn2(String column2) {
-            Column2 = column2;
-        }
-
-        public String getColumn3() {
-            return Column3;
-        }
-
-        public void setColumn3(String column3) {
-            Column3 = column3;
-        }
-
-        public String getColumn4() {
-            return Column4;
-        }
-
-        public void setColumn4(String column4) {
-            Column4 = column4;
-        }
-
-        public String getColumn5() {
-            return Column5;
-        }
-
-        public void setColumn5(String column5) {
-            Column5 = column5;
-        }
-
-        public String getColumn6() {
-            return Column6;
-        }
-
-        public void setColumn6(String column6) {
-            Column6 = column6;
-        }
-
-        public String getColumn7() {
-            return Column7;
-        }
-
-        public void setColumn7(String column7) {
-            Column7 = column7;
+        public void setColumn(int index, String column) {
+            if (index >= COLUMN_SIZE || index < 0)
+                return;
+            Column[index] = column;
         }
 
         public String getNote() {

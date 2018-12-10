@@ -108,14 +108,8 @@ public class SizePurchaseViewPagerContainer extends FrameLayout implements Conta
         if (object instanceof PurchaseInfo.SizeStruct) {
             PurchaseInfo.SizeStruct sizeStruct = (PurchaseInfo.SizeStruct) object;
             ((EditText) findViewById(R.id.content_size_text)).setText(sizeStruct.getSizeName());
-            sizeEditText[0].setText(sizeStruct.getColumn0());
-            sizeEditText[1].setText(sizeStruct.getColumn1());
-            sizeEditText[2].setText(sizeStruct.getColumn2());
-            sizeEditText[3].setText(sizeStruct.getColumn3());
-            sizeEditText[4].setText(sizeStruct.getColumn4());
-            sizeEditText[5].setText(sizeStruct.getColumn5());
-            sizeEditText[6].setText(sizeStruct.getColumn6());
-            sizeEditText[7].setText(sizeStruct.getColumn7());
+            for (int i = 0; i < sizeStruct.getMaxColumnSize(); i++)
+                sizeEditText[i].setText(sizeStruct.getColumn(i));
             ((EditText) findViewById(R.id.purchase_append)).setText(sizeStruct.getAppend());
             ((EditText) findViewById(R.id.purchase_note)).setText(sizeStruct.getNote());
         }

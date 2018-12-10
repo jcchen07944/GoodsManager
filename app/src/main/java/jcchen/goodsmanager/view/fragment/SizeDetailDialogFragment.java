@@ -44,36 +44,36 @@ public class SizeDetailDialogFragment extends DialogFragment {
             pageList.add(new SizeDetailViewPagerContainer(getActivity()));
             if (!sizeDetail.get(i).getSizeName().equals(""))
                 ((TextView) pageList.get(i).findViewById(R.id.detail_size_name)).setText(sizeDetail.get(i).getSizeName());
-            if (!sizeDetail.get(i).getColumn0().equals(""))
-                ((TextView) pageList.get(i).findViewById(R.id.detail_size_1)).setText(sizeDetail.get(i).getColumn0());
+            if (!sizeDetail.get(i).getColumn(0).equals(""))
+                ((TextView) pageList.get(i).findViewById(R.id.detail_size_1)).setText(sizeDetail.get(i).getColumn(0));
             if (!typeInfo.getColumn().get(0).equals(""))
                 ((TextView) pageList.get(i).findViewById(R.id.detail_size_1_text)).setText("(" + typeInfo.getColumn().get(0) + ")");
-            if (!sizeDetail.get(i).getColumn1().equals(""))
-                ((TextView) pageList.get(i).findViewById(R.id.detail_size_2)).setText(sizeDetail.get(i).getColumn1());
+            if (!sizeDetail.get(i).getColumn(1).equals(""))
+                ((TextView) pageList.get(i).findViewById(R.id.detail_size_2)).setText(sizeDetail.get(i).getColumn(1));
             if (!typeInfo.getColumn().get(1).equals(""))
                 ((TextView) pageList.get(i).findViewById(R.id.detail_size_2_text)).setText("(" + typeInfo.getColumn().get(1) + ")");
-            if (!sizeDetail.get(i).getColumn2().equals(""))
-                ((TextView) pageList.get(i).findViewById(R.id.detail_size_3)).setText(sizeDetail.get(i).getColumn2());
+            if (!sizeDetail.get(i).getColumn(2).equals(""))
+                ((TextView) pageList.get(i).findViewById(R.id.detail_size_3)).setText(sizeDetail.get(i).getColumn(2));
             if (!typeInfo.getColumn().get(2).equals(""))
                 ((TextView) pageList.get(i).findViewById(R.id.detail_size_3_text)).setText("(" + typeInfo.getColumn().get(2) + ")");
-            if (!sizeDetail.get(i).getColumn3().equals(""))
-                ((TextView) pageList.get(i).findViewById(R.id.detail_size_4)).setText(sizeDetail.get(i).getColumn3());
+            if (!sizeDetail.get(i).getColumn(3).equals(""))
+                ((TextView) pageList.get(i).findViewById(R.id.detail_size_4)).setText(sizeDetail.get(i).getColumn(3));
             if (!typeInfo.getColumn().get(3).equals(""))
                 ((TextView) pageList.get(i).findViewById(R.id.detail_size_4_text)).setText("(" + typeInfo.getColumn().get(3) + ")");
-            if (!sizeDetail.get(i).getColumn4().equals(""))
-                ((TextView) pageList.get(i).findViewById(R.id.detail_size_5)).setText(sizeDetail.get(i).getColumn4());
+            if (!sizeDetail.get(i).getColumn(4).equals(""))
+                ((TextView) pageList.get(i).findViewById(R.id.detail_size_5)).setText(sizeDetail.get(i).getColumn(4));
             if (!typeInfo.getColumn().get(4).equals(""))
                 ((TextView) pageList.get(i).findViewById(R.id.detail_size_5_text)).setText("(" + typeInfo.getColumn().get(4) + ")");
-            if (!sizeDetail.get(i).getColumn5().equals(""))
-                ((TextView) pageList.get(i).findViewById(R.id.detail_size_6)).setText(sizeDetail.get(i).getColumn5());
+            if (!sizeDetail.get(i).getColumn(5).equals(""))
+                ((TextView) pageList.get(i).findViewById(R.id.detail_size_6)).setText(sizeDetail.get(i).getColumn(5));
             if (!typeInfo.getColumn().get(5).equals(""))
                 ((TextView) pageList.get(i).findViewById(R.id.detail_size_6_text)).setText("(" + typeInfo.getColumn().get(5) + ")");
-            if (!sizeDetail.get(i).getColumn6().equals(""))
-                ((TextView) pageList.get(i).findViewById(R.id.detail_size_7)).setText(sizeDetail.get(i).getColumn6());
+            if (!sizeDetail.get(i).getColumn(6).equals(""))
+                ((TextView) pageList.get(i).findViewById(R.id.detail_size_7)).setText(sizeDetail.get(i).getColumn(6));
             if (!typeInfo.getColumn().get(6).equals(""))
                 ((TextView) pageList.get(i).findViewById(R.id.detail_size_7_text)).setText("(" + typeInfo.getColumn().get(6) + ")");
-            if (!sizeDetail.get(i).getColumn7().equals(""))
-                ((TextView) pageList.get(i).findViewById(R.id.detail_size_8)).setText(sizeDetail.get(i).getColumn7());
+            if (!sizeDetail.get(i).getColumn(7).equals(""))
+                ((TextView) pageList.get(i).findViewById(R.id.detail_size_8)).setText(sizeDetail.get(i).getColumn(7));
             if (!typeInfo.getColumn().get(7).equals(""))
                 ((TextView) pageList.get(i).findViewById(R.id.detail_size_8_text)).setText("(" + typeInfo.getColumn().get(7) + ")");
             if (!sizeDetail.get(i).getNote().equals(""))
