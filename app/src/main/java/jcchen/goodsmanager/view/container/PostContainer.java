@@ -123,20 +123,67 @@ public class PostContainer extends BottomSheetFL implements Container {
         String text = "";
         for (int i = 0; i < postList.size(); i++) {
             if (postList.get(i).isDefault()) {
-                // Goods' information.
+                // Numbers & Item name.
                 text += purchaseInfo.getNumbers() + purchaseInfo.getName() + '\n';
+
+                // Actual price.
                 text += "連線價：" + convertToFullwidth(purchaseInfo.getActualPrice() + "") + '\n';
+
+                // Size.
                 text += "尺寸：";
                 for (int j = 0; j < purchaseInfo.getSizeList().size(); j++) {
                     if(j > 0)
                         text += "/";
                     text += purchaseInfo.getSizeList().get(j).getName();
                 }
-                text += '\n';
+                if (purchaseInfo.getSizeList().size() == 0)
+                    text += "F";
+                text += "　★平舖平量 (單位：公分)" + '\n';
 
+                // Size detail.
+                ArrayList<String> typeColumns = purchaseInfo.getTypeInfo().getColumn();
+                for (int k = 0; k < purchaseInfo.getSizeStructList().size(); k++) {
+                    boolean empty = true;
+                    if (!purchaseInfo.getSizeStructList().get(k).getSizeName().equals("")) {
+                        text += purchaseInfo.getSizeStructList().get(k).getSizeName() + " ";
+                        empty = false;
+                    }
+                    for (int j = 0; j < typeColumns.size(); j++) {
+                        if (!typeColumns.get(j).equals("") &&
+                                !purchaseInfo.getSizeStructList().get(k).getColumn(j).equals("")) {
+                            text += typeColumns.get(j) + "：";
+                            text += purchaseInfo.getSizeStructList().get(k).getColumn(j) + " ";
+                            empty = false;
+                        }
+                    }
+                    if (!empty)
+                        text += '\n';
+                }
 
+                // Color.
+                if (purchaseInfo.getColorList().size() != 0) {
+                    text += "顏色：";
+                    for (int j = 0; j < purchaseInfo.getColorList().size(); j++) {
+                        if (j > 0)
+                            text += "/";
+                        text += purchaseInfo.getColorList().get(j).getName();
+                    }
+                    text += '\n';
+                }
 
+                // Material.
+                if (!purchaseInfo.getMaterial().equals("")) {
+                    text += "材質：" + purchaseInfo.getMaterial();
+                    text += '\n';
+                }
 
+                // Flexible.
+                if (!purchaseInfo.getFlexible().equals("")) {
+                    text += "彈性：" + purchaseInfo.getFlexible();
+                    text += '\n';
+                }
+
+                // End.
                 text += '\n';
             }
             else {
