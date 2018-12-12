@@ -3,6 +3,8 @@ package jcchen.goodsmanager.presenter.impl;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import jcchen.goodsmanager.entity.ColorInfo;
 import jcchen.goodsmanager.entity.DateInfo;
@@ -181,11 +183,12 @@ public class SettingPresenterImpl implements SettingPresenter {
     }
 
     private ArrayList<PostBlock> getDefaultPostList() {
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         ArrayList<PostBlock> postList = new ArrayList<>();
-        postList.add(new PostBlock(false, "<3 12月官網連線新款相簿：\n" + "https://reurl.cc/e66vm"));
+        postList.add(new PostBlock(false, "<3 " + (calendar.get(Calendar.MONTH) + 1) + "月官網連線新款相簿：\n" + "https://reurl.cc/"));
         postList.add(new PostBlock(true, ""));
-        postList.add(new PostBlock(false, "<3 12月連線優惠活動：\n" + "https://reurl.cc/LpnQx"));
-        postList.add(new PostBlock(false, "<3 12月直播抽獎活動：\n" + "https://reurl.cc/jkrm2"));
+        postList.add(new PostBlock(false, "<3 " + (calendar.get(Calendar.MONTH) + 1) + "月連線優惠活動：\n" + "https://reurl.cc/"));
+        postList.add(new PostBlock(false, "<3 " + (calendar.get(Calendar.MONTH) + 1) + "月直播抽獎活動：\n" + "https://reurl.cc/"));
 
         return postList;
     }
