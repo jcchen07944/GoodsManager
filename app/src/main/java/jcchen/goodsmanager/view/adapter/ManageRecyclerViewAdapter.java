@@ -178,41 +178,6 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         notifyItemRangeChanged(0, getItemCount());
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        public int position;
-        public ConstraintLayout Card;
-        public TextView Name, Type, Numbers, ActualPrice, ListPrice, IncomeK, IncomeT, Material, Flexible, Color, Size, Mall, Position;
-        public ImageView Expand, Upload;
-        public Button SizeDetail;
-        public LinearLayout PriceLayout, IncomeLayout, FlexibleLayout, MaterialLayout, ColorLayout, SizeLayout;
-        public ViewHolder(View view) {
-            super(view);
-            Card = view.findViewById(R.id.manage_card);
-            Name = view.findViewById(R.id.manage_goods_name);
-            Type = view.findViewById(R.id.manage_type);
-            Numbers = view.findViewById(R.id.manage_numbers);
-            ActualPrice = view.findViewById(R.id.manage_actual_price);
-            ListPrice = view.findViewById(R.id.manage_list_price);
-            IncomeK = view.findViewById(R.id.manage_income_k);
-            IncomeT = view.findViewById(R.id.manage_income_t);
-            Material = view.findViewById(R.id.manage_material);
-            Flexible = view.findViewById(R.id.manage_flexible);
-            Color = view.findViewById(R.id.manage_color);
-            Size = view.findViewById(R.id.manage_size);
-            Mall = view.findViewById(R.id.manage_mall);
-            Position = view.findViewById(R.id.manage_position);
-            Expand = view.findViewById(R.id.manage_expand);
-            Upload = view.findViewById(R.id.manage_upload);
-            SizeDetail = view.findViewById(R.id.manage_size_detail);
-            PriceLayout = view.findViewById(R.id.manage_price_layout);
-            IncomeLayout = view.findViewById(R.id.manage_income_layout);
-            FlexibleLayout = view.findViewById(R.id.manage_flexible_layout);
-            MaterialLayout = view.findViewById(R.id.manage_material_layout);
-            ColorLayout = view.findViewById(R.id.manage_color_layout);
-            SizeLayout = view.findViewById(R.id.manage_size_layout);
-        }
-    }
-
     public ArrayList<Integer> getSelectedPosition() {
         ArrayList<Integer> selectedPosition = new ArrayList<>();
         for (int i = 0; i < selectedCard.size(); i++)
@@ -329,6 +294,41 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         protected void publishResults(CharSequence constraint, FilterResults results) {
             purchaseList = (ArrayList<PurchaseInfo>) results.values;
             notifyDataSetChanged();
+        }
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        public int position;
+        public ConstraintLayout Card;
+        public TextView Name, Type, Numbers, ActualPrice, ListPrice, IncomeK, IncomeT, Material, Flexible, Color, Size, Mall, Position;
+        public ImageView Expand, Upload;
+        public Button SizeDetail;
+        public LinearLayout PriceLayout, IncomeLayout, FlexibleLayout, MaterialLayout, ColorLayout, SizeLayout;
+        public ViewHolder(View view) {
+            super(view);
+            Card = view.findViewById(R.id.manage_card);
+            Name = view.findViewById(R.id.manage_goods_name);
+            Type = view.findViewById(R.id.manage_type);
+            Numbers = view.findViewById(R.id.manage_numbers);
+            ActualPrice = view.findViewById(R.id.manage_actual_price);
+            ListPrice = view.findViewById(R.id.manage_list_price);
+            IncomeK = view.findViewById(R.id.manage_income_k);
+            IncomeT = view.findViewById(R.id.manage_income_t);
+            Material = view.findViewById(R.id.manage_material);
+            Flexible = view.findViewById(R.id.manage_flexible);
+            Color = view.findViewById(R.id.manage_color);
+            Size = view.findViewById(R.id.manage_size);
+            Mall = view.findViewById(R.id.manage_mall);
+            Position = view.findViewById(R.id.manage_position);
+            Expand = view.findViewById(R.id.manage_expand);
+            Upload = view.findViewById(R.id.manage_upload);
+            SizeDetail = view.findViewById(R.id.manage_size_detail);
+            PriceLayout = view.findViewById(R.id.manage_price_layout);
+            IncomeLayout = view.findViewById(R.id.manage_income_layout);
+            FlexibleLayout = view.findViewById(R.id.manage_flexible_layout);
+            MaterialLayout = view.findViewById(R.id.manage_material_layout);
+            ColorLayout = view.findViewById(R.id.manage_color_layout);
+            SizeLayout = view.findViewById(R.id.manage_size_layout);
         }
     }
 }
