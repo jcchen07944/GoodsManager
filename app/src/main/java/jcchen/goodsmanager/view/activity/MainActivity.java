@@ -222,7 +222,8 @@ public class MainActivity extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("yyyy年MM月dd日").format(Calendar.getInstance().getTime());
         if ((mSettingProfile.getTimeDialogShowFreq() == SettingProfile.TIME_DIALOG_MODE_ONCE &&
                 !mSettingProfile.getLastDialogShowTimeStamp().equals(timeStamp)) ||
-                mSettingProfile.getTimeDialogShowFreq() == SettingProfile.TIME_DIALOG_MODE_EVERYDAY) {
+                mSettingProfile.getTimeDialogShowFreq() == SettingProfile.TIME_DIALOG_MODE_EVERYDAY ||
+                mSettingPresenter.getDate() == null) {
             DateSelectDialogFragment mDateSelectDialogFragment = new DateSelectDialogFragment();
             mDateSelectDialogFragment.setCancelable(false);
             mDateSelectDialogFragment.show(getFragmentManager(), DateSelectDialogFragment.TAG);
