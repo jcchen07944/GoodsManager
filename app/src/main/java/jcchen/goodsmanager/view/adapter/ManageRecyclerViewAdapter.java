@@ -66,6 +66,8 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
             public void onClick(View view) {
                 if (selectedCard.isEmpty())
                     expand(viewHolder);
+                else if (selectedCard.contains(viewHolder))
+                    resumeCard(viewHolder.position);
                 else
                     selectCard(viewHolder);
             }
@@ -186,11 +188,9 @@ public class ManageRecyclerViewAdapter extends RecyclerView.Adapter<ManageRecycl
         return selectedPosition;
     }
 
-    private void selectCard(ViewHolder viewHolder) {
-        if (selectedCard.contains(viewHolder)) {
-            resumeCard(viewHolder.position);
+    public void selectCard(ViewHolder viewHolder) {
+        if (selectedCard.contains(viewHolder))
             return;
-        }
         contract();
         viewHolder.Card.setElevation(8 * context.getResources().getDisplayMetrics().density);
         viewHolder.Numbers.setBackground(ContextCompat.getDrawable(context, R.color.colorPrimaryLight));

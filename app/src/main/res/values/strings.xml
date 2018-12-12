@@ -59,6 +59,7 @@
     <string name="resume">恢復</string>
     <string name="post">Po文</string>
     <string name="copy_to_clipboard">複製到剪貼簿</string>
+    <string name="select_all">全選</string>
 
     <string-array name="flexible_array">
         <item></item>

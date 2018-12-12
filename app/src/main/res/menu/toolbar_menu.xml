@@ -46,4 +46,8 @@
         android:title="@string/clear"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/menu_select_all"
+        android:title="@string/select_all"
+        app:showAsAction="never" />
 </menu>

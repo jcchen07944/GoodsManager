@@ -47,6 +47,10 @@ public class ManageFragment extends Fragment {
         ((ManageContainer) oldView).refresh();
     }
 
+    public void selectAll() {
+        ((ManageContainer) oldView).selectAll();
+    }
+
     public ManageRecyclerViewAdapter getAdapter() {
         return ((ManageContainer) oldView).getAdapter();
     }

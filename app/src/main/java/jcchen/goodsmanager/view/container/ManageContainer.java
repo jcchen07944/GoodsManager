@@ -86,6 +86,12 @@ public class ManageContainer extends ConstraintLayout implements Container {
         mRecyclerView.setAdapter(adapter);
     }
 
+    public void selectAll() {
+        for (int childCount = mRecyclerView.getChildCount(), i = 0; i < childCount; i++) {
+            adapter.selectCard((ManageRecyclerViewAdapter.ViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(i)));
+        }
+    }
+
     public ManageRecyclerViewAdapter getAdapter() {
         return adapter;
     }

@@ -253,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.menu_po).setVisible(false);
                 menu.findItem(R.id.menu_edit).setVisible(false);
                 menu.findItem(R.id.menu_clear).setVisible(false);
+                menu.findItem(R.id.menu_select_all).setVisible(false);
                 break;
             case ACTIONBAR_STATE_PURCHASE:
                 menu.findItem(R.id.menu_search).setVisible(false);
@@ -262,6 +263,7 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.menu_po).setVisible(false);
                 menu.findItem(R.id.menu_edit).setVisible(false);
                 menu.findItem(R.id.menu_clear).setVisible(true);
+                menu.findItem(R.id.menu_select_all).setVisible(false);
                 break;
             case ACTIONBAR_STATE_SELECT_CARD:
                 menu.findItem(R.id.menu_search).setVisible(false);
@@ -271,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.menu_po).setVisible(true);
                 menu.findItem(R.id.menu_edit).setVisible(true);
                 menu.findItem(R.id.menu_clear).setVisible(false);
+                menu.findItem(R.id.menu_select_all).setVisible(true);
                 break;
             case ACTIONBAR_STATE_MULTI_SELECT_CARD:
                 menu.findItem(R.id.menu_search).setVisible(false);
@@ -280,6 +283,7 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.menu_po).setVisible(false);
                 menu.findItem(R.id.menu_edit).setVisible(false);
                 menu.findItem(R.id.menu_clear).setVisible(false);
+                menu.findItem(R.id.menu_select_all).setVisible(true);
                 break;
         }
         return true;
@@ -358,6 +362,9 @@ public class MainActivity extends AppCompatActivity {
                 mMaterialSearchView.closeSearch();
                 mMaterialSearchView.setVisibility(View.VISIBLE);
                 mMaterialSearchView.showSearch();
+                return true;
+            case R.id.menu_select_all:
+                mManageFragment.selectAll();
                 return true;
         }
         return super.onOptionsItemSelected(item);

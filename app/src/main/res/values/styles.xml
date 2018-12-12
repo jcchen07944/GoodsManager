@@ -6,10 +6,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="android:colorBackground">@color/colorAppBackground</item>
+
+        <item name="android:textColor">@color/colorTextOnBackground</item>
+        <item name="android:buttonStyle">@style/ButtonStyle</item>
     </style>
 
     <style name="ToolbarItem" parent="AppTheme">
         <item name="android:textColorSecondary">@color/colorTextOnPrimary</item>
+        <item name="android:actionMenuTextColor">@color/colorTextOnBackground</item>
     </style>
 
     <style name="SettingTabLayout" parent="Widget.Design.TabLayout">
@@ -46,6 +50,10 @@
         <item name="android:textColor">@color/colorTextOnBackground</item>
         <item name="android:textColorHint">@color/colorTextHint</item>
         <item name="android:hint">@string/search_hint</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/colorTextOnPrimary</item>
     </style>
 
 </resources>
